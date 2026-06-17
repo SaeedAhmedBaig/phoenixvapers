@@ -1,118 +1,104 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { footerLinks, pageSlugs, pages, siteNav, supportLinks } from "../siteData";
+import {
+  ProductGrid,
+  SectionHeader,
+  StatsGrid,
+  StoreShell,
+} from "../components";
+import {
+  categoryCards,
+  featuredCollections,
+  pageSlugs,
+  pages,
+  products,
+} from "../siteData";
+
+const staticSlugs = [
+  "shop",
+  ...pageSlugs,
+  ...categoryCards.map((category) => category.slug),
+  ...featuredCollections.map((collection) => collection.slug),
+];
 
 export function generateStaticParams() {
-  return pageSlugs.map((slug) => ({ slug }));
+  return [...new Set(staticSlugs)].map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }) {
-  const page = pages[params.slug];
+function getRouteData(slug) {
+  if (slug === "shop") {
+    return {
+      eyebrow: "Shop",
+      title: "All Phoenix Vapers products in one polished storefront.",
+      description:
+        "Browse e-liquids, hardware, coils, CBD, deals, starter kits, and customer favourites from one ecommerce catalogue.",
+      stats: [
+        ["320+", "e-liquid options"],
+        ["100+", "hardware products"],
+        ["68", "coil and pod essentials"],
+        ["£30", "free delivery threshold"],
+      ],
+      products,
+      mode: "catalogue",
+    };
+  }
 
-  if (!page) {
+  const category = categoryCards.find((item) => item.slug === slug);
+  if (category) {
+    return {
+      eyebrow: category.title,
+      title: `${category.title} built for confident ecommerce shopping.`,
+      description: category.description,
+      stats: [
+        [category.count, "range depth"],
+        [category.accent, "shopping path"],
+        ["18+", "regulated retail"],
+        ["Rewards", "points eligible"],
+      ],
+      products: products.filter((product) => product.category === slug),
+      mode: "category",
+    };
+  }
+
+  const collection = featuredCollections.find((item) => item.slug === slug);
+  if (collection) {
+    return {
+      eyebrow: collection.title,
+      title: collection.description,
+      description:
+        "Curated ecommerce collection pages help shoppers move from campaign, launch, or reorder intent directly into product cards.",
+      stats: [
+        ["Curated", "collection"],
+        ["Fast", "reorder path"],
+        ["Tracked", "delivery ready"],
+        ["Points", "eligible spend"],
+      ],
+      products: products.filter((product) => product.collection === slug),
+      mode: "collection",
+    };
+  }
+
+  return pages[slug] ? { ...pages[slug], mode: "content" } : null;
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const route = getRouteData(slug);
+
+  if (!route) {
     return {};
   }
 
   return {
-    title: `${page.eyebrow} | Phoenix Vapers`,
-    description: page.description,
+    title: `${route.eyebrow} | Phoenix Vapers`,
+    description: route.description,
   };
-}
-
-function Header() {
-  return (
-    <>
-      <section className="announcement" aria-label="Age and delivery notice">
-        <p>For adults 18+ only. Free Royal Mail Tracked 24 delivery over £30.</p>
-        <Link href="/safety">View safety standards</Link>
-      </section>
-
-      <header className="siteHeader">
-        <Link className="brandMark" href="/" aria-label="Phoenix Vapers home">
-          <span className="brandIcon" aria-hidden="true">
-            PV
-          </span>
-          <span>
-            <strong>Phoenix Vapers</strong>
-            <small>UK e-liquids, hardware & CBD</small>
-          </span>
-        </Link>
-
-        <nav aria-label="Primary navigation">
-          {siteNav.map((item) => (
-            <Link key={item.label} href={item.href}>
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        <Link className="headerCta" href="/faq">
-          Find My Vape
-        </Link>
-      </header>
-    </>
-  );
-}
-
-function PageFooter() {
-  return (
-    <footer>
-      <div>
-        <Link className="brandMark" href="/" aria-label="Phoenix Vapers home">
-          <span className="brandIcon" aria-hidden="true">
-            PV
-          </span>
-          <span>
-            <strong>Phoenix Vapers</strong>
-            <small>Rise into better vaping</small>
-          </span>
-        </Link>
-        <p>
-          Head Office: 1 The Manor Grove Centre, Vicarage Farm Road, Boongate,
-          Peterborough, PE1 5UH, United Kingdom.
-        </p>
-      </div>
-      <div>
-        <h3>Quick Links</h3>
-        {footerLinks.map((item) => (
-          <Link key={item.label} href={item.href}>
-            {item.label}
-          </Link>
-        ))}
-      </div>
-      <div>
-        <h3>Support</h3>
-        {supportLinks.map((item) => (
-          <span key={item}>{item}</span>
-        ))}
-      </div>
-    </footer>
-  );
-}
-
-function StatGrid({ stats }) {
-  if (!stats) {
-    return null;
-  }
-
-  return (
-    <div className="specGrid pageStats">
-      {stats.map(([value, label]) => (
-        <article key={`${value}-${label}`}>
-          <strong>{value}</strong>
-          <span>{label}</span>
-        </article>
-      ))}
-    </div>
-  );
 }
 
 function ContentSection({ section }) {
   return (
-    <section className="section innerSection">
-      <div className="sectionIntro">
-        <h2>{section.title}</h2>
-      </div>
+    <section className="storeSection">
+      <SectionHeader title={section.title} />
 
       {section.cards ? (
         <div className="categoryGrid">
@@ -138,15 +124,17 @@ function ContentSection({ section }) {
 }
 
 function FaqList({ faqs }) {
-  if (!faqs) {
+  if (!faqs?.length) {
     return null;
   }
 
   return (
-    <section className="section innerSection">
-      <div className="sectionIntro">
-        <h2>Common Questions</h2>
-      </div>
+    <section className="storeSection">
+      <SectionHeader
+        eyebrow="Support"
+        title="Common Questions"
+        text="Clear answers reduce abandoned baskets and help new vapers choose with confidence."
+      />
       <div className="faqList">
         {faqs.map((faq) => (
           <details key={faq.question}>
@@ -166,8 +154,8 @@ function ContactForm() {
         <p className="eyebrow">Support Request</p>
         <h2>Send the team a message.</h2>
         <p>
-          This frontend form is ready to connect to an email service or CRM when
-          backend handling is added.
+          This frontend form is ready to connect to email, CRM, or order support
+          tooling when backend handling is added.
         </p>
       </div>
       <form>
@@ -183,41 +171,68 @@ function ContactForm() {
   );
 }
 
-export default function ContentPage({ params }) {
-  const page = pages[params.slug];
+function CatalogueTools() {
+  return (
+    <aside className="catalogueTools" aria-label="Shop filters">
+      <div>
+        <strong>Shop Filters</strong>
+        <span>Frontend-ready filter controls</span>
+      </div>
+      {["Format", "Brand", "Strength", "Vaping Style", "Price"].map((filter) => (
+        <button key={filter} type="button">
+          {filter}
+        </button>
+      ))}
+    </aside>
+  );
+}
 
-  if (!page) {
+export default async function DynamicPage({ params }) {
+  const { slug } = await params;
+  const route = getRouteData(slug);
+
+  if (!route) {
     notFound();
   }
 
   return (
-    <main>
-      <Header />
-
+    <StoreShell>
       <section className="pageHero">
         <div>
-          <p className="eyebrow">{page.eyebrow}</p>
-          <h1>{page.title}</h1>
-          <p className="heroLead">{page.description}</p>
-          {page.cta ? (
-            <Link className="primaryButton" href={page.ctaHref}>
-              {page.cta}
+          <p className="eyebrow">{route.eyebrow}</p>
+          <h1>{route.title}</h1>
+          <p className="heroLead">{route.description}</p>
+          {route.cta ? (
+            <Link className="primaryButton" href={route.ctaHref}>
+              {route.cta}
             </Link>
           ) : null}
         </div>
       </section>
 
-      <StatGrid stats={page.stats} />
+      <StatsGrid stats={route.stats} />
 
-      {page.sections?.map((section) => (
+      {route.products ? (
+        <section className="storeSection catalogueLayout">
+          <CatalogueTools />
+          <div>
+            <SectionHeader
+              eyebrow={route.mode === "catalogue" ? "Catalogue" : "Products"}
+              title={`${route.products.length} products ready to shop.`}
+              text="Static product data is structured like a real ecommerce catalogue and can be wired to Shopify, WooCommerce, Stripe, or a custom backend later."
+            />
+            <ProductGrid products={route.products} />
+          </div>
+        </section>
+      ) : null}
+
+      {route.sections?.map((section) => (
         <ContentSection key={section.title} section={section} />
       ))}
 
-      <FaqList faqs={page.faqs} />
+      <FaqList faqs={route.faqs} />
 
-      {page.form ? <ContactForm /> : null}
-
-      <PageFooter />
-    </main>
+      {route.form ? <ContactForm /> : null}
+    </StoreShell>
   );
 }

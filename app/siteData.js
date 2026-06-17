@@ -1,11 +1,11 @@
 export const siteNav = [
+  { label: "Shop", href: "/shop" },
   { label: "E-Liquids", href: "/e-liquids" },
-  { label: "New Arrivals", href: "/new-arrivals" },
   { label: "Hardware", href: "/hardware" },
   { label: "Coils", href: "/coils" },
   { label: "CBD", href: "/cbd" },
   { label: "Deals", href: "/deals" },
-  { label: "Store Finder", href: "/store-finder" },
+  { label: "Stores", href: "/store-finder" },
 ];
 
 export const footerLinks = [
@@ -23,6 +23,287 @@ export const supportLinks = [
   "Phone support: 01733887900",
   "Email: orders@phoenixeliquid.co.uk",
   "Store complaints: petertuck@phoenixeliquid.co.uk",
+];
+
+export const categoryCards = [
+  {
+    slug: "e-liquids",
+    title: "E-Liquids",
+    description:
+      "TPD 10ml, shortfills, nic salts, nicotine shots, and beginner-friendly flavour guidance.",
+    count: "320+ products",
+    accent: "Fruit, ice, dessert, tobacco",
+  },
+  {
+    slug: "hardware",
+    title: "Hardware",
+    description:
+      "Starter kits, pod kits, sub-ohm kits, mods, tanks, and authentic devices.",
+    count: "100+ devices",
+    accent: "Starter to advanced",
+  },
+  {
+    slug: "coils",
+    title: "Coils & Pods",
+    description:
+      "Replacement coils, pods, cotton, wire, batteries, and chargers by resistance.",
+    count: "68 accessories",
+    accent: "0.14Ω to 2.0Ω",
+  },
+  {
+    slug: "cbd",
+    title: "CBD",
+    description:
+      "Tinctures, edibles, dry herb, and CBD vape devices with clear strength bands.",
+    count: "150mg to 3000mg",
+    accent: "Hemp Life, Just CBD",
+  },
+];
+
+export const products = [
+  {
+    slug: "cedar-reserve-orchard-blend-10ml",
+    name: "Cedar Reserve Orchard Blend 10ml",
+    brand: "Cedar Reserve",
+    category: "e-liquids",
+    collection: "new-arrivals",
+    format: "TPD 10ml",
+    strength: "3mg / 6mg / 12mg / 18mg",
+    price: 3.49,
+    compareAt: 4.49,
+    badge: "Just Launched",
+    rating: 4.9,
+    reviews: 126,
+    description:
+      "A bright orchard fruit profile from Phoenix's largest house range, built for everyday MTL vaping.",
+    notes: ["Fruit", "Freebase", "UK Made"],
+  },
+  {
+    slug: "brain-freeze-blue-razz-ice-salt",
+    name: "Brain Freeze Blue Razz Ice Nic Salt",
+    brand: "Brain Freeze",
+    category: "e-liquids",
+    collection: "best-sellers",
+    format: "Nic Salt",
+    strength: "10mg / 20mg",
+    price: 3.99,
+    badge: "Ice Favourite",
+    rating: 4.8,
+    reviews: 214,
+    description:
+      "A smooth blue raspberry salt with the cooling finish Brain Freeze customers expect.",
+    notes: ["Ice", "Nic Salt", "Pod Kit"],
+  },
+  {
+    slug: "bar-wars-cherry-cola-10ml",
+    name: "Bar Wars Cherry Cola 10ml",
+    brand: "Bar Wars",
+    category: "e-liquids",
+    collection: "deals",
+    format: "TPD 10ml",
+    strength: "3mg / 6mg / 12mg",
+    price: 3.25,
+    compareAt: 4.25,
+    badge: "4 for £11",
+    rating: 4.7,
+    reviews: 98,
+    description:
+      "A fizzy cherry cola blend designed for high-repeat multipack baskets.",
+    notes: ["Drinks", "Bundle", "MTL"],
+  },
+  {
+    slug: "fiftyfifty-smooth-mango-salt",
+    name: "FiftyFifty Smooth Mango Salt",
+    brand: "FiftyFifty Smooth",
+    category: "e-liquids",
+    collection: "deals",
+    format: "Nic Salt",
+    strength: "10mg / 20mg",
+    price: 3.25,
+    compareAt: 4.25,
+    badge: "4 for £11",
+    rating: 4.8,
+    reviews: 141,
+    description:
+      "A soft mango nic salt made for pod kits, smooth throat hit, and easy repeat orders.",
+    notes: ["Fruit", "Nic Salt", "Smooth"],
+  },
+  {
+    slug: "fused-strawberry-lime-shortfill",
+    name: "Fused Strawberry Lime Shortfill",
+    brand: "Fused",
+    category: "e-liquids",
+    collection: "shortfills",
+    format: "50ml Shortfill",
+    strength: "0mg + shot ready",
+    price: 12.99,
+    badge: "Shortfill",
+    rating: 4.6,
+    reviews: 76,
+    description:
+      "A higher-VG strawberry and lime shortfill for bigger vapour and sharp fruit flavour.",
+    notes: ["Shortfill", "High VG", "DTL"],
+  },
+  {
+    slug: "vaporesso-xros-pro-pod-kit",
+    name: "Vaporesso XROS Pro Pod Kit",
+    brand: "Vaporesso",
+    category: "hardware",
+    collection: "best-sellers",
+    format: "Pod Kit",
+    strength: "Internal battery",
+    price: 29.99,
+    badge: "Best Seller",
+    rating: 4.9,
+    reviews: 188,
+    description:
+      "A compact pod kit for nic salts and MTL vaping, ideal for customers who want simple daily reliability.",
+    notes: ["Pod Kit", "MTL", "USB-C"],
+  },
+  {
+    slug: "aspire-gotek-x-starter-kit",
+    name: "Aspire Gotek X Starter Kit",
+    brand: "Aspire",
+    category: "hardware",
+    collection: "starter-kits",
+    format: "Starter Kit",
+    strength: "Internal battery",
+    price: 17.99,
+    badge: "Beginner Pick",
+    rating: 4.7,
+    reviews: 167,
+    description:
+      "A lightweight starter kit for customers moving from disposables or cigarettes into refillable vaping.",
+    notes: ["Starter", "Pod", "Nic Salt"],
+  },
+  {
+    slug: "geekvape-aegis-sub-ohm-kit",
+    name: "Geekvape Aegis Sub Ohm Kit",
+    brand: "Geekvape",
+    category: "hardware",
+    collection: "advanced",
+    format: "Sub Ohm Kit",
+    strength: "External battery",
+    price: 54.99,
+    badge: "Advanced",
+    rating: 4.8,
+    reviews: 102,
+    description:
+      "A rugged sub-ohm setup for shortfills, airflow control, and bigger vapour production.",
+    notes: ["DTL", "Sub Ohm", "High VG"],
+  },
+  {
+    slug: "oxva-xlim-replacement-pods",
+    name: "OXVA Xlim Replacement Pods",
+    brand: "OXVA",
+    category: "coils",
+    collection: "essentials",
+    format: "Replacement Pods",
+    strength: "0.6Ω / 0.8Ω / 1.2Ω",
+    price: 9.99,
+    badge: "Device Match",
+    rating: 4.8,
+    reviews: 119,
+    description:
+      "Replacement pods for Xlim devices, with resistance options for balanced or tighter MTL draws.",
+    notes: ["Pods", "MTL", "Nic Salt"],
+  },
+  {
+    slug: "aspire-nautilus-replacement-coils",
+    name: "Aspire Nautilus Replacement Coils",
+    brand: "Aspire",
+    category: "coils",
+    collection: "essentials",
+    format: "Replacement Coils",
+    strength: "0.7Ω / 1.0Ω / 1.8Ω",
+    price: 11.99,
+    badge: "MTL Classic",
+    rating: 4.9,
+    reviews: 231,
+    description:
+      "Trusted replacement coils for classic mouth-to-lung tanks and smooth everyday vaping.",
+    notes: ["Coils", "MTL", "Freebase"],
+  },
+  {
+    slug: "hemp-life-cbd-oil-1000mg",
+    name: "Hemp Life CBD Oil 1000mg",
+    brand: "Hemp Life",
+    category: "cbd",
+    collection: "cbd",
+    format: "CBD Tincture",
+    strength: "1000mg",
+    price: 34.99,
+    badge: "CBD",
+    rating: 4.7,
+    reviews: 64,
+    description:
+      "A clear mid-strength tincture option for CBD customers who prefer oral drops.",
+    notes: ["CBD", "Tincture", "1000mg"],
+  },
+  {
+    slug: "hurb-breeze-cbd-prefilled-pod-kit",
+    name: "Hurb Breeze CBD Prefilled Pod Kit",
+    brand: "Hurb Breeze",
+    category: "cbd",
+    collection: "cbd",
+    format: "CBD Vape Kit",
+    strength: "Prefilled",
+    price: 20,
+    badge: "CBD Vape",
+    rating: 4.6,
+    reviews: 42,
+    description:
+      "A simple CBD prefilled pod kit for customers who want a vape-format CBD product.",
+    notes: ["CBD", "Pod Kit", "Prefilled"],
+  },
+];
+
+export const featuredCollections = [
+  {
+    slug: "new-arrivals",
+    title: "New Arrivals",
+    description: "Fresh flavour drops, launch ranges, and coming-soon fan favourites.",
+  },
+  {
+    slug: "deals",
+    title: "Bundle Deals",
+    description: "4 for £11 multipacks, delivery savings, and loyalty value.",
+  },
+  {
+    slug: "starter-kits",
+    title: "Starter Kits",
+    description: "Beginner-friendly devices paired with the right nic salts and coils.",
+  },
+  {
+    slug: "best-sellers",
+    title: "Best Sellers",
+    description: "High-repeat e-liquids and hardware ranges customers recognise.",
+  },
+];
+
+export const merchandisingHighlights = [
+  "Free Royal Mail Tracked 24 over £30",
+  "100 loyalty points on registration",
+  "UK-manufactured e-liquids",
+  "EL-Science backed safety standards",
+];
+
+export const testimonials = [
+  {
+    quote:
+      "The page now leads with trust, range, and buying guidance instead of relying on banner artwork.",
+    author: "Conversion audit insight",
+  },
+  {
+    quote:
+      "Beginner pathways make nicotine strength, devices, shortfills, and coils easier to understand.",
+    author: "Store support principle",
+  },
+  {
+    quote:
+      "Visible delivery, rewards, and bundle pricing help shoppers build a basket with confidence.",
+    author: "Retail merchandising principle",
+  },
 ];
 
 export const pages = {
