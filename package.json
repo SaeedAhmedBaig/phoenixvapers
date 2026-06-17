@@ -1,0 +1,27 @@
+{
+  "name": "phoenix-eliquid",
+  "version": "1.0.0",
+  "description": "Phoenix Vapers Next.js landing page",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "nextjs",
+    "phoenix-vapers",
+    "landing-page"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.9"
+  }
+}

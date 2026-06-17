@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="18" fill="#2C3132"/>
+  <path d="M33.6 9C41.4 17.2 44.8 24.3 43.8 30.3C42.9 35.9 38.6 40.2 32 43.1C36.2 37.5 36.4 32.4 32.8 27.9C29.6 32.8 25.4 35.1 20.2 34.7C23.1 29 27.6 20.4 33.6 9Z" fill="#0CA252"/>
+  <path d="M21 50C27.4 41.7 35.9 39.9 46.4 44.7C41.2 52.7 32.7 54.5 21 50Z" fill="#AECC53"/>
+  <text x="32" y="39" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="800" fill="white">PV</text>
+</svg>
