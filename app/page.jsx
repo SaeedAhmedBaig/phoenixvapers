@@ -1,11 +1,15 @@
 import Link from "next/link";
 import {
+  Badge,
+  ButtonLink,
   CategoryTile,
   ProductGrid,
   PromoStrip,
   SectionHeader,
   StatsGrid,
   StoreShell,
+  TrustRail,
+  commerceTrust,
 } from "./components";
 import {
   categoryCards,
@@ -15,165 +19,193 @@ import {
 } from "./siteData";
 
 const heroStats = [
-  ["£30", "free Tracked 24 threshold"],
-  ["18+", "age verified retail"],
-  ["320+", "flavour-led products"],
-  ["ISO", "quality-led operations"],
+  ["18+", "age-aware commerce"],
+  ["£30", "free Tracked 24"],
+  ["320+", "e-liquid options"],
+  ["34", "static storefront pages"],
 ];
 
-const featuredProducts = products.filter((product) =>
-  ["new-arrivals", "best-sellers", "deals"].includes(product.collection),
-);
-
-const starterProducts = products.filter((product) =>
-  ["starter-kits", "essentials"].includes(product.collection),
-);
+const featuredProducts = products
+  .filter((product) => ["new-arrivals", "best-sellers", "deals"].includes(product.collection))
+  .slice(0, 8);
 
 export default function Home() {
   return (
     <StoreShell>
-      <section className="storeHero">
-        <div className="storeHeroCopy">
-          <p className="eyebrow">Phoenix Vapers</p>
-          <h1>UK vaping made easier to shop, safer to trust, and faster to reorder.</h1>
-          <p className="heroLead">
-            Explore UK-made e-liquids, authentic hardware, replacement coils, CBD,
-            loyalty rewards, and delivery promises in one full-scale ecommerce
-            storefront.
-          </p>
-          <div className="heroActions">
-            <Link className="primaryButton" href="/shop">
-              Shop All Products
-            </Link>
-            <Link className="secondaryButton" href="/faq">
-              Help Me Choose
-            </Link>
+      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-8 lg:grid-cols-[1.15fr_0.85fr] lg:py-12">
+        <div className="relative overflow-hidden rounded-[3rem] border border-[#2C3132]/10 bg-white p-6 shadow-2xl shadow-emerald-950/10 md:p-10">
+          <div className="absolute right-[-8rem] top-[-8rem] h-72 w-72 rounded-full bg-lime/30 blur-3xl" />
+          <div className="relative">
+            <Badge tone="green">Enterprise vape storefront</Badge>
+            <h1 className="mt-5 max-w-4xl text-5xl font-black leading-[0.9] tracking-[-0.075em] text-[#2C3132] md:text-7xl lg:text-8xl">
+              Regulated vape retail with serious ecommerce UX.
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
+              Phoenix Vapers now has a headless-ready frontend for compliant UK
+              vape retail: age-aware checkout, faceted product discovery, product
+              detail pages, cart, loyalty, delivery, and trust architecture.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="/shop">Shop The Storefront</ButtonLink>
+              <ButtonLink href="/faq" variant="outline">Find My Vape</ButtonLink>
+            </div>
+            <div className="mt-8">
+              <StatsGrid stats={heroStats} />
+            </div>
           </div>
-          <StatsGrid stats={heroStats} />
         </div>
 
-        <aside className="heroCommerceCard" aria-label="Featured ecommerce offer">
-          <span className="pill">Bundle Deal</span>
-          <h2>4 for £11 on selected 10ml favourites.</h2>
-          <p>
-            Build a repeat basket with Bar Wars and FiftyFifty Smooth, then unlock
-            premium Royal Mail Tracked 24 delivery over £30.
-          </p>
-          <div className="priceCallout">
-            <strong>£11</strong>
-            <span>selected multipacks</span>
+        <aside className="grid gap-4">
+          <div className="rounded-[3rem] bg-[#2C3132] p-6 text-white shadow-2xl shadow-slate-950/20 md:p-8">
+            <Badge tone="lime">Compliance first</Badge>
+            <h2 className="mt-5 text-4xl font-black leading-none tracking-[-0.06em]">
+              Age verification belongs in checkout, not as a weak popup.
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-white/70">
+              R&D points toward API or payment-linked verification for vape sales.
+              The UI is structured for providers such as AgeChecked, 1account, or
+              AgeVerifyUK and keeps 18+ notices visible across the journey.
+            </p>
           </div>
-          <Link className="primaryButton" href="/deals">
-            Shop Deals
-          </Link>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            <div className="rounded-[2rem] border border-[#2C3132]/10 bg-lime p-6 text-[#2C3132]">
+              <span className="text-sm font-black uppercase tracking-[0.18em]">Offer</span>
+              <strong className="mt-3 block text-5xl font-black tracking-[-0.08em]">4 for £11</strong>
+              <p className="mt-2 text-sm font-bold">Selected Bar Wars and FiftyFifty Smooth 10ml ranges.</p>
+            </div>
+            <div className="rounded-[2rem] border border-[#2C3132]/10 bg-white p-6">
+              <span className="text-sm font-black uppercase tracking-[0.18em] text-brand">Delivery</span>
+              <strong className="mt-3 block text-3xl font-black tracking-[-0.06em]">Tracked 24 over £30</strong>
+              <p className="mt-2 text-sm leading-6 text-muted">Clear delivery cost visibility before checkout.</p>
+            </div>
+          </div>
         </aside>
       </section>
 
       <PromoStrip />
 
-      <section className="storeSection">
+      <section className="mx-auto max-w-7xl px-4 py-16">
         <SectionHeader
-          eyebrow="Shop By Category"
-          title="Clear buying paths for every customer type."
-          text="The storefront starts with range, trust, and guidance, so new and returning shoppers can move quickly."
-          action="View Shop"
+          eyebrow="Commerce Categories"
+          title="Built for vape-specific product complexity."
+          text="E-liquid shoppers need strength, flavour, format, and device compatibility. Hardware shoppers need style, battery, coil, and experience-level guidance."
+          action="View All"
           href="/shop"
         />
-        <div className="categoryShowcase">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {categoryCards.map((category) => (
             <CategoryTile key={category.slug} category={category} />
           ))}
         </div>
       </section>
 
-      <section className="storeSection">
+      <section className="mx-auto max-w-7xl px-4 py-8">
         <SectionHeader
-          eyebrow="Featured Products"
-          title="Launches, best sellers, and deal-led products."
-          text="Product cards include price, badge, format, rating, flavour notes, and ecommerce calls to action."
-          action="Shop New Arrivals"
-          href="/new-arrivals"
+          eyebrow="Product Discovery"
+          title="PLP-grade cards with badges, ratings, formats, notes, and clear pricing."
+          text="Enterprise PLPs should help customers compare without opening every product. Cards now show purchase-critical information early."
+          action="Shop Catalogue"
+          href="/shop"
         />
         <ProductGrid products={featuredProducts} />
       </section>
 
-      <section className="splitMerch">
-        <div>
-          <p className="eyebrow">Find The Right Vape</p>
-          <h2>Guided shopping instead of overwhelming filters.</h2>
-          <p>
-            Match customers by draw style, nicotine format, flavour family, and
-            device compatibility. This gives beginners a clear path while keeping
-            advanced users close to coils, shortfills, and hardware.
+      <section className="mx-auto grid max-w-7xl gap-6 px-4 py-16 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="rounded-[3rem] bg-[#2C3132] p-8 text-white md:p-10">
+          <Badge tone="lime">Guided selling</Badge>
+          <h2 className="mt-5 text-4xl font-black leading-none tracking-[-0.06em] md:text-6xl">
+            A vape finder, not just a product grid.
+          </h2>
+          <p className="mt-5 text-base leading-8 text-white/70">
+            The design supports beginner and advanced shoppers without exposing
+            every technical option at once. This follows progressive disclosure
+            patterns used in enterprise ecommerce.
           </p>
-          <Link className="primaryButton" href="/faq">
+          <ButtonLink className="mt-7" href="/faq" variant="lime">
             Open Buying Guide
-          </Link>
+          </ButtonLink>
         </div>
-        <div className="finderSteps">
+
+        <div className="grid gap-4">
           {[
-            "Choose MTL or DTL draw style",
-            "Pick freebase, nic salt, shortfill, or CBD",
-            "Match coil resistance to device",
-            "Use loyalty points on repeat baskets",
-          ].map((step, index) => (
-            <article key={step}>
-              <span>{index + 1}</span>
-              <p>{step}</p>
+            ["1", "Choose draw style", "MTL for cigarette-like draws, DTL for cloud and shortfill users."],
+            ["2", "Select nicotine format", "Freebase, nic salts, 0mg shortfills with shots, or CBD products."],
+            ["3", "Match device and coil", "Resistance and compatibility stay visible near product cards."],
+            ["4", "Checkout with confidence", "Age, delivery, rewards, and return conditions are clear before payment."],
+          ].map(([number, title, text]) => (
+            <article key={title} className="grid grid-cols-[3rem_1fr] gap-4 rounded-[2rem] border border-[#2C3132]/10 bg-white p-5 shadow-sm">
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-lime text-lg font-black text-[#2C3132]">
+                {number}
+              </span>
+              <div>
+                <h3 className="text-lg font-black text-[#2C3132]">{title}</h3>
+                <p className="mt-1 text-sm leading-7 text-muted">{text}</p>
+              </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="storeSection">
+      <section className="mx-auto max-w-7xl px-4 py-8">
         <SectionHeader
-          eyebrow="Starter And Essential Reorders"
-          title="Make repeat purchases feel effortless."
-          text="A proper ecommerce frontend needs fast paths to starter kits, pods, replacement coils, and everyday essentials."
-          action="Shop Coils"
-          href="/coils"
+          eyebrow="Trust Architecture"
+          title="Vape retail trust is a layer, not a badge pile."
+          text="Compliance, delivery, payment confidence, lab standards, and human support are placed across the buying journey."
         />
-        <ProductGrid products={starterProducts} />
-      </section>
-
-      <section className="collectionBand">
-        {featuredCollections.map((collection) => (
-          <Link key={collection.slug} href={`/${collection.slug}`}>
-            <span>Collection</span>
-            <h3>{collection.title}</h3>
-            <p>{collection.description}</p>
-          </Link>
-        ))}
-      </section>
-
-      <section className="storeSection">
-        <SectionHeader
-          eyebrow="Trust First"
-          title="Safety, service, delivery, and loyalty are visible before checkout."
-          text="The page now surfaces compliance and support details where shoppers actually make decisions."
-        />
-        <div className="trustGrid polishedTrust">
-          {[
-            ["UK Manufactured", "E-liquids produced in the UK with chemist and food-scientist oversight."],
-            ["EL-Science Backed", "Product Risk Assessments and safety-led messaging are promoted early."],
-            ["Tracked Delivery", "Same-day weekday dispatch before 2pm and free Tracked 24 over £30."],
-            ["Rewards Built In", "1 point per £1 spent, 100 points for £1 off, plus registration bonus."],
-          ].map(([title, text]) => (
-            <article key={title}>
-              <h3>{title}</h3>
-              <p>{text}</p>
+        <TrustRail />
+        <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+          {commerceTrust.map(({ title, text, icon: Icon }) => (
+            <article key={title} className="rounded-[2rem] border border-[#2C3132]/10 bg-white p-5 shadow-sm">
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#ecf5df] text-brand">
+                <Icon className="h-5 w-5" />
+              </span>
+              <h3 className="mt-5 text-lg font-black text-[#2C3132]">{title}</h3>
+              <p className="mt-2 text-sm leading-7 text-muted">{text}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="reviewBand">
-        {testimonials.map((testimonial) => (
-          <figure key={testimonial.author}>
-            <blockquote>{testimonial.quote}</blockquote>
-            <figcaption>{testimonial.author}</figcaption>
-          </figure>
-        ))}
+      <section className="mx-auto max-w-7xl px-4 py-16">
+        <SectionHeader
+          eyebrow="Merchandising"
+          title="Collections designed for campaigns and repeat purchase."
+          text="Reusable collection slots support launches, bundles, starter kits, and top sellers without rebuilding page layouts."
+        />
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {featuredCollections.map((collection) => (
+            <Link
+              key={collection.slug}
+              className="group rounded-[2rem] border border-[#2C3132]/10 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-950/10"
+              href={`/${collection.slug}`}
+            >
+              <Badge tone="soft">Collection</Badge>
+              <h3 className="mt-12 text-2xl font-black tracking-[-0.05em] text-[#2C3132]">
+                {collection.title}
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted">{collection.description}</p>
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-brand">
+                Explore collection
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-8">
+        <div className="grid gap-5 md:grid-cols-3">
+          {testimonials.map((testimonial) => (
+            <figure key={testimonial.author} className="rounded-[2rem] border border-[#2C3132]/10 bg-[#ecf5df] p-6">
+              <blockquote className="text-lg font-black leading-8 tracking-[-0.03em] text-[#2C3132]">
+                “{testimonial.quote}”
+              </blockquote>
+              <figcaption className="mt-5 text-sm font-black uppercase tracking-[0.16em] text-brand">
+                {testimonial.author}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </section>
     </StoreShell>
   );
