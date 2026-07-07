@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import type { Request, Response } from "express";
 import { Public } from "../../common/decorators/public.decorator";
 import { CurrentUser } from "../../common/decorators/current-user.decorator";
+import { crossSiteCookieOptions } from "../../common/utils/cookie.util";
 import type { AuthUser } from "../../common/types/auth-user.type";
 import { AuthService } from "./auth.service";
 import { LoginDto, RegisterDto } from "./dto/auth.dto";
@@ -72,8 +73,7 @@ export class AuthController {
   private setRefreshCookie(res: Response, token: string) {
     res.cookie(REFRESH_COOKIE, token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: this.config.get<string>("nodeEnv") === "production",
+      ...crossSiteCookieOptions(),
       path: "/api/auth",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });

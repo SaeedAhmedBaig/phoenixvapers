@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Q
 import type { Request, Response } from "express";
 import { Public } from "../../common/decorators/public.decorator";
 import { CurrentUser } from "../../common/decorators/current-user.decorator";
+import { crossSiteCookieOptions } from "../../common/utils/cookie.util";
 import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
 import type { AuthUser } from "../../common/types/auth-user.type";
 import { CartService } from "./cart.service";
@@ -40,7 +41,7 @@ export class CartController {
       token = this.cartService.generateGuestToken();
       res.cookie(CART_TOKEN_COOKIE, token, {
         httpOnly: true,
-        sameSite: "lax",
+        ...crossSiteCookieOptions(),
         maxAge: 90 * 24 * 60 * 60 * 1000,
       });
     }
