@@ -2,19 +2,25 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Menu, Search, ShoppingBag, UserCheck } from "lucide-react";
+import { ChevronRight, Menu, Search, ShoppingBag, UserCheck, LogIn, UserPlus } from "lucide-react";
 import { useCart } from "../../lib/store";
+import { useUser } from "../../lib/user-store";
 import { siteNav } from "../../siteData";
 import { BrandMark } from "./brand-mark";
 import { ThemeToggle } from "./theme-toggle";
 import { SearchCommand } from "./search-command";
+import { LoginDialog, SignupDialog } from "./auth-dialogs";
+import { AccountMenu } from "./account-menu";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
 
 export function SiteHeader() {
   const { count, openDrawer, ready } = useCart();
+  const { user } = useUser();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [signupOpen, setSignupOpen] = useState(false);
 
   return (
     <>
@@ -66,6 +72,23 @@ export function SiteHeader() {
               <Search className="h-4 w-4" /> Search products
             </Button>
             <ThemeToggle className="hidden md:inline-flex" />
+
+            {/* Auth buttons or account menu */}
+            {user ? (
+              <AccountMenu />
+            ) : (
+              <>
+                <Button variant="outline" size="sm" onClick={() => setLoginOpen(true)} className="hidden sm:inline-flex">
+                  <LogIn className="h-4 w-4" />
+                  Sign In
+                </Button>
+                <Button size="sm" onClick={() => setSignupOpen(true)}>
+                  <UserPlus className="h-4 w-4" />
+                  Sign Up
+                </Button>
+              </>
+            )}
+
             <Button variant="inverse" onClick={openDrawer} className="relative" aria-label="Open basket">
               <ShoppingBag className="h-4 w-4" />
               <span className="hidden sm:inline">Basket</span>
@@ -81,6 +104,8 @@ export function SiteHeader() {
 
       <MobileMenu open={menuOpen} onOpenChange={setMenuOpen} />
       <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
+      <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} />
+      <SignupDialog open={signupOpen} onOpenChange={setSignupOpen} />
     </>
   );
 }
