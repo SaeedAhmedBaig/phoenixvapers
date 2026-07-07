@@ -9,7 +9,7 @@ export const siteNav = [
   { label: "Coils", href: "/coils" },
   { label: "CBD", href: "/cbd" },
   { label: "Deals", href: "/deals" },
-  { label: "Stores", href: "/store-finder" },
+  { label: "Find Stores", href: "/store-locator" },
 ];
 
 export const footerLinks = [
