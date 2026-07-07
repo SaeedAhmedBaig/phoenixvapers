@@ -46,6 +46,9 @@ async function resolveMongoUri(config: ConfigService): Promise<string> {
     throw new Error("MONGODB_URI must be set in production");
   }
 
+  // mongodb-memory-server is a devDependency and absent from production
+  // installs; this branch is unreachable there (guarded by the throw above).
+  // @ts-ignore -- module types unavailable when devDependencies are pruned
   const { MongoMemoryServer } = await import("mongodb-memory-server");
   const instance = await MongoMemoryServer.create({
     instance: { dbName: "phoenix-vapers" },
