@@ -1,26 +1,12 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import Script from "next/script";
 
 const THEME_KEY = "pv-theme";
 const ThemeContext = createContext(null);
 
-const THEME_INIT_SOURCE = `
-(function () {
-  try {
-    var stored = localStorage.getItem("${THEME_KEY}");
-    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    var theme = stored || (prefersDark ? "dark" : "light");
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  } catch (e) {}
-})();
-`;
-
-/** Blocking script so the correct theme class is set before first paint (no flash). */
-export function ThemeInitScript() {
-  return <Script id="pv-theme-init" strategy="beforeInteractive">{THEME_INIT_SOURCE}</Script>;
-}
+// The blocking theme-init script lives in theme-init.jsx (a server component)
+// so it ships in the server HTML and runs before first paint.
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState("light");
