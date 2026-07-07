@@ -1,30 +1,33 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
-import { PermissionsGuard } from "../../common/guards/permissions.guard";
-import { Permissions } from "../../common/decorators/permissions.decorator";
-import { PERMISSIONS } from "../../common/constants/permissions";
+﻿import { Controller, Post, Get, UseGuards } from "@nestjs/common";
+import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
 import { RbacService } from "./rbac.service";
-import { CreateRoleDto, UpdateRoleDto } from "./dto/role.dto";
+import { Permissions } from "../../common/decorators/permissions.decorator";
+import { PermissionsGuard } from "../../common/guards/permissions.guard";
 
-@Controller("rbac/roles")
-@UseGuards(PermissionsGuard)
+@Controller("admin/rbac")
+@UseGuards(JwtAuthGuard, PermissionsGuard)
 export class RbacController {
-  constructor(private readonly rbacService: RbacService) {}
+  constructor(private rbacService: RbacService) {}
 
-  @Get()
-  @Permissions(PERMISSIONS.RBAC_MANAGE)
-  findAll() {
-    return this.rbacService.findAll();
+  @Post("seed")
+  @Permissions("settings.system")
+  async seed() {
+    const [perms, roles] = await Promise.all([
+      this.rbacService.seedPermissions(),
+      this.rbacService.seedRoles(),
+    ]);
+    return { permissions: perms, roles };
   }
 
-  @Post()
-  @Permissions(PERMISSIONS.RBAC_MANAGE)
-  create(@Body() dto: CreateRoleDto) {
-    return this.rbacService.create(dto);
+  @Get("permissions")
+  @Permissions("staff.permissions")
+  async getPermissions() {
+    return this.rbacService.getPermissions();
   }
 
-  @Patch(":name")
-  @Permissions(PERMISSIONS.RBAC_MANAGE)
-  update(@Param("name") name: string, @Body() dto: UpdateRoleDto) {
-    return this.rbacService.update(name, dto);
+  @Get("roles")
+  @Permissions("staff.permissions")
+  async getRoles() {
+    return this.rbacService.getRoles();
   }
 }

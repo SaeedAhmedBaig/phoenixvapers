@@ -176,6 +176,12 @@ export class RbacService {
     return true;
   }
 
+  async permissionsFor(roleId: string): Promise<string[]> {
+    const role = await this.roleModel.findById(roleId).populate('permissions');
+    if (!role) return [];
+    return (role.permissions as any[]).map((p) => p.name);
+  }
+
   // AUDIT LOGGING
   async logAction(data: {
     userId: string;
