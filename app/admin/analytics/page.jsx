@@ -21,17 +21,29 @@ export default function AnalyticsDashboard() {
     if (!accessToken) return;
 
     const getDaysBack = () => {
-      const days = { "7d": 7, "30d": 30, "90d": 90, "1y": 365 }[dateRange] || 30;
+      const days =
+        {
+          "7d": 7,
+          "30d": 30,
+          "90d": 90,
+          "1y": 365,
+        }[dateRange] || 30;
+
       const to = new Date();
       const from = new Date(to.getTime() - days * 24 * 60 * 60 * 1000);
+
       return { from, to };
     };
 
     const { from, to } = getDaysBack();
 
     setLoading(true);
+
     Promise.all([
-      adminSalesByDay(accessToken, { from: from.toISOString(), to: to.toISOString() }),
+      adminSalesByDay(accessToken, {
+        from: from.toISOString(),
+        to: to.toISOString(),
+      }),
       adminTopProducts(accessToken, { limit: 10 }),
     ])
       .then(([sales, products]) => {
@@ -40,7 +52,7 @@ export default function AnalyticsDashboard() {
       })
       .catch((err) => console.error("Analytics load failed:", err))
       .finally(() => setLoading(false));
-  }, [ready, user, dateRange]);
+  }, [ready, accessToken, dateRange]);
 
   if (!ready) return null;
 
@@ -49,8 +61,12 @@ export default function AnalyticsDashboard() {
       <div className="space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-4xl font-black tracking-tight text-foreground">Analytics</h1>
-          <p className="mt-2 text-base text-muted-foreground">Real-time sales, revenue, and product performance data</p>
+          <h1 className="text-4xl font-black tracking-tight text-foreground">
+            Analytics
+          </h1>
+          <p className="mt-2 text-base text-muted-foreground">
+            Real-time sales, revenue, and product performance data
+          </p>
         </div>
 
         {/* Date Range Selector */}
@@ -83,7 +99,10 @@ export default function AnalyticsDashboard() {
             ))}
           </div>
         ) : (
-          <RevenueMetrics salesData={salesData} topProducts={topProducts} />
+          <RevenueMetrics
+            salesData={salesData}
+            topProducts={topProducts}
+          />
         )}
 
         {/* Charts */}
@@ -93,7 +112,9 @@ export default function AnalyticsDashboard() {
             <Skeleton className="h-80 rounded-xl" />
           ) : (
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-              <h2 className="text-lg font-black tracking-tight text-foreground">Revenue Trend</h2>
+              <h2 className="text-lg font-black tracking-tight text-foreground">
+                Revenue Trend
+              </h2>
               <div className="mt-4">
                 <SalesChart data={salesData} />
               </div>
@@ -105,7 +126,9 @@ export default function AnalyticsDashboard() {
             <Skeleton className="h-80 rounded-xl" />
           ) : (
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-              <h2 className="text-lg font-black tracking-tight text-foreground">Top Products</h2>
+              <h2 className="text-lg font-black tracking-tight text-foreground">
+                Top Products
+              </h2>
               <div className="mt-4">
                 <TopProductsChart data={topProducts} />
               </div>
@@ -118,23 +141,37 @@ export default function AnalyticsDashboard() {
           <div className="rounded-xl border border-border/50 bg-card p-6 shadow-sm">
             <div className="flex items-center gap-2">
               <PieChart className="h-4 w-4 text-primary" />
-              <h3 className="text-base font-black text-foreground">Customer Segmentation</h3>
+              <h3 className="text-base font-black text-foreground">
+                Customer Segmentation
+              </h3>
             </div>
-            <p className="mt-3 text-sm text-muted-foreground">New, returning, and VIP breakdown — coming soon</p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              New, returning, and VIP breakdown — coming soon
+            </p>
           </div>
+
           <div className="rounded-xl border border-border/50 bg-card p-6 shadow-sm">
             <div className="flex items-center gap-2">
               <Filter className="h-4 w-4 text-primary" />
-              <h3 className="text-base font-black text-foreground">Conversion Funnel</h3>
+              <h3 className="text-base font-black text-foreground">
+                Conversion Funnel
+              </h3>
             </div>
-            <p className="mt-3 text-sm text-muted-foreground">Browse, basket, checkout, and payment tracking — coming soon</p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Browse, basket, checkout, and payment tracking — coming soon
+            </p>
           </div>
+
           <div className="rounded-xl border border-border/50 bg-card p-6 shadow-sm">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-primary" />
-              <h3 className="text-base font-black text-foreground">Order Timing</h3>
+              <h3 className="text-base font-black text-foreground">
+                Order Timing
+              </h3>
             </div>
-            <p className="mt-3 text-sm text-muted-foreground">Orders by day and hour patterns — coming soon</p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Orders by day and hour patterns — coming soon
+            </p>
           </div>
         </div>
       </div>
