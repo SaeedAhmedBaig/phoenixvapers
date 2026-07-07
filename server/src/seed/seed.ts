@@ -1,6 +1,11 @@
 import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
+import { getModelToken } from "@nestjs/mongoose";
+import bcrypt from "bcryptjs";
+import type { Model } from "mongoose";
 import { AppModule } from "../app.module";
+import { User } from "../modules/identity/schemas/user.schema";
+import { ROLE_NAMES } from "../common/constants/permissions";
 import { BrandsService } from "../modules/catalogue/brands.service";
 import { CategoriesService } from "../modules/catalogue/categories.service";
 import { ProductsService } from "../modules/catalogue/products.service";
@@ -34,6 +39,27 @@ async function run() {
   const pricingService = app.get(PricingService);
   const cmsService = app.get(CmsService);
   const storeLocatorService = app.get(StoreLocatorService);
+
+  // Bootstrap the first super-admin so /admin/login is usable. Idempotent:
+  // skipped when the email already has an account. The password deliberately
+  // has no default — set SEED_ADMIN_PASSWORD when running the seed.
+  const adminEmail = (process.env.SEED_ADMIN_EMAIL ?? "admin@phoenixvapers.co.uk").toLowerCase();
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+  const userModel = app.get<Model<User>>(getModelToken(User.name));
+  const existingAdmin = await userModel.findOne({ email: adminEmail });
+  if (existingAdmin) {
+    console.log(`Super-admin already exists: ${adminEmail}`);
+  } else if (!adminPassword) {
+    console.warn("SEED_ADMIN_PASSWORD not set — skipping super-admin creation.");
+  } else {
+    console.log(`Seeding super-admin ${adminEmail}...`);
+    await userModel.create({
+      email: adminEmail,
+      passwordHash: await bcrypt.hash(adminPassword, 12),
+      name: "Phoenix Admin",
+      role: ROLE_NAMES.SUPER_ADMIN,
+    });
+  }
 
   console.log("Seeding categories...");
   for (const category of categorySeeds) {
