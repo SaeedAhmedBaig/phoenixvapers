@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: phoenix-vapers-api
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "4000"
+      - key: WEB_ORIGIN
+        fromDatabase:
+          name: phoenix_db
+          property: connection_string
+        scope: RUN_AND_BUILD
+      - key: MONGODB_URI
+        fromDatabase:
+          name: phoenix_db
+          property: connection_string
+        scope: RUN_AND_BUILD
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+        scope: RUN_AND_BUILD
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+        scope: RUN_AND_BUILD
+      - key: STRIPE_SECRET_KEY
+        scope: RUN_AND_BUILD
+      - key: STRIPE_WEBHOOK_SECRET
+        scope: RUN_AND_BUILD
+
+databases:
+  - name: phoenix_db
+    plan: free
+    ipAllowList: []
