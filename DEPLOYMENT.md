@@ -28,7 +28,7 @@ Complete step-by-step guide for deploying Frontend (Vercel) and Backend (Render)
 - **Region:** Frankfurt (EU-Central) or Singapore (closer to users)
 - **Branch:** `main`
 - **Root Directory:** `server` ⚠️ (Important!)
-- **Build Command:** `npm install && npm run build`
+- **Build Command:** `npm install --include=dev && npm run build`
 - **Start Command:** `npm start`
 
 ### Step 4: Add Environment Variables
