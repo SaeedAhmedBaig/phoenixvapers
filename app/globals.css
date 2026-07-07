@@ -1,66 +1,184 @@
 @import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+/* Manual class-based dark mode: `.dark` on <html> drives `dark:` utilities,
+   independent of the OS `prefers-color-scheme` setting. */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f4f6ef;
-  --foreground: #2c3132;
+  --radius: 1rem;
+
+  /* Light mode semantic tokens. Primary is Phoenix Vapers ember-green
+     #1CAD60; primary-foreground is a near-black ink (not white) because
+     white-on-#1CAD60 fails WCAG AA contrast (~2.9:1) while dark ink on the
+     same green clears 6.5:1+. */
+  --background: #f6f9f7;
+  --foreground: #101512;
+
+  --card: #ffffff;
+  --card-foreground: #101512;
+
+  --popover: #ffffff;
+  --popover-foreground: #101512;
+
+  --primary: #1cad60;
+  --primary-hover: #17954f;
+  --primary-foreground: #0a1f14;
+
+  --secondary: #e7f4ec;
+  --secondary-foreground: #0f2a1b;
+
+  --muted: #eef2f0;
+  --muted-foreground: #5c665f;
+
+  --accent: #0f7a46;
+  --accent-foreground: #ffffff;
+
+  --success: #1cad60;
+  --success-foreground: #0a1f14;
+
+  --warning: #c77d12;
+  --warning-foreground: #241300;
+
+  --destructive: #d8342c;
+  --destructive-foreground: #ffffff;
+
+  --border: #e1e7e3;
+  --input: #e1e7e3;
+  --ring: #1cad60;
+
+  /* Fixed (non-inverting) dark surface — for branded panels that must stay
+     visually dark in both themes (footer, hero, checkout summary), as
+     opposed to --foreground/--background which intentionally swap for
+     readability. Not redefined in .dark on purpose. */
+  --surface-dark: #12181a;
+  --surface-dark-foreground: #ffffff;
+  --surface-dark-muted: rgba(255, 255, 255, 0.7);
+  --surface-dark-border: rgba(255, 255, 255, 0.1);
+}
+
+.dark {
+  --background: #0b1210;
+  --foreground: #eaf3ee;
+
+  --card: #101a16;
+  --card-foreground: #eaf3ee;
+
+  --popover: #101a16;
+  --popover-foreground: #eaf3ee;
+
+  --primary: #22c371;
+  --primary-hover: #2ddb81;
+  --primary-foreground: #06120c;
+
+  --secondary: #16241c;
+  --secondary-foreground: #dceee3;
+
+  --muted: #16211b;
+  --muted-foreground: #8fa79a;
+
+  --accent: #34d583;
+  --accent-foreground: #06120c;
+
+  --success: #22c371;
+  --success-foreground: #06120c;
+
+  --warning: #e4a23b;
+  --warning-foreground: #1c1100;
+
+  --destructive: #f1554b;
+  --destructive-foreground: #170403;
+
+  --border: #1e2b24;
+  --input: #1e2b24;
+  --ring: #22c371;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --color-ink: #2c3132;
-  --color-ink-soft: #3c4344;
-  --color-brand: #0ca252;
-  --color-brand-dark: #08763d;
-  --color-lime: #aecc53;
-  --color-accent: #e81f76;
-  --color-muted: #76777a;
-  --color-soft: #ecf5df;
-  --color-cream: #f4f6ef;
-  --color-line: rgba(44, 49, 50, 0.1);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
 
-  --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif;
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-surface-dark: var(--surface-dark);
+  --color-surface-dark-foreground: var(--surface-dark-foreground);
+  --color-surface-dark-muted: var(--surface-dark-muted);
+  --color-surface-dark-border: var(--surface-dark-border);
 
   --radius-4xl: 2rem;
   --radius-5xl: 2.5rem;
   --radius-6xl: 3rem;
+
+  --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
+/* Base element resets live in Tailwind's `base` layer so utility classes
+   (which live in the `utilities` layer) always win regardless of selector
+   specificity — unlayered CSS would otherwise beat them unconditionally
+   per the CSS Cascade Layers spec, which previously made `text-*` utilities
+   on <button> silently lose to a plain `button { color: inherit }` rule. */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, color-mix(in srgb, var(--primary) 12%, transparent), transparent 34rem),
+      radial-gradient(circle at 88% -4%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 30rem),
+      var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "ss01";
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 30%, transparent);
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(174, 204, 83, 0.24), transparent 34rem),
-    radial-gradient(circle at 88% -4%, rgba(12, 162, 82, 0.12), transparent 30rem),
-    linear-gradient(180deg, #ffffff 0%, #f4f6ef 44%, #ffffff 100%);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  font-feature-settings: "cv02", "cv03", "cv04", "ss01";
-  -webkit-font-smoothing: antialiased;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-  color: inherit;
-}
-
-::selection {
-  background: rgba(12, 162, 82, 0.22);
-}
-
-/* Hide scrollbars on horizontal scrollers but keep functionality */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -70,66 +188,32 @@ textarea {
 }
 
 @keyframes pv-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-
 @keyframes pv-scale-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
-
 @keyframes pv-slide-in {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 }
-
 @keyframes pv-toast-in {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-.pv-fade-in {
-  animation: pv-fade-in 0.25s ease both;
-}
-.pv-scale-in {
-  animation: pv-scale-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.pv-slide-in {
-  animation: pv-slide-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.pv-toast-in {
-  animation: pv-toast-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
+.pv-fade-in { animation: pv-fade-in 0.25s ease both; }
+.pv-scale-in { animation: pv-scale-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.pv-slide-in { animation: pv-slide-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.pv-toast-in { animation: pv-toast-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .pv-fade-in,
-  .pv-scale-in,
-  .pv-slide-in,
-  .pv-toast-in {
-    animation: none;
-  }
+  html { scroll-behavior: auto; }
+  .pv-fade-in, .pv-scale-in, .pv-slide-in, .pv-toast-in { animation: none; }
 }

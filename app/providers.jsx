@@ -1,18 +1,21 @@
 "use client";
 
 import { AgeProvider, CartProvider } from "./lib/store";
-import { AgeGate, MiniCartDrawer, ProductDataIsland } from "./interactive";
-import { products } from "./siteData";
+import { ThemeProvider } from "./lib/theme";
+import { TooltipProvider } from "./components/ui/tooltip";
+import { Toaster } from "./components/ui/toaster";
 
 export function Providers({ children }) {
   return (
-    <AgeProvider>
-      <CartProvider>
-        <ProductDataIsland products={products} />
-        {children}
-        <MiniCartDrawer />
-        <AgeGate />
-      </CartProvider>
-    </AgeProvider>
+    <ThemeProvider>
+      <TooltipProvider delayDuration={150}>
+        <AgeProvider>
+          <CartProvider>
+            {children}
+            <Toaster />
+          </CartProvider>
+        </AgeProvider>
+      </TooltipProvider>
+    </ThemeProvider>
   );
 }

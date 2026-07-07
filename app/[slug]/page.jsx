@@ -1,211 +1,192 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { StoreShell } from "../components";
-import { ContactForm, ProductBrowser } from "../interactive";
-import { Badge, ButtonLink, SectionHeader, StatsGrid } from "../ui";
-import {
-  categoryCards,
-  featuredCollections,
-  pageSlugs,
-  pages,
-  products,
-} from "../siteData";
+import Link from "next/link";
+import { StoreShell } from "../components/storefront/store-shell";
+import { SectionHeader } from "../components/storefront/section-header";
+import { StatsGrid } from "../components/storefront/stats-grid";
+import { TrustRail } from "../components/storefront/trust-badges";
+import { ProductBrowser } from "../components/storefront/product-browser";
+import { Badge } from "../components/ui/badge";
+import { Button } from "../components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
+import { ContactForm } from "../components/storefront/contact-form";
+import { getCategories, getPage, getProducts } from "../lib/api";
+import { featuredCollections } from "../siteData";
 
-const allSlugs = [
-  ...pageSlugs,
-  ...categoryCards.map((category) => category.slug),
-  ...featuredCollections.map((collection) => collection.slug),
-];
-
-export function generateStaticParams() {
-  return [...new Set(allSlugs)].map((slug) => ({ slug }));
-}
-
-function getRoute(slug) {
-  const category = categoryCards.find((item) => item.slug === slug);
+async function resolveRoute(slug) {
+  const categories = await getCategories().catch(() => []);
+  const category = categories.find((item) => item.slug === slug);
   if (category) {
-    const list = products.filter((product) => product.category === slug);
     return {
-      kind: "browse",
-      eyebrow: category.title,
-      title: `${category.title} with vape-specific discovery controls.`,
+      eyebrow: category.name,
+      title: `${category.name}, with vape-specific discovery controls.`,
       description: category.description,
       stats: [
-        [category.count, "catalogue depth"],
-        [`${list.length}`, "shown online"],
-        ["18+", "regulated retail"],
-        ["Tracked", "delivery ready"],
+        [category.accent, "Focus area"],
+        ["18+", "Regulated retail"],
+        ["Tracked", "UK delivery"],
+        ["Rewards", "Eligible spend"],
       ],
-      products: list,
-      content: pages[slug],
+      mode: "products",
+      category: slug,
     };
   }
 
   const collection = featuredCollections.find((item) => item.slug === slug);
   if (collection) {
-    const list = products.filter((product) => product.collection === slug);
     return {
-      kind: "browse",
       eyebrow: collection.title,
       title: collection.description,
-      description:
-        "Campaign collections support launches, starter journeys, bundle pricing, and retention without custom one-off pages.",
-      stats: [
-        ["Campaign", "merchandising"],
-        [`${list.length}`, "products"],
-        ["Fast", "reorder paths"],
-        ["Rewards", "eligible spend"],
-      ],
-      products: list,
-      content: pages[slug],
+      description: "Campaign collections support launches, starter journeys, and bundle pricing.",
+      mode: "products",
+      collection: slug,
     };
   }
 
-  if (pages[slug]) return { kind: "content", ...pages[slug] };
+  const page = await getPage(slug).catch(() => null);
+  if (page) return { ...page, mode: "content" };
+
   return null;
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const route = getRoute(slug);
+  const route = await resolveRoute(slug);
   if (!route) return {};
-  return { title: route.eyebrow, description: route.description };
+  return { title: `${route.eyebrow} | Phoenix Vapers`, description: route.description };
+}
+
+export default async function DynamicPage({ params }) {
+  const { slug } = await params;
+  const route = await resolveRoute(slug);
+  if (!route) notFound();
+
+  const initialResult =
+    route.mode === "products"
+      ? await getProducts({ category: route.category, collection: route.collection, limit: 24 }).catch(() => null)
+      : null;
+
+  return (
+    <StoreShell>
+      <section className="mx-auto max-w-7xl px-4 py-10">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-xl md:p-10">
+          <Badge>{route.eyebrow}</Badge>
+          <h1 className="mt-5 max-w-4xl text-balance text-4xl font-black leading-[0.95] tracking-tight text-foreground sm:text-5xl">
+            {route.title}
+          </h1>
+          <p className="mt-5 max-w-3xl text-pretty text-base leading-7 text-muted-foreground lg:text-lg">
+            {route.description}
+          </p>
+          {route.cta ? (
+            <Button className="mt-6" asChild>
+              <Link href={route.ctaHref}>{route.cta}</Link>
+            </Button>
+          ) : null}
+          {route.stats ? (
+            <div className="mt-7">
+              <StatsGrid stats={route.stats} />
+            </div>
+          ) : null}
+        </div>
+      </section>
+
+      {route.mode === "products" ? (
+        <ProductBrowser
+          category={route.category}
+          collection={route.collection}
+          heading={route.eyebrow}
+          initialResult={initialResult}
+        />
+      ) : null}
+
+      {route.mode === "products" && !route.category && !route.collection ? (
+        <section className="mx-auto max-w-7xl px-4 py-10">
+          <SectionHeader
+            eyebrow="Trust before checkout"
+            title="Concrete trust cues where ecommerce decisions happen."
+            text="Delivery, age verification, payment security, and batch testing stay near catalogue interactions."
+          />
+          <TrustRail />
+        </section>
+      ) : null}
+
+      {route.sections?.map((section) => <ContentSection key={section.title} section={section} />)}
+
+      {route.faqs?.length ? (
+        <section className="mx-auto max-w-4xl px-4 py-12">
+          <SectionHeader
+            eyebrow="Guided support"
+            title="Buyer questions, answered before support is needed."
+            align="center"
+          />
+          <Accordion type="single" collapsible className="rounded-xl border border-border bg-card px-6">
+            {route.faqs.map((faq) => (
+              <AccordionItem key={faq.question} value={faq.question}>
+                <AccordionTrigger className="text-base text-foreground">{faq.question}</AccordionTrigger>
+                <AccordionContent className="text-base leading-7">{faq.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </section>
+      ) : null}
+
+      {route.form ? (
+        <section className="mx-auto max-w-5xl px-4 py-12">
+          <div className="grid gap-8 rounded-2xl border border-border bg-card p-6 shadow-xl lg:grid-cols-[0.85fr_1.15fr] lg:p-10">
+            <div>
+              <Badge>Support hub</Badge>
+              <h2 className="mt-4 text-3xl font-black tracking-tight text-foreground">Contact Phoenix Vapers.</h2>
+              <p className="mt-4 text-base leading-7 text-muted-foreground">
+                Order support, store questions, product guidance, and fault-based returns.
+              </p>
+            </div>
+            <ContactForm />
+          </div>
+        </section>
+      ) : null}
+
+      {route.mode === "content" ? (
+        <section className="mx-auto max-w-7xl px-4 py-10">
+          <div className="rounded-xl bg-surface-dark p-8 text-surface-dark-foreground md:p-10">
+            <Badge className="bg-primary text-primary-foreground">Ready to shop?</Badge>
+            <h2 className="mt-4 text-3xl font-black tracking-tight">Move back into the catalogue.</h2>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-surface-dark-muted">
+              Go from policy, support, or education content back into products without breaking your
+              shopping flow.
+            </p>
+            <Button className="mt-6 bg-primary text-primary-foreground hover:opacity-90" asChild>
+              <Link href="/shop">Return to shop</Link>
+            </Button>
+          </div>
+        </section>
+      ) : null}
+    </StoreShell>
+  );
 }
 
 function ContentSection({ section }) {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-8">
+    <section className="mx-auto max-w-7xl px-4 py-10">
       <SectionHeader title={section.title} />
-      {section.cards ? (
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+      {section.cards?.length ? (
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {section.cards.map((card) => (
-            <article key={card.title} className="rounded-4xl border border-line bg-white p-6 shadow-sm">
-              <Badge tone="soft">{card.meta}</Badge>
-              <h3 className="mt-8 text-2xl font-black tracking-[-0.05em] text-ink">{card.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-muted">{card.text}</p>
-            </article>
+            <div key={card.title} className="rounded-xl border border-border bg-card p-6 shadow-sm">
+              <Badge variant="secondary">{card.meta}</Badge>
+              <h3 className="mt-6 text-lg font-black tracking-tight text-foreground">{card.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{card.text}</p>
+            </div>
           ))}
         </div>
       ) : null}
-      {section.list ? (
-        <div className="grid gap-3 rounded-4xl border border-line bg-white p-6 shadow-sm">
+      {section.list?.length ? (
+        <div className="grid gap-3 rounded-xl border border-border bg-card p-6 shadow-sm">
           {section.list.map((item) => (
-            <p key={item} className="border-l-4 border-lime pl-4 text-base leading-8 text-muted">
+            <p key={item} className="border-l-4 border-primary pl-4 text-base leading-7 text-muted-foreground">
               {item}
             </p>
           ))}
         </div>
       ) : null}
     </section>
-  );
-}
-
-function FaqList({ faqs }) {
-  if (!faqs?.length) return null;
-  return (
-    <section className="mx-auto max-w-5xl px-4 py-12">
-      <SectionHeader
-        eyebrow="Guided support"
-        title="Buyer questions answered before support is needed."
-        text="Strong vape UX reduces confusion around nicotine strength, salts, shortfills, coils, and returns."
-        align="center"
-      />
-      <div className="grid gap-3">
-        {faqs.map((faq) => (
-          <details key={faq.question} className="group rounded-3xl border border-line bg-white p-5 shadow-sm">
-            <summary className="flex cursor-pointer items-center justify-between text-lg font-black text-ink">
-              {faq.question}
-              <span className="ml-4 grid h-8 w-8 flex-none place-items-center rounded-full bg-soft text-brand transition group-open:rotate-45">
-                +
-              </span>
-            </summary>
-            <p className="mt-4 text-sm leading-7 text-muted">{faq.answer}</p>
-          </details>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function ContactPanel() {
-  return (
-    <section className="mx-auto max-w-7xl px-4 py-12">
-      <div className="grid gap-8 rounded-5xl border border-line bg-white p-6 shadow-2xl shadow-brand/5 lg:grid-cols-[0.85fr_1.15fr] lg:p-10">
-        <div>
-          <Badge tone="brand">Support hub</Badge>
-          <h2 className="mt-4 text-4xl font-black tracking-[-0.06em] text-ink">Contact Phoenix Vapers.</h2>
-          <p className="mt-4 text-base leading-8 text-muted">
-            Frontend-ready form for order support, store questions, product guidance, and
-            fault-based returns.
-          </p>
-        </div>
-        <ContactForm />
-      </div>
-    </section>
-  );
-}
-
-export default async function DynamicPage({ params }) {
-  const { slug } = await params;
-  const route = getRoute(slug);
-  if (!route) notFound();
-
-  return (
-    <StoreShell>
-      <section className="mx-auto max-w-7xl px-4 py-10">
-        <div className="rounded-6xl border border-line bg-white p-6 shadow-2xl shadow-brand/5 md:p-10">
-          <Badge tone="soft">{route.eyebrow}</Badge>
-          <h1 className="mt-5 max-w-5xl text-balance text-4xl font-black leading-[0.95] tracking-[-0.06em] text-ink md:text-6xl">
-            {route.title}
-          </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">{route.description}</p>
-          {route.cta ? (
-            <ButtonLink className="mt-7" href={route.ctaHref}>
-              {route.cta} <ArrowRight className="h-4 w-4" />
-            </ButtonLink>
-          ) : null}
-          <div className="mt-8">
-            <StatsGrid stats={route.stats} />
-          </div>
-        </div>
-      </section>
-
-      {route.kind === "browse" ? (
-        <>
-          <ProductBrowser products={route.products} heading={route.eyebrow} />
-          {route.content?.sections?.map((section) => (
-            <ContentSection key={section.title} section={section} />
-          ))}
-        </>
-      ) : null}
-
-      {route.kind === "content" ? (
-        <>
-          {route.sections?.map((section) => (
-            <ContentSection key={section.title} section={section} />
-          ))}
-          <FaqList faqs={route.faqs} />
-          {route.form ? <ContactPanel /> : null}
-
-          <section className="mx-auto max-w-7xl px-4 py-10">
-            <div className="rounded-5xl bg-gradient-to-br from-ink to-[#101617] p-8 text-white md:p-10">
-              <Badge tone="lime">Keep shopping</Badge>
-              <h2 className="mt-5 text-4xl font-black tracking-[-0.06em]">Ready to shop with guidance?</h2>
-              <p className="mt-4 max-w-2xl text-base leading-8 text-white/70">
-                Move from policy, support, or education content back into the product catalogue
-                without breaking the shopping flow.
-              </p>
-              <Link
-                className="mt-7 inline-flex items-center gap-2 rounded-full bg-lime px-5 py-3 text-sm font-black text-ink"
-                href="/shop"
-              >
-                Return to shop <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </section>
-        </>
-      ) : null}
-    </StoreShell>
   );
 }

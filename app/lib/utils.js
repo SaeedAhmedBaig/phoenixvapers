@@ -10,23 +10,29 @@ const gbp = new Intl.NumberFormat("en-GB", {
   currency: "GBP",
 });
 
+/** Formats a value already in pounds (e.g. a user-entered amount). */
 export function formatGBP(value) {
   return gbp.format(value ?? 0);
 }
 
-/** Deterministic gradient identity per category so cards feel branded without image assets. */
+/** Formats a value in minor units (pence) as returned by the API. */
+export function formatMinor(minor) {
+  return gbp.format((minor ?? 0) / 100);
+}
+
+/** Category-branded gradient classes, driven by the active theme's primary/accent tokens. */
 export function categoryGradient(category) {
   switch (category) {
     case "e-liquids":
-      return "from-[#0b2a1c] via-[#0ca252] to-[#aecc53]";
+      return "from-foreground via-primary to-accent";
     case "hardware":
-      return "from-[#161b1c] via-[#2c3132] to-[#0ca252]";
+      return "from-foreground via-secondary-foreground to-primary";
     case "coils":
-      return "from-[#12312a] via-[#0ca252] to-[#7db8a0]";
+      return "from-foreground via-primary to-accent/70";
     case "cbd":
-      return "from-[#1a2913] via-[#5c8a2c] to-[#aecc53]";
+      return "from-foreground via-accent to-primary";
     default:
-      return "from-[#0b2a1c] via-[#0ca252] to-[#aecc53]";
+      return "from-foreground via-primary to-accent";
   }
 }
 
@@ -38,7 +44,3 @@ export function strengthOptions(strength) {
     .map((s) => s.trim())
     .filter(Boolean);
 }
-
-export const FREE_SHIPPING_THRESHOLD = 30;
-export const DELIVERY_FEE = 3.99;
-export const POINTS_PER_POUND = 1;

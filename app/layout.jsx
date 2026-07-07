@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { ThemeInitScript } from "./lib/theme";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,7 +31,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en-GB" className={inter.variable}>
+    <html lang="en-GB" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <ThemeInitScript />
+      </head>
       <body>
         <Providers>{children}</Providers>
       </body>

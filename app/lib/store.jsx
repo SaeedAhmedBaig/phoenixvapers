@@ -1,118 +1,85 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import {
-  DELIVERY_FEE,
-  FREE_SHIPPING_THRESHOLD,
-  POINTS_PER_POUND,
-} from "./utils";
+  addCartItem,
+  clearCart as apiClearCart,
+  getCart,
+  recordAgeVerification,
+  removeCartItem,
+  updateCartItem,
+} from "./api";
 
-const CART_KEY = "pv-cart-v1";
-const AGE_KEY = "pv-age-verified-v1";
+const AGE_SUBJECT_KEY = "pv-age-subject-id";
+const AGE_VERIFIED_KEY = "pv-age-verified-v1";
+
+const EMPTY_CART = {
+  items: [],
+  subtotalMinor: 0,
+  discountMinor: 0,
+  appliedPromotions: [],
+  deliveryMinor: 0,
+  shippingMethod: undefined,
+  totalMinor: 0,
+  freeShippingThresholdMinor: 3000,
+  freeShippingRemainingMinor: 3000,
+  pointsPreview: 0,
+  vat: { rate: 0.2, netMinor: 0, vatMinor: 0 },
+};
 
 /* -------------------------------------------------------------------------- */
-/*  Cart                                                                        */
+/*  Cart — server is the source of truth (products, prices, promotions,        */
+/*  stock and delivery all live behind the API, never hard-coded here).       */
 /* -------------------------------------------------------------------------- */
 
 const CartContext = createContext(null);
 
-function lineId(slug, strength) {
-  return strength ? `${slug}::${strength}` : slug;
-}
-
 export function CartProvider({ children }) {
-  const [items, setItems] = useState([]);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [cart, setCart] = useState(EMPTY_CART);
   const [ready, setReady] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Hydrate from localStorage after mount to keep SSR markup stable.
-  useEffect(() => {
+  const refresh = useCallback(async (shippingMethod) => {
     try {
-      const raw = window.localStorage.getItem(CART_KEY);
-      if (raw) setItems(JSON.parse(raw));
+      const view = await getCart(shippingMethod);
+      setCart(view);
     } catch {
-      /* ignore malformed storage */
+      setCart(EMPTY_CART);
+    } finally {
+      setReady(true);
     }
-    setReady(true);
   }, []);
 
   useEffect(() => {
-    if (!ready) return;
-    try {
-      window.localStorage.setItem(CART_KEY, JSON.stringify(items));
-    } catch {
-      /* storage may be unavailable */
-    }
-  }, [items, ready]);
+    refresh();
+  }, [refresh]);
 
-  function addItem(product, { strength, qty = 1 } = {}) {
-    const chosen = strength ?? product.strength ?? null;
-    const id = lineId(product.slug, chosen);
-    setItems((prev) => {
-      const existing = prev.find((item) => item.id === id);
-      if (existing) {
-        return prev.map((item) =>
-          item.id === id ? { ...item, qty: item.qty + qty } : item,
-        );
-      }
-      return [
-        ...prev,
-        {
-          id,
-          slug: product.slug,
-          name: product.name,
-          brand: product.brand,
-          category: product.category,
-          format: product.format,
-          strength: chosen,
-          price: product.price,
-          compareAt: product.compareAt ?? null,
-          badge: product.badge ?? null,
-          qty,
-        },
-      ];
-    });
+  async function addItem(product, { strength, qty = 1 } = {}) {
+    const view = await addCartItem({ productSlug: product.slug, strength: strength ?? product.strength, qty });
+    setCart(view);
     setDrawerOpen(true);
   }
 
-  function updateQty(id, qty) {
-    setItems((prev) =>
-      prev
-        .map((item) => (item.id === id ? { ...item, qty: Math.max(0, qty) } : item))
-        .filter((item) => item.qty > 0),
-    );
+  async function updateQty(itemId, qty) {
+    const view = await updateCartItem(itemId, qty);
+    setCart(view);
   }
 
-  function removeItem(id) {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+  async function removeItem(itemId) {
+    const view = await removeCartItem(itemId);
+    setCart(view);
   }
 
-  function clearCart() {
-    setItems([]);
+  async function clearCart() {
+    const view = await apiClearCart();
+    setCart(view);
   }
 
-  const derived = useMemo(() => {
-    const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const count = items.reduce((sum, item) => sum + item.qty, 0);
-    const qualifies = subtotal >= FREE_SHIPPING_THRESHOLD;
-    const delivery = subtotal === 0 || qualifies ? 0 : DELIVERY_FEE;
-    const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
-    const progress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
-    const points = Math.floor(subtotal * POINTS_PER_POUND);
-    return {
-      subtotal,
-      count,
-      delivery,
-      total: subtotal + delivery,
-      remaining,
-      progress,
-      points,
-      qualifiesForFreeShipping: qualifies,
-    };
-  }, [items]);
+  const count = cart.items.reduce((sum, item) => sum + item.qty, 0);
 
   const value = {
-    items,
+    ...cart,
+    count,
     ready,
     drawerOpen,
     openDrawer: () => setDrawerOpen(true),
@@ -121,7 +88,8 @@ export function CartProvider({ children }) {
     updateQty,
     removeItem,
     clearCart,
-    ...derived,
+    refresh,
+    qualifiesForFreeShipping: cart.freeShippingRemainingMinor === 0,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
@@ -134,37 +102,45 @@ export function useCart() {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Age verification                                                            */
+/*  Age verification — recorded server-side (Compliance module) against a     */
+/*  stable anonymous subject key, so checkout can enforce it independent of   */
+/*  any single page load.                                                     */
 /* -------------------------------------------------------------------------- */
 
 const AgeContext = createContext(null);
 
+function ensureSubjectKey() {
+  let key = window.localStorage.getItem(AGE_SUBJECT_KEY);
+  if (!key) {
+    key = crypto.randomUUID();
+    window.localStorage.setItem(AGE_SUBJECT_KEY, key);
+  }
+  return key;
+}
+
 export function AgeProvider({ children }) {
   const [verified, setVerified] = useState(false);
   const [ready, setReady] = useState(false);
+  const [subjectKey, setSubjectKey] = useState(null);
 
   useEffect(() => {
-    try {
-      setVerified(window.localStorage.getItem(AGE_KEY) === "true");
-    } catch {
-      /* ignore */
-    }
+    setSubjectKey(ensureSubjectKey());
+    setVerified(window.localStorage.getItem(AGE_VERIFIED_KEY) === "true");
     setReady(true);
   }, []);
 
-  function confirm() {
+  async function confirm() {
+    const key = subjectKey ?? ensureSubjectKey();
     try {
-      window.localStorage.setItem(AGE_KEY, "true");
-    } catch {
-      /* ignore */
+      await recordAgeVerification({ subjectKey: key, confirmed: true });
+    } finally {
+      window.localStorage.setItem(AGE_VERIFIED_KEY, "true");
+      setVerified(true);
     }
-    setVerified(true);
   }
 
   return (
-    <AgeContext.Provider value={{ verified, ready, confirm }}>
-      {children}
-    </AgeContext.Provider>
+    <AgeContext.Provider value={{ verified, ready, confirm, subjectKey }}>{children}</AgeContext.Provider>
   );
 }
 
