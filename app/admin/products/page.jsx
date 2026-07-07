@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Edit2, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
+import { Edit2, Image as ImageIcon, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
 import { useRequireStaff } from "../lib/admin-auth";
 import { AdminLayout } from "../components/admin-layout";
 import { Button } from "../../components/ui/button";
 import { Skeleton } from "../../components/ui/skeleton";
-import { adminDeleteProduct, getBrands, getCategories, getProducts } from "../../lib/api";
+import { adminDeleteProduct, getBrands, getCategories, getProducts, mediaUrl } from "../../lib/api";
 import { formatMoney } from "../lib/export-csv";
 import { ProductFormDialog } from "./components/product-form-dialog";
 
@@ -154,8 +154,19 @@ export default function ProductsPage() {
               const stock = STOCK_BADGES[product.stockStatus] || STOCK_BADGES.in;
               return (
                 <div key={product.slug} className="flex flex-col rounded-xl border border-border bg-card p-5 shadow-sm">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="grid h-14 w-14 flex-shrink-0 place-items-center overflow-hidden rounded-lg border border-border bg-secondary/40">
+                      {product.imageUrl ? (
+                        <img
+                          src={mediaUrl(product.imageUrl)}
+                          alt={product.name}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <ImageIcon className="h-5 w-5 text-muted-foreground" />
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
                       <p className="text-xs font-bold uppercase text-muted-foreground">
                         {product.brandName}
                       </p>

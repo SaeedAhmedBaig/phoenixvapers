@@ -2,7 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Menu, Search, ShoppingBag, UserCheck, LogIn, UserPlus, MapPin } from "lucide-react";
+import {
+  ChevronRight,
+  MapPin,
+  Menu,
+  Search,
+  ShieldCheck,
+  ShoppingBag,
+  Truck,
+  User,
+  UserCheck,
+} from "lucide-react";
 import { useCart } from "../../lib/store";
 import { useUser } from "../../lib/user-store";
 import { siteNav } from "../../siteData";
@@ -22,31 +32,46 @@ export function SiteHeader() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
 
+  function switchToSignup() {
+    setLoginOpen(false);
+    setSignupOpen(true);
+  }
+  function switchToLogin() {
+    setSignupOpen(false);
+    setLoginOpen(true);
+  }
+
   return (
     <>
-      {/* Top announcement bar */}
-      <div className="border-b border-border bg-card text-foreground dark:bg-foreground/5">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-xs font-bold sm:flex-wrap">
-          <span className="inline-flex items-center gap-1.5">
-            <UserCheck className="h-3.5 w-3.5 text-primary" /> Adults 18+ only
-          </span>
+      {/* Announcement bar — trust signals */}
+      <div className="bg-foreground text-background dark:bg-card dark:text-foreground">
+        <div className="mx-auto flex max-w-7xl items-center justify-center gap-6 px-4 py-2 text-xs font-bold sm:justify-between">
           <span className="hidden items-center gap-1.5 sm:inline-flex">
+            <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+            Age-verified 18+ UK retailer
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Truck className="h-3.5 w-3.5 text-primary" />
             Free Royal Mail Tracked 24 over £30
           </span>
-          <Link className="font-black text-primary transition hover:opacity-80 ml-auto sm:ml-0" href="/safety">
-            Compliance standards
+          <Link
+            className="hidden items-center gap-1.5 transition hover:text-primary sm:inline-flex"
+            href="/store-locator"
+          >
+            <MapPin className="h-3.5 w-3.5 text-primary" />
+            Find a store
           </Link>
         </div>
       </div>
 
       {/* Main header */}
-      <header className="sticky top-0 z-40 border-b border-border bg-card/85 backdrop-blur-xl">
-        <div className="mx-auto max-w-7xl px-4 py-3">
-          {/* Row 1: Logo and primary nav */}
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
+      <header className="sticky top-0 z-40 border-b border-border bg-card/90 backdrop-blur-xl">
+        <div className="mx-auto max-w-7xl px-4">
+          {/* Row 1: logo · search · account/basket */}
+          <div className="flex items-center gap-3 py-3 sm:gap-6">
+            <div className="flex items-center gap-2">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="icon"
                 className="lg:hidden"
                 onClick={() => setMenuOpen(true)}
@@ -57,72 +82,67 @@ export function SiteHeader() {
               <BrandMark />
             </div>
 
-            {/* Desktop nav - centered */}
-            <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
-              {siteNav.map((item) => (
-                <Link
-                  key={item.label}
-                  className="rounded-lg px-3 py-2 text-sm font-bold text-muted-foreground transition hover:bg-secondary hover:text-foreground"
-                  href={item.href}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+            {/* Search bar — prominent, center stage */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="group hidden flex-1 items-center gap-3 rounded-full border border-border bg-secondary/50 px-4 py-2.5 text-sm font-bold text-muted-foreground transition hover:border-primary/40 hover:bg-secondary sm:flex"
+              aria-label="Search products"
+            >
+              <Search className="h-4 w-4 flex-shrink-0 transition group-hover:text-primary" />
+              <span className="truncate">Search e-liquids, devices, brands…</span>
+              <kbd className="ml-auto hidden rounded border border-border bg-card px-1.5 py-0.5 text-[0.65rem] font-black text-muted-foreground lg:inline">
+                ⌘K
+              </kbd>
+            </button>
 
-            {/* Right section - search, auth, theme, basket */}
-            <div className="flex items-center gap-2">
-              {/* Search - hidden on mobile */}
-              <div className="hidden sm:flex">
-                <Button variant="ghost" size="sm" onClick={() => setSearchOpen(true)}>
-                  <Search className="h-4 w-4" />
-                </Button>
-              </div>
-
-              {/* Theme toggle - hidden on mobile */}
-              <ThemeToggle className="hidden sm:inline-flex" />
-
-              {/* Auth section */}
-              <div className="hidden sm:flex items-center gap-1">
-                {user ? (
-                  <AccountMenu />
-                ) : (
-                  <>
-                    <Button variant="ghost" size="sm" onClick={() => setLoginOpen(true)}>
-                      <LogIn className="h-4 w-4" />
-                    </Button>
-                    <Button size="sm" onClick={() => setSignupOpen(true)}>
-                      <UserPlus className="h-4 w-4" />
-                      Sign Up
-                    </Button>
-                  </>
-                )}
-              </div>
-
-              {/* Mobile search button */}
+            {/* Right: search (mobile), theme, account, basket */}
+            <div className="ml-auto flex items-center gap-1.5 sm:ml-0">
               <Button
                 variant="ghost"
-                size="sm"
+                size="icon"
                 onClick={() => setSearchOpen(true)}
                 className="sm:hidden"
                 aria-label="Search"
               >
-                <Search className="h-4 w-4" />
+                <Search className="h-5 w-5" />
               </Button>
 
-              {/* Mobile auth menu */}
-              <div className="sm:hidden">
-                {user ? (
-                  <AccountMenu />
-                ) : (
-                  <Button size="sm" onClick={() => setSignupOpen(true)}>
-                    <UserPlus className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
+              <ThemeToggle className="hidden md:inline-flex" />
 
-              {/* Basket button - always visible */}
-              <Button variant="inverse" onClick={openDrawer} className="relative" aria-label="Open basket">
+              {user ? (
+                <AccountMenu />
+              ) : (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setLoginOpen(true)}
+                    className="hidden sm:inline-flex"
+                  >
+                    <User className="h-4 w-4" />
+                    Sign in
+                  </Button>
+                  <Button size="sm" onClick={() => setSignupOpen(true)} className="hidden sm:inline-flex">
+                    Join
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setLoginOpen(true)}
+                    className="sm:hidden"
+                    aria-label="Sign in"
+                  >
+                    <User className="h-5 w-5" />
+                  </Button>
+                </>
+              )}
+
+              <Button
+                variant="inverse"
+                onClick={openDrawer}
+                className="relative"
+                aria-label={`Open basket${ready && count > 0 ? `, ${count} items` : ""}`}
+              >
                 <ShoppingBag className="h-4 w-4" />
                 <span className="hidden sm:inline">Basket</span>
                 {ready && count > 0 ? (
@@ -133,13 +153,29 @@ export function SiteHeader() {
               </Button>
             </div>
           </div>
+
+          {/* Row 2: category navigation */}
+          <nav
+            className="hidden items-center gap-1 overflow-x-auto pb-2 lg:flex"
+            aria-label="Primary navigation"
+          >
+            {siteNav.map((item) => (
+              <Link
+                key={item.label}
+                className="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-bold text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+                href={item.href}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </header>
 
       <MobileMenu open={menuOpen} onOpenChange={setMenuOpen} />
       <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
-      <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} />
-      <SignupDialog open={signupOpen} onOpenChange={setSignupOpen} />
+      <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} onSwitchToSignup={switchToSignup} />
+      <SignupDialog open={signupOpen} onOpenChange={setSignupOpen} onSwitchToLogin={switchToLogin} />
     </>
   );
 }

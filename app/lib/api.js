@@ -1,4 +1,15 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+const API_ORIGIN = API_BASE.replace(/\/api\/?$/, "");
+
+/**
+ * Resolves a media path (e.g. "/uploads/abc.webp") to an absolute URL on the
+ * API origin. Absolute URLs and empty values pass through unchanged.
+ */
+export function mediaUrl(path) {
+  if (!path) return null;
+  if (/^https?:\/\//.test(path)) return path;
+  return `${API_ORIGIN}${path.startsWith("/") ? path : `/${path}`}`;
+}
 
 export class ApiError extends Error {
   constructor(message, status, body) {
@@ -115,6 +126,14 @@ export const adminUpdateProduct = (slug, dto, accessToken) =>
   apiFetch(`/catalogue/products/${slug}`, { method: "PATCH", body: JSON.stringify(dto), accessToken });
 export const adminDeleteProduct = (slug, accessToken) =>
   apiFetch(`/catalogue/products/${slug}`, { method: "DELETE", accessToken });
+
+/* Admin: media */
+export const adminUploadMedia = (file, altText, accessToken) => {
+  const form = new FormData();
+  form.append("file", file);
+  form.append("altText", altText);
+  return apiFetch("/media/upload", { method: "POST", body: form, accessToken });
+};
 
 /* Admin: RBAC */
 export const adminListRoles = (accessToken) => apiFetch("/rbac/roles", { accessToken });

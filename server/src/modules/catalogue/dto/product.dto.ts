@@ -35,6 +35,10 @@ export class CreateProductDto {
 
   @IsOptional() @IsString() badge?: string;
 
+  @IsOptional() @IsString() imageUrl?: string;
+
+  @IsOptional() @IsArray() @IsString({ each: true }) galleryUrls?: string[];
+
   @IsOptional() @IsNumber() nicotineMg?: number;
 
   @IsString() description: string;

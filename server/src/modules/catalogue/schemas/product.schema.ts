@@ -35,6 +35,12 @@ export class Product extends Document {
 
   @Prop() badge?: string;
 
+  /** Primary product photo (served from /uploads via the Media module). */
+  @Prop() imageUrl?: string;
+
+  /** Additional gallery photos shown on the product detail page. */
+  @Prop({ type: [String], default: [] }) galleryUrls: string[];
+
   /** Highest nicotine strength (mg/ml) represented by this listing, used by the Compliance module. */
   @Prop() nicotineMg?: number;
 

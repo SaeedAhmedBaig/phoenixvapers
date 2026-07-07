@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Loader2, X } from "lucide-react";
+import { useRef, useState } from "react";
+import { ImagePlus, Loader2, Trash2, X } from "lucide-react";
 import { Button } from "../../../components/ui/button";
-import { adminCreateProduct, adminUpdateProduct } from "../../../lib/api";
+import { adminCreateProduct, adminUpdateProduct, adminUploadMedia, mediaUrl } from "../../../lib/api";
 
 const REQUIRED_FIELDS = ["name", "brandSlug", "categorySlug", "collection", "format", "strength", "description"];
+const MAX_IMAGE_MB = 8;
 
 export function ProductFormDialog({ product, brands, categories, accessToken, onClose, onSaved }) {
   const isEdit = Boolean(product);
+  const fileInputRef = useRef(null);
 
   const [form, setForm] = useState({
     name: product?.name || "",
@@ -23,8 +25,36 @@ export function ProductFormDialog({ product, brands, categories, accessToken, on
     badge: product?.badge || "",
     description: product?.description || "",
   });
+  const [imageUrl, setImageUrl] = useState(product?.imageUrl || "");
+  const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+
+  async function handleImageSelect(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      setError("Please choose an image file (JPG, PNG, or WebP)");
+      return;
+    }
+    if (file.size > MAX_IMAGE_MB * 1024 * 1024) {
+      setError(`Image must be under ${MAX_IMAGE_MB}MB`);
+      return;
+    }
+    setUploading(true);
+    setError(null);
+    try {
+      const altText = form.name.trim() || file.name.replace(/\.[^.]+$/, "");
+      const asset = await adminUploadMedia(file, altText, accessToken);
+      setImageUrl(asset.url);
+    } catch (err) {
+      console.error("Image upload failed:", err);
+      setError(err?.message || "Image upload failed");
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }
 
   const set = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
@@ -52,6 +82,8 @@ export function ProductFormDialog({ product, brands, categories, accessToken, on
       strength: form.strength.trim(),
       priceMinor,
       description: form.description.trim(),
+      imageUrl, // empty string clears a previously set photo
+
       ...(form.flavour.trim() ? { flavour: form.flavour.trim() } : {}),
       ...(form.badge.trim() ? { badge: form.badge.trim() } : {}),
     };
@@ -92,6 +124,61 @@ export function ProductFormDialog({ product, brands, categories, accessToken, on
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 p-6">
+          {/* Product photo */}
+          <div>
+            <span className="text-xs font-black uppercase text-muted-foreground">Product Photo</span>
+            <div className="mt-1 flex items-center gap-4">
+              <div className="relative grid h-28 w-28 flex-shrink-0 place-items-center overflow-hidden rounded-xl border border-dashed border-border bg-secondary/40">
+                {uploading ? (
+                  <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                ) : imageUrl ? (
+                  <img
+                    src={mediaUrl(imageUrl)}
+                    alt="Product preview"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <ImagePlus className="h-7 w-7 text-muted-foreground" />
+                )}
+              </div>
+              <div className="space-y-2">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleImageSelect}
+                  className="hidden"
+                  id="p-image-input"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  disabled={uploading}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <ImagePlus className="h-4 w-4" />
+                  {imageUrl ? "Replace Photo" : "Upload Photo"}
+                </Button>
+                {imageUrl && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    disabled={uploading}
+                    onClick={() => setImageUrl("")}
+                  >
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                    Remove
+                  </Button>
+                )}
+                <p className="text-xs text-muted-foreground">
+                  JPG, PNG, or WebP up to {MAX_IMAGE_MB}MB. Converted to WebP automatically.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div>
             <label className="text-xs font-black uppercase text-muted-foreground" htmlFor="p-name">
               Product Name *
@@ -187,7 +274,7 @@ export function ProductFormDialog({ product, brands, categories, accessToken, on
             <Button type="button" variant="outline" onClick={onClose} disabled={saving}>
               Cancel
             </Button>
-            <Button type="submit" disabled={saving}>
+            <Button type="submit" disabled={saving || uploading}>
               {saving && <Loader2 className="h-4 w-4 animate-spin" />}
               {saving ? "Saving…" : isEdit ? "Save Changes" : "Create Product"}
             </Button>
