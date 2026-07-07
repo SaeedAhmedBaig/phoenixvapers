@@ -2,21 +2,37 @@
 
 import { useEffect, useState } from "react";
 import { Loader2, Gift, TrendingUp, Star } from "lucide-react";
-import { getMyLoyalty } from "../../lib/api";
+import { getMyLoyalty, redeemLoyaltyPoints } from "../../lib/api";
 import { Button } from "../../components/ui/button";
 
-export function LoyaltyTab({ user }) {
+export function LoyaltyTab({ accessToken }) {
   const [loyalty, setLoyalty] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user?.accessToken) return;
-    setLoading(true);
-    getMyLoyalty(user.accessToken)
+    if (!accessToken) return;
+    getMyLoyalty(accessToken)
       .then(setLoyalty)
       .catch(() => null)
       .finally(() => setLoading(false));
-  }, [user]);
+  }, [accessToken]);
+
+  const [redeeming, setRedeeming] = useState(false);
+  const [redeemError, setRedeemError] = useState(null);
+
+  async function handleRedeem() {
+    setRedeeming(true);
+    setRedeemError(null);
+    try {
+      await redeemLoyaltyPoints(loyalty.balancePoints, accessToken);
+      const refreshed = await getMyLoyalty(accessToken);
+      setLoyalty(refreshed);
+    } catch (err) {
+      setRedeemError(err?.message || "Could not redeem points right now");
+    } finally {
+      setRedeeming(false);
+    }
+  }
 
   if (loading) return <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
 
@@ -90,9 +106,15 @@ export function LoyaltyTab({ user }) {
 
       {/* Redeem Button */}
       {points >= 100 && (
-        <Button className="w-full" size="lg">
-          Redeem {points} Points
-        </Button>
+        <>
+          <Button className="w-full" size="lg" disabled={redeeming} onClick={handleRedeem}>
+            {redeeming && <Loader2 className="h-4 w-4 animate-spin" />}
+            {redeeming ? "Redeeming…" : `Redeem ${points} Points`}
+          </Button>
+          {redeemError && (
+            <p className="text-center text-sm font-bold text-destructive">{redeemError}</p>
+          )}
+        </>
       )}
     </div>
   );

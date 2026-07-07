@@ -14,7 +14,7 @@ import { SettingsTab } from "./components/settings-tab";
 
 export default function AccountPage() {
   const router = useRouter();
-  const { user, logout, ready } = useUser();
+  const { user, accessToken, logout, ready } = useUser();
 
   useEffect(() => {
     if (ready && !user) {
@@ -70,11 +70,11 @@ export default function AccountPage() {
             </TabsList>
 
             <TabsContent value="orders" className="mt-6">
-              <OrdersTab user={user} />
+              <OrdersTab accessToken={accessToken} />
             </TabsContent>
 
             <TabsContent value="loyalty" className="mt-6">
-              <LoyaltyTab user={user} />
+              <LoyaltyTab accessToken={accessToken} />
             </TabsContent>
 
             <TabsContent value="wishlist" className="mt-6">

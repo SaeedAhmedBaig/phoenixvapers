@@ -69,7 +69,7 @@ export function SiteHeader() {
         <div className="mx-auto max-w-7xl px-4">
           {/* Row 1: logo · search · account/basket */}
           <div className="flex items-center gap-3 py-3 sm:gap-6">
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <Button
                 variant="ghost"
                 size="icon"
@@ -79,13 +79,13 @@ export function SiteHeader() {
               >
                 <Menu className="h-5 w-5" />
               </Button>
-              <BrandMark />
+              <BrandMark hideTextOnMobile />
             </div>
 
             {/* Search bar — prominent, center stage */}
             <button
               onClick={() => setSearchOpen(true)}
-              className="group hidden flex-1 items-center gap-3 rounded-full border border-border bg-secondary/50 px-4 py-2.5 text-sm font-bold text-muted-foreground transition hover:border-primary/40 hover:bg-secondary sm:flex"
+              className="group hidden min-w-0 flex-1 items-center gap-3 rounded-full border border-border bg-secondary/50 px-4 py-2.5 text-sm font-bold text-muted-foreground transition hover:border-primary/40 hover:bg-secondary sm:flex"
               aria-label="Search products"
             >
               <Search className="h-4 w-4 flex-shrink-0 transition group-hover:text-primary" />
@@ -96,7 +96,7 @@ export function SiteHeader() {
             </button>
 
             {/* Right: search (mobile), theme, account, basket */}
-            <div className="ml-auto flex items-center gap-1.5 sm:ml-0">
+            <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:ml-0">
               <Button
                 variant="ghost"
                 size="icon"

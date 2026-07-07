@@ -8,6 +8,11 @@ const AdminAuthContext = createContext(null);
 
 const STAFF_ROLES = new Set(["staff", "brand-partner", "super-admin"]);
 
+// Access tokens expire after 15 minutes (JWT_ACCESS_TTL). Without proactive
+// renewal every admin API call — including media uploads — starts returning
+// 401 after that, so refresh well inside the window.
+const TOKEN_REFRESH_MS = 10 * 60 * 1000;
+
 export function AdminAuthProvider({ children }) {
   const [accessToken, setAccessToken] = useState(null);
   const [user, setUser] = useState(null);
@@ -32,6 +37,16 @@ export function AdminAuthProvider({ children }) {
       .finally(() => setReady(true));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!accessToken) return undefined;
+    const id = setInterval(() => {
+      refreshSession()
+        .then((res) => setAccessToken(res.accessToken))
+        .catch(() => undefined);
+    }, TOKEN_REFRESH_MS);
+    return () => clearInterval(id);
+  }, [accessToken]);
 
   async function login(email, password) {
     const res = await loginAccount({ email, password });
