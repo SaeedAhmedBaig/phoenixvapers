@@ -1,18 +1,12 @@
-﻿import { Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
+import { Role, RoleSchema } from "./schemas/role.schema";
 import { RbacService } from "./rbac.service";
-import { PermissionSchema } from "./schemas/permission.schema";
-import { RoleSchema } from "./schemas/role.schema";
-import { AuditLogSchema } from "./schemas/audit-log.schema";
+import { RbacController } from "./rbac.controller";
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      { name: "Permission", schema: PermissionSchema },
-      { name: "Role", schema: RoleSchema },
-      { name: "AuditLog", schema: AuditLogSchema },
-    ]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }])],
+  controllers: [RbacController],
   providers: [RbacService],
   exports: [RbacService],
 })

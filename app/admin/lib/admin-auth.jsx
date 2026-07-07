@@ -62,7 +62,7 @@ export function useAdminAuth() {
 
 /** Redirects to /admin/login unless a staff-role session is present. */
 export function useRequireStaff() {
-  const { ready, user, isStaff } = useAdminAuth();
+  const { ready, user, isStaff, accessToken } = useAdminAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -71,5 +71,5 @@ export function useRequireStaff() {
     }
   }, [ready, user, isStaff, router]);
 
-  return { ready, user, isStaff };
+  return { ready, user, isStaff, accessToken };
 }

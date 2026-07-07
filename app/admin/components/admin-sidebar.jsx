@@ -3,37 +3,47 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  BarChart3,
   Flame,
+  LayoutDashboard,
+  LineChart,
   LogOut,
   Package,
   Settings,
+  ShieldCheck,
   ShoppingCart,
+  Store,
+  FileBarChart,
+  UserCog,
   Users,
-  Menu,
   X,
 } from "lucide-react";
 import { useAdminAuth } from "../lib/admin-auth";
 import { Button } from "../../components/ui/button";
 
-const ADMIN_NAV = [
-  { label: "Dashboard", href: "/admin", icon: BarChart3 },
-  { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
+/**
+ * Navigation ordered by task frequency (operations first, insights second),
+ * following the IA conventions of Shopify Admin / Stripe Dashboard:
+ * Dashboard → daily operations (Orders, Products, Customers) → Analytics.
+ * Role-scoped sections (Administration, Merchant) are grouped separately.
+ */
+const CORE_NAV = [
+  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { label: "Products", href: "/admin/products", icon: Package },
   { label: "Customers", href: "/admin/customers", icon: Users },
+  { label: "Analytics", href: "/admin/analytics", icon: LineChart },
 ];
 
 const SUPER_ADMIN_NAV = [
-  { label: "Staff", href: "/admin/super/staff", icon: Users },
-  { label: "Permissions", href: "/admin/super/permissions", icon: Settings },
-  { label: "Reports", href: "/admin/super/reports", icon: BarChart3 },
+  { label: "Staff", href: "/admin/super/staff", icon: UserCog },
+  { label: "Permissions", href: "/admin/super/permissions", icon: ShieldCheck },
+  { label: "Reports", href: "/admin/super/reports", icon: FileBarChart },
 ];
 
 const MERCHANT_NAV = [
-  { label: "Merchant Dashboard", href: "/admin/merchant", icon: BarChart3 },
+  { label: "Merchant Dashboard", href: "/admin/merchant", icon: Store },
   { label: "Brand Settings", href: "/admin/merchant/settings", icon: Settings },
-  { label: "Performance", href: "/admin/merchant/performance", icon: BarChart3 },
+  { label: "Performance", href: "/admin/merchant/performance", icon: LineChart },
 ];
 
 export function AdminSidebar({ open, onOpenChange }) {
@@ -44,8 +54,10 @@ export function AdminSidebar({ open, onOpenChange }) {
   const isSuper = user?.role === "super-admin";
   const isMerchant = user?.role === "brand-partner";
 
-  const navItems = isSuper ? SUPER_ADMIN_NAV : isMerchant ? MERCHANT_NAV : ADMIN_NAV;
-  const otherNav = isSuper ? ADMIN_NAV : SUPER_ADMIN_NAV;
+  // Everyone gets the core commerce nav; role-specific groups are appended.
+  const navItems = isMerchant ? MERCHANT_NAV : CORE_NAV;
+  const secondaryNav = isSuper ? SUPER_ADMIN_NAV : [];
+  const secondaryLabel = "Administration";
 
   async function handleLogout() {
     await logout();
@@ -95,15 +107,15 @@ export function AdminSidebar({ open, onOpenChange }) {
           })}
         </div>
 
-        {/* Secondary Navigation */}
-        {!isMerchant && otherNav.length > 0 && (
+        {/* Role-scoped secondary navigation */}
+        {secondaryNav.length > 0 && (
           <>
             <div className="mt-6 border-t border-border pt-6">
               <p className="px-4 text-xs font-black uppercase text-muted-foreground">
-                {isSuper ? "Staff Admin" : "Super Admin"}
+                {secondaryLabel}
               </p>
               <div className="mt-3 space-y-1">
-                {otherNav.map((item) => {
+                {secondaryNav.map((item) => {
                   const isActive = pathname === item.href;
                   return (
                     <Link

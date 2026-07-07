@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Clock, Filter, PieChart } from "lucide-react";
 import { useRequireStaff } from "../lib/admin-auth";
 import { AdminLayout } from "../components/admin-layout";
 import { adminSalesByDay, adminTopProducts } from "../../lib/api";
@@ -10,14 +11,14 @@ import { RevenueMetrics } from "./components/revenue-metrics";
 import { Skeleton } from "../../components/ui/skeleton";
 
 export default function AnalyticsDashboard() {
-  const { ready, user } = useRequireStaff();
+  const { ready, accessToken } = useRequireStaff();
   const [salesData, setSalesData] = useState(null);
   const [topProducts, setTopProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState("30d");
 
   useEffect(() => {
-    if (!ready || !user) return;
+    if (!accessToken) return;
 
     const getDaysBack = () => {
       const days = { "7d": 7, "30d": 30, "90d": 90, "1y": 365 }[dateRange] || 30;
@@ -30,8 +31,8 @@ export default function AnalyticsDashboard() {
 
     setLoading(true);
     Promise.all([
-      adminSalesByDay(user.accessToken || "", { from: from.toISOString(), to: to.toISOString() }),
-      adminTopProducts(user.accessToken || "", { limit: 10 }),
+      adminSalesByDay(accessToken, { from: from.toISOString(), to: to.toISOString() }),
+      adminTopProducts(accessToken, { limit: 10 }),
     ])
       .then(([sales, products]) => {
         setSalesData(sales);
@@ -112,19 +113,28 @@ export default function AnalyticsDashboard() {
           )}
         </div>
 
-        {/* Future Sections Placeholder */}
+        {/* Upcoming analytics modules */}
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="rounded-xl border border-border/50 bg-card p-6 shadow-sm">
-            <h3 className="text-base font-black text-foreground">Customer Segmentation</h3>
-            <p className="mt-3 text-sm text-muted-foreground">📊 New, Returning, VIP breakdown coming soon</p>
+            <div className="flex items-center gap-2">
+              <PieChart className="h-4 w-4 text-primary" />
+              <h3 className="text-base font-black text-foreground">Customer Segmentation</h3>
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground">New, returning, and VIP breakdown — coming soon</p>
           </div>
           <div className="rounded-xl border border-border/50 bg-card p-6 shadow-sm">
-            <h3 className="text-base font-black text-foreground">Conversion Funnel</h3>
-            <p className="mt-3 text-sm text-muted-foreground">📈 Browse → Cart → Checkout → Paid tracking</p>
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-primary" />
+              <h3 className="text-base font-black text-foreground">Conversion Funnel</h3>
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground">Browse, basket, checkout, and payment tracking — coming soon</p>
           </div>
           <div className="rounded-xl border border-border/50 bg-card p-6 shadow-sm">
-            <h3 className="text-base font-black text-foreground">Heatmap Analytics</h3>
-            <p className="mt-3 text-sm text-muted-foreground">🔥 Order timing by day/hour patterns</p>
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-primary" />
+              <h3 className="text-base font-black text-foreground">Order Timing</h3>
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground">Orders by day and hour patterns — coming soon</p>
           </div>
         </div>
       </div>

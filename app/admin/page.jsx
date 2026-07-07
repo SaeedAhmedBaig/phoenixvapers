@@ -1,54 +1,70 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { BarChart3, Package, ShoppingCart, Users, TrendingUp, Download, Calendar } from "lucide-react";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Calendar,
+  Download,
+  Package,
+  ShoppingCart,
+  TrendingUp,
+  Users,
+} from "lucide-react";
 import { useRequireStaff } from "./lib/admin-auth";
 import { AdminLayout } from "./components/admin-layout";
 import { StatCard } from "./components/stat-card";
-import { adminSalesByDay, adminTopProducts } from "../lib/api";
+import { adminListOrders, adminSalesByDay, adminTopProducts } from "../lib/api";
 import { Button } from "../components/ui/button";
 import { SalesChart } from "./analytics/components/sales-chart";
 import { TopProductsChart } from "./analytics/components/top-products-chart";
 import { Skeleton } from "../components/ui/skeleton";
+import { exportToCsv, formatMoney } from "./lib/export-csv";
+
+const STATUS_STYLES = {
+  pending_payment: "bg-warning/10 text-warning",
+  paid: "bg-primary/10 text-primary",
+  dispatched: "bg-info/10 text-info",
+  delivered: "bg-success/10 text-success",
+  cancelled: "bg-muted text-muted-foreground",
+  refunded: "bg-destructive/10 text-destructive",
+};
 
 export default function AdminDashboard() {
-  const router = useRouter();
-  const { ready, user } = useRequireStaff();
+  const { ready, accessToken } = useRequireStaff();
   const [salesData, setSalesData] = useState(null);
   const [topProducts, setTopProducts] = useState(null);
+  const [recentOrders, setRecentOrders] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [dateRange, setDateRange] = useState("7d");
 
   useEffect(() => {
-    if (ready && !user) {
-      router.replace("/admin/login");
-      return;
-    }
+    if (!ready || !accessToken) return;
 
-    if (!ready || !user?.accessToken) return;
+    const days = { "7d": 7, "30d": 30 }[dateRange] || 7;
+    const to = new Date();
+    const from = new Date(to.getTime() - days * 24 * 60 * 60 * 1000);
 
-    const getDaysBack = () => {
-      const days = { "7d": 7, "30d": 30 }[dateRange] || 7;
-      const to = new Date();
-      const from = new Date(to.getTime() - days * 24 * 60 * 60 * 1000);
-      return { from, to };
-    };
-
-    const { from, to } = getDaysBack();
     setLoading(true);
+    setError(null);
 
     Promise.all([
-      adminSalesByDay(user.accessToken, { from: from.toISOString(), to: to.toISOString() }),
-      adminTopProducts(user.accessToken, { limit: 5 }),
+      adminSalesByDay(accessToken, { from: from.toISOString(), to: to.toISOString() }),
+      adminTopProducts(accessToken, { limit: 5 }),
+      adminListOrders(accessToken, { page: 1, limit: 6 }),
     ])
-      .then(([sales, products]) => {
-        setSalesData(sales || []);
-        setTopProducts(products || []);
+      .then(([sales, products, orders]) => {
+        setSalesData(Array.isArray(sales) ? sales : []);
+        setTopProducts(Array.isArray(products) ? products : []);
+        setRecentOrders(orders?.items ?? []);
       })
-      .catch((err) => console.error("Dashboard load failed:", err))
+      .catch((err) => {
+        console.error("Dashboard load failed:", err);
+        setError("Could not load dashboard data. Please try again.");
+      })
       .finally(() => setLoading(false));
-  }, [ready, user, dateRange]);
+  }, [ready, accessToken, dateRange]);
 
   if (!ready) {
     return (
@@ -63,20 +79,31 @@ export default function AdminDashboard() {
 
   const totalRevenue = salesData?.reduce((sum, d) => sum + (d.revenueMinor || 0), 0) || 0;
   const totalOrders = salesData?.reduce((sum, d) => sum + (d.orders || 0), 0) || 0;
-  const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders / 100 : 0;
+  const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
+
+  function handleExport() {
+    const exported = exportToCsv(`sales-summary-${dateRange}`, salesData || [], {
+      Date: "_id",
+      "Revenue (£)": (d) => ((d.revenueMinor || 0) / 100).toFixed(2),
+      Orders: "orders",
+    });
+    if (!exported) setError("Nothing to export for this period yet.");
+  }
 
   return (
     <AdminLayout>
       <div className="space-y-8">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-4xl font-black tracking-tight text-foreground">Dashboard</h1>
-            <p className="mt-2 text-base text-muted-foreground">Real-time business metrics and analytics</p>
+            <p className="mt-2 text-base text-muted-foreground">
+              Business performance at a glance
+            </p>
           </div>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Export Report
+          <Button variant="outline" size="sm" onClick={handleExport} disabled={loading || !salesData?.length}>
+            <Download className="h-4 w-4" />
+            Export CSV
           </Button>
         </div>
 
@@ -92,7 +119,7 @@ export default function AdminDashboard() {
               className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-bold transition ${
                 dateRange === option.value
                   ? "bg-primary text-primary-foreground"
-                  : "border border-border bg-card hover:bg-secondary text-foreground"
+                  : "border border-border bg-card text-foreground hover:bg-secondary"
               }`}
             >
               <Calendar className="h-4 w-4" />
@@ -101,41 +128,47 @@ export default function AdminDashboard() {
           ))}
         </div>
 
+        {error && (
+          <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+            {error}
+          </div>
+        )}
+
         {/* KPI Stats */}
         {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
-              <Skeleton key={i} className="h-24 rounded-xl" />
+              <Skeleton key={i} className="h-28 rounded-xl" />
             ))}
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <StatCard
               icon={ShoppingCart}
-              label="Total Orders"
-              value={totalOrders.toString()}
-              trend={`+${Math.floor(Math.random() * 20)}%`}
+              label="Orders"
+              value={totalOrders.toLocaleString()}
+              trend={dateRange === "7d" ? "Last 7 days" : "Last 30 days"}
               trendUp
             />
             <StatCard
               icon={TrendingUp}
-              label="Total Revenue"
-              value={`£${(totalRevenue / 100).toFixed(2)}`}
-              trend={`+${Math.floor(Math.random() * 20)}%`}
+              label="Revenue"
+              value={formatMoney(totalRevenue)}
+              trend={dateRange === "7d" ? "Last 7 days" : "Last 30 days"}
               trendUp
             />
             <StatCard
               icon={Users}
               label="Avg Order Value"
-              value={`£${avgOrderValue.toFixed(2)}`}
+              value={formatMoney(avgOrderValue)}
               trend="Per order"
-              trendUp={false}
+              trendUp
             />
             <StatCard
               icon={Package}
               label="Top Product"
-              value={topProducts?.[0]?.name?.substring(0, 15) || "N/A"}
-              trend={`${topProducts?.[0]?.totalSales || 0} sold`}
+              value={topProducts?.[0]?.name?.slice(0, 18) || "—"}
+              trend={topProducts?.[0] ? `${topProducts[0].unitsSold ?? topProducts[0].qty ?? 0} sold` : "No sales yet"}
               trendUp
             />
           </div>
@@ -144,83 +177,104 @@ export default function AdminDashboard() {
         {/* Charts */}
         <div className="grid gap-6 lg:grid-cols-2">
           {loading ? (
-            <Skeleton className="h-80 rounded-xl" />
+            <Skeleton className="h-96 rounded-xl" />
           ) : (
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-              <h2 className="text-lg font-black tracking-tight text-foreground">Revenue & Orders Trend</h2>
-              <p className="text-xs text-muted-foreground mt-1">Last {dateRange === "7d" ? "7 days" : "30 days"}</p>
-              <div className="mt-4" style={{ height: "300px" }}>
+              <h2 className="text-lg font-black tracking-tight text-foreground">Revenue & Orders</h2>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {dateRange === "7d" ? "Last 7 days" : "Last 30 days"}
+              </p>
+              <div className="mt-4 h-80">
                 <SalesChart data={salesData} />
               </div>
             </div>
           )}
 
           {loading ? (
-            <Skeleton className="h-80 rounded-xl" />
+            <Skeleton className="h-96 rounded-xl" />
           ) : (
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-              <h2 className="text-lg font-black tracking-tight text-foreground">Top 5 Products</h2>
-              <p className="text-xs text-muted-foreground mt-1">By revenue</p>
-              <div className="mt-4" style={{ height: "300px" }}>
+              <h2 className="text-lg font-black tracking-tight text-foreground">Top Products</h2>
+              <p className="mt-1 text-xs text-muted-foreground">By revenue</p>
+              <div className="mt-4 h-80">
                 <TopProductsChart data={topProducts} />
               </div>
             </div>
           )}
         </div>
 
-        {/* Recent Activity */}
+        {/* Recent Orders + Quick Actions */}
         <div className="grid gap-6 lg:grid-cols-3">
-          <div className="rounded-xl border border-border bg-card p-6">
-            <h3 className="font-black text-foreground">Quick Actions</h3>
+          <div className="rounded-xl border border-border bg-card p-6 shadow-sm lg:col-span-2">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-black tracking-tight text-foreground">Recent Orders</h2>
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/admin/orders">
+                  View all
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
             <div className="mt-4 space-y-2">
-              <Button variant="outline" size="sm" className="w-full justify-start">
-                <ShoppingCart className="h-4 w-4 mr-2" />
-                View All Orders
-              </Button>
-              <Button variant="outline" size="sm" className="w-full justify-start">
-                <Package className="h-4 w-4 mr-2" />
-                Manage Products
-              </Button>
-              <Button variant="outline" size="sm" className="w-full justify-start">
-                <Users className="h-4 w-4 mr-2" />
-                Customer Segments
-              </Button>
+              {loading ? (
+                [1, 2, 3].map((i) => <Skeleton key={i} className="h-14 rounded-lg" />)
+              ) : recentOrders?.length ? (
+                recentOrders.map((order) => (
+                  <div
+                    key={order.orderNumber}
+                    className="flex items-center justify-between rounded-lg border border-border/50 px-4 py-3"
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm font-black text-foreground">#{order.orderNumber}</p>
+                      <p className="truncate text-xs text-muted-foreground">{order.email}</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm font-bold text-foreground">
+                        {formatMoney(order.totalMinor)}
+                      </span>
+                      <span
+                        className={`rounded-full px-2.5 py-1 text-xs font-black capitalize ${
+                          STATUS_STYLES[order.status] || "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {order.status?.replace("_", " ")}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="py-8 text-center text-sm text-muted-foreground">No orders yet</p>
+              )}
             </div>
           </div>
 
-          <div className="rounded-xl border border-border bg-card p-6">
-            <h3 className="font-black text-foreground">System Status</h3>
-            <div className="mt-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">API Health</span>
-                <span className="text-xs font-bold text-success">✓ Operational</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Database</span>
-                <span className="text-xs font-bold text-success">✓ Connected</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Email Service</span>
-                <span className="text-xs font-bold text-success">✓ Active</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-xl border border-border bg-card p-6">
-            <h3 className="font-black text-foreground">Pending Tasks</h3>
-            <div className="mt-4 space-y-2 text-sm">
-              <div className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span className="text-muted-foreground">12 orders awaiting shipment</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span className="text-muted-foreground">3 refund requests pending</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-primary">•</span>
-                <span className="text-muted-foreground">5 customer inquiries</span>
-              </div>
+          <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+            <h2 className="text-lg font-black tracking-tight text-foreground">Quick Actions</h2>
+            <div className="mt-4 space-y-2">
+              <Button variant="outline" size="sm" className="w-full justify-start" asChild>
+                <Link href="/admin/orders">
+                  <ShoppingCart className="h-4 w-4" />
+                  Manage Orders
+                </Link>
+              </Button>
+              <Button variant="outline" size="sm" className="w-full justify-start" asChild>
+                <Link href="/admin/products">
+                  <Package className="h-4 w-4" />
+                  Manage Products
+                </Link>
+              </Button>
+              <Button variant="outline" size="sm" className="w-full justify-start" asChild>
+                <Link href="/admin/customers">
+                  <Users className="h-4 w-4" />
+                  View Customers
+                </Link>
+              </Button>
+              <Button variant="outline" size="sm" className="w-full justify-start" asChild>
+                <Link href="/admin/analytics">
+                  <TrendingUp className="h-4 w-4" />
+                  Full Analytics
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
