@@ -18,6 +18,7 @@ import { Button } from "../../components/ui/button";
 
 const ADMIN_NAV = [
   { label: "Dashboard", href: "/admin", icon: BarChart3 },
+  { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { label: "Products", href: "/admin/products", icon: Package },
   { label: "Customers", href: "/admin/customers", icon: Users },
