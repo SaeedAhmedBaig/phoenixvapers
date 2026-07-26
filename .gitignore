@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Builds
+.next/
+dist/
+out/
+build/
+
+# Turborepo
+.turbo/
+
+# Environment — secrets never live in the repository (§16.9).
+# A committed .env.example documents every variable.
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/tasks.json
+
+# Test artefacts
+coverage/
+playwright-report/
+
+# Local dev services (portable MongoDB binaries + data — never committed)
+.local/
+
+# Redis dumps — runtime data (sessions/carts), never committed
+*.rdb
+
+# Claude Code — personal/local settings only (shared settings.json may commit)
+.claude/settings.local.json

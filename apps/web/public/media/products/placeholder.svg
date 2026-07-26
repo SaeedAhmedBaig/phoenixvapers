@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" fill="none" role="img" aria-label="Product image">
+  <rect width="120" height="160" fill="#f0ede6"/>
+  <path d="M44 28h32l-4 18h-24l-4-18z" stroke="#05633a" stroke-width="2" stroke-linejoin="round" opacity="0.35"/>
+  <rect x="38" y="46" width="44" height="88" rx="10" stroke="#05633a" stroke-width="2.5" opacity="0.45"/>
+  <rect x="46" y="58" width="28" height="36" rx="4" fill="#08ab5e" opacity="0.12"/>
+  <path d="M52 118h16" stroke="#05633a" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+</svg>

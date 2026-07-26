@@ -1,0 +1,29 @@
+{
+  "name": "phoenix-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Phoenix Vapers Commerce Platform — compliance-first commerce monorepo (Next.js storefront with built-in /admin console, NestJS API, MongoDB, Redis/BullMQ).",
+  "author": "Phoenix Vapers Limited",
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm redis:start && pnpm mongo:start && turbo run dev",
+    "dev:apps": "turbo run dev",
+    "dev:web": "turbo run dev --filter=web",
+    "dev:api": "turbo run dev --filter=api",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "redis:start": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start-redis.ps1",
+    "mongo:start": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start-mongo.ps1",
+    "create-admin": "pnpm --filter api create-admin --"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.0",
+    "turbo": "^2.5.0"
+  }
+}

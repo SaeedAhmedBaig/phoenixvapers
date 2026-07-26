@@ -1,0 +1,1736 @@
+--- PAGE 1 ---
+PHOENIX VAPERS
+LIMITED
+BRAND IDENTITY SYSTEM
+VOLUME ONE · MMXXVI
+THE OFFICIAL BRAND IDENTITY BOOK
+TheStandardof Trust.
+A complete brand identity system for the United Kingdom’s
+most rigorously engineered vaping company.
+PHOENIX VAPERS LIMITED
+PETERBOROUGH · UNITED KINGDOM
+ESTABLISHED RETAILER & MANUFACTURER
+STRATEGY · VERBAL · VISUAL · APPLICATION
+CONFIDENTIAL — INTERNAL & PARTNER USE
+EDITION 1.0
+
+--- PAGE 2 ---
+COLOPHON
+This document is the definitive articulation of the Phoenix Vapers brand:
+the reasoning behind it, the system that expresses it, and the standards
+that protect it.
+It has been prepared as an enterprise-grade reference for every party who shapes how
+Phoenix Vapers is seen, read, and experienced — the leadership team, in-house designers
+and marketers, packaging and print partners, retail and exhibition contractors, digital
+product teams, and external agencies. It is intended to remain the governing reference for
+the brand across the coming decade, revised only through the formal process described in
+the closing part of this book.
+Every recommendation in these pages is derived from a single source of truth: the strategy
+established in the Phoenix Vapers Product Requirements Document, read against the
+realities of the United Kingdom vaping market as it stands following the Tobacco and Vapes
+Act 2026. Nothing here is decoration for its own sake. Each decision — a colour value, a
+measure of clear space, a turn of phrase — is made to advance a commercial position: that
+Phoenix Vapers is the most trusted, most rigorously engineered, most responsibly operated
+vaping company in Britain.
+DOCUMENT
+Brand Identity Book
+EDITION
+1.0 · Volume One
+STATUS
+Confidential
+FORMAT
+A4 Portrait
+LANGUAGE
+British English
+PRIMARY COLOUR
+#08AB5E
+The Phoenix Vapers name, marks, and system contained within are the property of Phoenix Vapers Limited.
+This publication and the assets it describes may not be reproduced, distributed, or adapted outside the terms of
+the governance framework set out in Part Six. Nearest-match Pantone references are provided as guidance and
+must be confirmed against current physical colour standards before any production run.
+
+--- PAGE 3 ---
+CONTE NTS
+What thisbook contains.
+PART ONE · STRATEGY & MARKET
+01 Executive Summary 01
+02 About Phoenix Vapers 04
+03 The Industry & UK Market 07
+04 Consumer Behaviour 11
+05 Competitive Landscape & SWOT 14
+PART TWO · THE BRAND IDEA
+06 Positioning 18
+07 Purpose, Vision & Mission 21
+08 Promise & Value Proposition 24
+09 Brand DNA, Personality &
+Archetype
+26
+10 Values & Principles 30
+11 Brand Story & Narrative 33
+12 Audience & Personas 36
+PART THREE · VERBAL IDENTITY
+13 Tone of Voice 40
+14 Copywriting & Naming 43
+15 Compliance & Legal Language 46
+PART FOUR · VISUAL IDENTITY
+16 Logo Philosophy & Construction 49
+17 Clear Space, Sizing & Misuse 53
+18 The Colour System 56
+19 Colour Accessibility 61
+20 Typography 63
+21 Grid, Layout & Iconography 67
+22 Photography & Graphic
+Language
+70
+PART FIVE · APPLICATION
+23 Packaging System 74
+24 Retail, Environment & Fleet 78
+25 Digital Product & Design Tokens 81
+26 Stationery & Merchandise 85
+PART SIX · STEWARDSHIP
+27 Sustainability & Responsibility 87
+28 Governance & Evolution 89
+29 Executive Statement 92
+
+--- PAGE 4 ---
+Folios are shown for the first page of each chapter. Front matter is unpaginated in the editorial convention. Part
+dividers precede each section.
+
+--- PAGE 5 ---
+PART ONE
+Strategy& Market
+01 Executive Summary
+02 About Phoenix Vapers
+03 The Industry & the UK Market
+04 Consumer Behaviour
+05 Competitive Landscape & SWOT
+1
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 1
+
+--- PAGE 6 ---
+F
+CHAPTER ONE
+Executive Summary
+Phoenix Vapers is not entering a growth market. It is inheriting a corrected
+one — a market in which trust, compliance, and engineering discipline
+have become the only durable sources of advantage. This book builds the
+brand for that reality.
+or a decade the British vaping industry rewarded speed over substance. Brightly coloured
+disposable devices, sweet packaging, and disposable-income pricing built enormous
+volume and almost no loyalty. That era is over. On 1 June 2025 the sale of single-use
+disposable vapes became illegal across all four nations of the United Kingdom. On 29 April 2026
+the Tobacco and Vapes Act received Royal Assent, bringing an advertising ban, a retail licensing
+regime, and enforceable point-of-sale powers. From 1 October 2026 a Vaping Products Duty of
+£2.20 per ten millilitres applies to every e-liquid sold, nicotine-bearing or not. The market has
+been forcibly matured. What remains is a category that must now compete on the things Phoenix
+Vapers has quietly done well for years.
+This is the strategic opening the brand has been waiting for. Phoenix Vapers already
+manufactures in the United Kingdom, analyses its e-liquids through professional chemists, holds
+ISO 9001 certification for its quality management, and has every product independently risk-
+assessed by EL-Science. In the old market these were invisible virtues. In the new market they
+are precisely what a licensed, tax-registered, advertising-restricted trade demands. The task of
+this brand system is not to invent a story. It is to make the truth of the business legible, premium,
+and impossible to confuse with the disposable culture the country has just rejected.
+The strategic position in one sentence
+Phoenix Vapers is positioned as the standard of trust in British vaping: an engineering-led,
+compliance-first manufacturer and retailer that treats a regulated nicotine product with the
+seriousness it deserves. Every subsequent decision in this book — the retention and disciplining
+of the green, the adoption of a neutral grotesque and a technical mono, the restraint of the
+packaging, the sobriety of the voice — exists to make that single position felt before it is read.
+2025
+Disposable vapes banned across the
+UK — the market resets toward
+refillable and pod systems
+£2.20
+Vaping Products Duty per 10ml from
+October 2026, applied to every e-liquid
+ISO 9001
+Certified quality management — a
+credential the new market makes
+central, not peripheral
+What this book delivers
+The publication is organised as a single argument in six parts. Part One establishes the market
+and the audience. Part Two defines the brand idea — its position, purpose, personality, and story.
+Part Three governs the language. Part Four specifies the complete visual system, built around
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 2
+
+--- PAGE 7 ---
+the existing brand green. Part Five applies that system across packaging, retail, digital, and fleet.
+Part Six sets out how the brand is protected, measured, and allowed to evolve.
+Read in sequence, it moves from why the brand exists to how every touchpoint should look, read,
+and behave. Read as reference, any chapter can be consulted in isolation by a partner producing
+a single artefact. Both readings are intended, and both are governed by the same principle stated
+throughout: restraint is not the absence of design. For a company asking the public to trust it with
+a regulated product, restraint is the design.
+THE THROUGH-LINE
+A disposable brand sells a moment. Phoenix Vapers sells a standard. Everything in this book is
+built to make a standard visible — and to make it feel like relief in a category that has spent a
+decade shouting.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 3
+
+--- PAGE 8 ---
+CHAPTER TWO
+About Phoenix Vapers
+A Peterborough manufacturer and retailer with a rare combination of
+assets: it makes what it sells, tests what it makes, and operates across the
+full chain from formulation to shelf.
+Phoenix Vapers Limited operates from Peterborough as a vertically engaged business rather than
+a reseller. It formulates and produces e-liquids in the United Kingdom, retails through its own e-
+commerce platform and physical stores, supplies the trade at wholesale, and maintains its own
+hardware, coil, and accessory ranges alongside proprietary e-liquid lines. This breadth is
+unusual. Most vaping businesses occupy a single link in the chain — they either make liquid, or
+import hardware, or run shops. Phoenix Vapers spans formulation, quality assurance, retail, and
+distribution, and that span is the material foundation on which the brand is built.
+The four operating identities
+The organisation should be understood as four businesses sharing one standard. As a
+manufacturer, it develops e-liquid recipes and produces them under controlled conditions, with
+proprietary lines that give it identity and margin independent of third-party brands. As a retailer,
+it sells directly to the adult consumer through a website and a store network, owning the
+relationship rather than renting it. As a wholesaler, it supplies other retailers, extending the
+standard beyond its own shelves. And as an emerging technology platform, it holds the data,
+logistics, and compliance infrastructure that the licensed future of the category will require. The
+brand must be legible across all four without fragmenting.
+The evidence already in the business
+Three assets deserve particular emphasis because they will carry disproportionate strategic
+weight in the chapters that follow. The first is UK manufacture with in-house chemical analysis:
+products are produced domestically and examined by professional chemists rather than
+accepted on a supplier's word. The second is ISO 9001 certification, an internationally
+recognised standard for quality management that signals systematic process control rather than
+ad hoc effort. The third is independent risk assessment through EL-Science, a specialist that
+has invested substantially in product safety science and whose consumer-facing assessments
+Phoenix Vapers makes available in its stores.
+WHY THIS MATTERS NOW
+In a licensed, tax-registered market with mandatory product registration, these credentials stop
+being reassurances and start being requirements. Phoenix Vapers already meets a bar the rest
+of the market is being forced to reach. The brand's job is to make that head-start unmistakable.
+The rebrand mandate
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 4
+
+--- PAGE 9 ---
+The business has outgrown its current expression. The existing identity communicates a
+competent independent retailer; it does not communicate a compliance-first manufacturer with a
+decade of quality infrastructure and a claim on the premium centre of the market. The mandate
+of this book is to close that gap — to give a serious business a serious identity, without
+discarding the equity already held in the Phoenix name and the established brand green. This is a
+disciplining of the brand, not a replacement of it.
+HEADQUARTERS
+Peterborough, UK
+MODEL
+Make · Test · Retail · Supply
+QUALITY
+ISO 9001 · EL-Science
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 5
+
+--- PAGE 10 ---
+V
+CHAPTER THREE
+The Industry & the UK Market
+The United Kingdom has, in eighteen months, rewritten the rules of
+vaping more comprehensively than in the previous decade.
+Understanding that new rulebook is the precondition for every brand
+decision that follows.
+aping in Britain sits at an unusual intersection. It is simultaneously a public-health
+instrument — the country's most effective smoking-cessation aid — and a consumer
+category under intensifying regulatory constraint. The brand cannot pretend the second
+reality away, nor should it. The companies that will lead the licensed era are those that treat
+regulation not as a burden to be survived but as the terrain on which trust is won. Phoenix Vapers
+is built to lead precisely there.
+The three settled facts
+Three regulatory realities now define the market and are unlikely to reverse. First, the disposable
+ban: since 1 June 2025 it has been illegal to sell single-use vapes anywhere in the UK, a measure
+driven by environmental waste — millions of devices discarded weekly — and by youth-access
+concern. The category has migrated to refillable and prefilled pod systems, exactly the
+responsible, reusable formats Phoenix Vapers already prioritises. Second, the Tobacco and
+Vapes Act 2026, which received Royal Assent on 29 April 2026, introducing a vaping advertising
+and sponsorship ban, a retail licensing scheme, mandatory product registration, point-of-sale
+display powers, and on-the-spot fines for underage sales. Third, the Vaping Products Duty: from
+1 October 2026, £2.20 per ten millilitres applies to all e-liquid regardless of nicotine content, with
+registration having opened in April 2026.
+REGULATORY
+INSTRUMENT STATUS STRATEGIC CONSEQUENCE FOR THE BRAND
+Disposable vape ban In force since 1 Jun
+2025
+Reusable, refillable formats become the norm; responsibility is
+now table stakes
+TPD / TRPR 2016 In force 20mg/ml nicotine cap, 2ml tank limit, 10ml bottle limit, MHRA
+notification
+Tobacco & Vapes Act
+2026
+Royal Assent 29
+Apr 2026
+Advertising ban; retail licensing; brand equity must be earned
+at point of sale, not bought
+Vaping Products Duty From 1 Oct 2026 £2.20 / 10ml on all e-liquid; price competition erodes, quality
+competition rises
+Age of sale ·
+Challenge 25
+In force 18+ only; verification rigour becomes a visible brand behaviour
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 6
+
+--- PAGE 11 ---
+What the advertising ban does to branding
+The forthcoming prohibition on vaping advertising and sponsorship is the single most
+consequential fact for this document. When a category can no longer buy attention, the brand
+itself — the packaging on the shelf, the fascia of the shop, the experience of the website, the
+tone of a customer email — becomes the entire marketing surface. There is no campaign to
+compensate for a weak identity. The identity is the campaign. This is why the investment
+represented by this book is not cosmetic: in an advertising-restricted market, the brand system is
+the primary commercial asset the company owns.
+DESIGN IMPLICATION
+Every pound previously available to shout must now be earned through restraint. The most
+valuable square centimetres Phoenix Vapers owns are the label, the fascia, and the interface.
+This book treats each as prime media.
+The duty and the flight to quality
+The Vaping Products Duty compresses the market's historic advantage — cheapness — and
+rewards its historic weakness — quality. When every ten millilitres carries the same £2.20
+charge, the relative premium of a well-made, well-tested, well-packaged product shrinks. A
+consumer paying duty on everything has less reason to accept an inferior product to save a few
+pence. This is a structural tailwind for a manufacturer whose entire proposition is that its liquids
+are made properly and tested independently. The brand should never mention tax; it should
+simply be the obvious choice once tax has flattened the field.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 7
+
+--- PAGE 12 ---
+CHAPTER FOUR
+Consumer Behaviour
+The adult vaper of 2026 is not the impulse buyer of 2021. They are more
+informed, more sceptical, more cost-aware, and — after a decade of hype —
+quietly exhausted by the category's noise.
+The disposable era trained a generation of consumers to treat vaping as fast-moving and
+disposable in every sense: cheap to buy, easy to abandon, loyal to nothing. The correction has
+produced a different customer. Forced onto refillable and pod systems, they must now make
+considered choices about hardware, coils, and liquid. They must understand nicotine strength,
+PG/VG ratio, and flavour longevity. They are, in short, becoming users rather than consumers —
+and users reward competence.
+The four behavioural shifts
+Four movements in consumer psychology shape how the brand must behave. Each is an
+opportunity for a company built on substance.
+Shift 01
+From impulse to consideration
+Reusable devices demand a purchase
+decision, not a grab. Consumers research,
+compare, and expect information. The brand
+must reward that scrutiny with clarity rather
+than persuasion.
+Shift 02
+From novelty to reliability
+Having been let down by devices that failed
+and flavours that faded, the market now
+prizes consistency. Reliability, not surprise,
+is the emotional need to be met.
+Shift 03
+From price to value
+With duty flattening headline price, value
+shifts to performance, safety, and longevity.
+The question moves from "what is cheapest"
+to "what is worth it".
+Shift 04
+From scepticism to trust-seeking
+Amid health anxiety and illicit-market fear,
+consumers actively seek signals of
+legitimacy: UK manufacture, testing,
+registration, transparency. They are looking
+for permission to relax.
+The emotional job to be done
+Beneath the functional needs sits an emotional one that the entire brand is designed to serve: the
+desire to feel responsible about a habit the world disapproves of. The adult vaper is frequently a
+former smoker who has made a genuine improvement to their life and is tired of being treated as
+either a child or a delinquent. They want a product, and a company, that treats them as anPHOENIX VAPERS — BRAND IDENTITY SYSTEM 8
+
+--- PAGE 13 ---
+intelligent adult making a considered choice. Phoenix Vapers' restraint, sobriety, and
+transparency are not stylistic preferences. They are the direct expression of respect for that
+customer — and respect, in this category, is a competitive act.
+BEHAVIOURAL INSIGHT
+The category has spent a decade making adults feel like teenagers. The opportunity is to make
+them feel like adults again. Every quiet, precise, well-made touchpoint is a small act of respect
+— and respect is what earns the switch.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 9
+
+--- PAGE 14 ---
+CHAPTER FIVE
+Competitive Landscape & SWOT
+The competition is not other vape shops. It is the visual and behavioural
+clutter of the entire category — and the empty premium centre that no
+British vaping brand has yet credibly claimed.
+The UK vaping market is crowded at two poles and vacant in the middle. At one pole sit the mass
+brands and disposable-descended pod systems — high volume, loud packaging, price-led, now
+scrambling to look responsible. At the other pole sit hobbyist and sub-ohm specialists —
+technical, enthusiast-facing, visually chaotic, speaking to a narrow expert audience. Between
+them lies the position no one occupies with conviction: the premium, trustworthy, adult
+mainstream — the vaper who wants neither a toy nor a rig, but a well-made product from a
+company that behaves like a grown-up.
+PremiumValue
+Trusted
+Disposable-culture
+Mass / pods
+Enthusiast
+Phoenix
+Vapers
+FIG. 5.1 — POSITIONING MAP. THE PREMIUM-AND-TRUSTED QUADRANT IS UNCLAIMED; PHOENIX
+VAPERS MOVES TO OCCUPY IT.
+SWOT analysis
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 10
+
+--- PAGE 15 ---
+Strengths
+UK manufacture with in-house chemical
+analysis. ISO 9001 certification. Independent
+EL-Science risk assessment. Vertical span
+across make, test, retail, and supply.
+Proprietary e-liquid lines. Established
+Phoenix name and brand green.
+Weaknesses
+Current identity under-communicates the
+quality behind it. Regional recognition rather
+than national. Digital experience not yet at
+premium standard. Proprietary lines carry
+playful naming inconsistent with a premium
+centre.
+Opportunities
+The advertising ban makes brand the whole
+game. Duty flattens price advantage and
+rewards quality. The premium-trusted
+quadrant is empty. Licensing favours
+credentialled incumbents. Wholesale can
+export the standard.
+Threats
+Illicit and non-compliant supply undercutting
+on price. Larger nationals repositioning
+toward responsibility. Further flavour and
+packaging restrictions via secondary
+legislation. Public-health sentiment
+hardening against the category.
+STRATEGIC CONCLUSION
+Phoenix Vapers' strengths map almost exactly onto the market's new demands, and its
+weaknesses are largely matters of expression rather than substance. This is the ideal condition
+for a rebrand: the business is already what the market needs; the brand simply has not yet said
+so.
+PART TWO
+TheBrand IdeaPHOENIX VAPERS — BRAND IDENTITY SYSTEM 11
+
+--- PAGE 16 ---
+06 Positioning
+07 Purpose, Vision & Mission
+08 Promise & Value Proposition
+09 Brand DNA, Personality & Archetype
+10 Values & Principles
+11 Brand Story & Narrative
+12 Audience & Personas
+2
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 12
+
+--- PAGE 17 ---
+A
+CHAPTER SIX
+Positioning
+Positioning is the single most important decision a brand makes, because
+it determines every decision after it. Phoenix Vapers takes the one position
+the market has left open and that the business is uniquely equipped to
+defend.
+position is not a slogan or a look. It is the specific place a brand occupies in the mind of
+a customer relative to every alternative — the answer to the question "why this one?"
+that forms before the customer is consciously aware of asking it. A strong position is
+true, distinctive, and defensible. It must be honest to the business, different from competitors,
+and difficult to copy. Phoenix Vapers has all three available to it, provided it has the discipline to
+choose narrowly and hold the line.
+The positioning statement
+POSITIONING STATEMENT
+For the adult who has chosen to vape and refuses to be careless about it, Phoenix
+Vapers is the British vaping company that engineers trust into every product —
+because it makes what it sells, tests what it makes, and treats a regulated product
+with the seriousness it deserves.
+Read the statement closely, because each clause is load-bearing. "For the adult who has chosen
+to vape and refuses to be careless about it" defines the audience by attitude rather than
+demographic — the considered vaper, not the impulse buyer. "The British vaping company that
+engineers trust" claims the category benefit — trust — and attributes it to a method —
+engineering — rather than to assertion. "Makes what it sells, tests what it makes" supplies the
+proof. "Treats a regulated product with the seriousness it deserves" converts the constraint of
+regulation into a signal of respect. The statement is defensible because a competitor cannot
+claim it without also building the manufacturing, testing, and compliance infrastructure that
+stands behind it.
+The four pillars of the position
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 13
+
+--- PAGE 18 ---
+Pillar 01
+Engineering-led
+The brand frames itself through the
+language and discipline of engineering —
+precision, tolerance, testing, specification —
+not lifestyle or indulgence.
+Pillar 02
+Compliance-first
+Regulation is treated as a floor to exceed,
+not a ceiling to reach. Compliance is made
+visible as a virtue, never hidden as a cost.
+Pillar 03
+British-made
+Domestic manufacture and analysis anchor
+provenance, accountability, and quality in a
+market anxious about illicit imports.
+Pillar 04
+Quietly premium
+Premium is expressed through restraint and
+material quality, not ornament — the
+confidence of a brand that does not need to
+shout.
+THE DISCIPLINE THIS DEMANDS
+A position is defended by what a brand refuses to do. Phoenix Vapers will decline the loud
+packaging, the discount-led messaging, the youth-adjacent aesthetics, and the novelty-chasing
+that define the category. Saying no to these is not caution. It is the strategy.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 14
+
+--- PAGE 19 ---
+CHAPTER SEVEN
+Purpose, Vision & Mission
+Three statements, three time horizons. Purpose is why the company exists
+at all. Vision is the future it is working toward. Mission is what it does
+every day to get there.
+These three are frequently confused and often reduced to interchangeable marketing lines. They
+are not interchangeable. Together they form a hierarchy of intent that should cascade into every
+plan, every hire, and every design decision. Stated well, they are internal instruments before they
+are external claims — the compass the organisation steers by, not the flag it waves.
+PURPOSE · WHY WE EXIST
+To bring integrity to a category that has too often lacked it — so that
+choosing to vape need never mean choosing carelessly.
+The purpose reaches beyond commerce without abandoning it. It acknowledges the category's
+real failings and positions Phoenix Vapers as the corrective. It is deliberately durable: it will
+remain true whether the company sells liquids, hardware, or the technology platforms of a
+licensed future.
+VISION · WHERE WE ARE GOING
+To be recognised as the most trusted vaping company in the United
+Kingdom — the standard against which the responsible market measures
+itself.
+The vision is a destination, not a description. "Most trusted" is a measurable ambition — in
+prompted and unprompted brand trust, in retention, in wholesale advocacy. "The standard
+against which the market measures itself" sets the bar higher still: not merely to be trusted, but to
+define what trustworthiness in the category looks like.
+MISSION · WHAT WE DO DAILY
+To engineer, test, and supply vaping products of uncompromising quality,
+and to make the evidence of that quality plain to everyone we serve.
+The mission is operational and testable. It commits the company not only to quality but to the
+transparency of quality — the second clause is what distinguishes Phoenix Vapers from any
+competitor content to be good in private. Making the evidence plain is a design brief as much as
+an operational one, and it recurs throughout the visual and verbal systems that follow.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 15
+
+--- PAGE 20 ---
+PURPOSE VISION MISSION
+Why Where What
+ENDURING ————————————— IMMEDIATE
+FIG. 7.1 — THE INTENT HIERARCHY FROM ENDURING PURPOSE TO DAILY MISSION.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 16
+
+--- PAGE 21 ---
+CHAPTER EIGHT
+Promise & Value Proposition
+A promise is what the customer can rely on every time. A value
+proposition is the specific, comparative reason to choose Phoenix Vapers
+over the alternative in front of them.
+The brand promise
+BRAND PROMISE
+Nothing reaches you that we have not made properly and checked ourselves.
+A promise must be simple enough to remember, specific enough to be broken, and important
+enough to matter. This one qualifies on all three counts. It is the emotional distillation of the
+manufacturing and testing infrastructure — expressed not as a boast about the company but as a
+reassurance to the customer. It is written in the first person plural because a promise is made by
+people, not by a corporation. And it is falsifiable, which is what makes it credible: a promise that
+cannot be broken cannot be trusted.
+The value proposition
+Where the promise is emotional, the value proposition is rational and comparative. It answers the
+question a customer asks with a competitor's product already in their hand.
+DIMENSION THE CATEGORY DEFAULT THE PHOENIX VAPERS ALTERNATIVE
+Origin Imported, opaque supply chains Made and analysed in the United Kingdom
+Testing Supplier assurances, minimal
+verification
+In-house chemists; independent EL-Science risk
+assessment
+Quality
+system
+Ad hoc, uncertified ISO 9001 certified management
+Transparency Claims without evidence Risk assessments made available to the customer
+Design Loud, disposable-culture aesthetics Restrained, premium, adult
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 17
+
+--- PAGE 22 ---
+REASONS TO BELIEVE
+A proposition is only as strong as its evidence. Phoenix Vapers' reasons to believe — UK
+manufacture, in-house analysis, ISO 9001, EL-Science assessment — are not marketing claims
+to be invented. They already exist. The brand's task is disclosure, not persuasion.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 18
+
+--- PAGE 23 ---
+CHAPTER NINE
+Brand DNA, Personality & Archetype
+If the brand were a person, who would it be? The answer governs how it
+speaks, what it wears, and how it makes people feel — and it must be
+consistent across every encounter.
+Brands are understood by people the way people are understood by people: through a small
+number of consistent traits inferred from behaviour. A brand with a clear, stable personality is
+easier to trust because it is predictable, and predictability is the foundation of trust. The following
+model defines Phoenix Vapers' character so precisely that a copywriter, a designer, and a
+customer-service agent who have never met will nonetheless produce work that feels like the
+same company.
+Brand DNA
+At the core sit four traits that cannot be compromised without changing what the brand
+fundamentally is: Precise, Responsible, Understated, Assured. These are the genetic markers.
+Every expression of the brand should be testable against them — if a piece of work is imprecise,
+careless, loud, or anxious, it is off-brand regardless of how attractive it may be.
+The archetype
+Drawing on the archetypal framework that underpins much of modern brand theory, Phoenix
+Vapers is primarily The Sage, with a supporting register of The Creator. The Sage seeks truth,
+values expertise, and earns influence through knowledge and honesty rather than charm or
+dominance. It is the archetype of the trusted expert — the pharmacist, the engineer, the analyst
+— and it is exactly right for a company whose entire proposition is competence you can rely on.
+The Creator support brings the engineering pride: the satisfaction of making something properly,
+to specification, without shortcuts.
+Primary · The Sage
+Truth over persuasion
+Influence earned through knowledge and
+transparency. Speaks plainly, cites evidence,
+respects the customer's intelligence, never
+manipulates.
+Support · The Creator
+Made properly
+Pride in craft and specification. The quiet
+satisfaction of a thing engineered correctly,
+tested thoroughly, and finished with care.
+Personality expressed as tension
+A personality without tension is bland. Phoenix Vapers holds two productive tensions that keep it
+human. It is authoritative but not cold — expert without being clinical, because trust requires
+warmth as well as competence. And it is confident but not arrogant — sure of its standardsPHOENIX VAPERS — BRAND IDENTITY SYSTEM 19
+
+--- PAGE 24 ---
+without disparaging the customer's past choices. Managing these tensions is the ongoing craft
+of the brand, and it is why the tone-of-voice chapter that follows matters as much as any visual
+specification.
+Cold Warm
+Arrogant Modest
+FIG. 9.1 — PERSONALITY CALIBRATION. WARM OF CENTRE, MODEST OF CENTRE — NEVER
+CLINICAL, NEVER BOASTFUL.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 20
+
+--- PAGE 25 ---
+CHAPTER TEN
+Values & Principles
+Values describe what the company believes. Principles translate those
+beliefs into rules that can settle a real decision when two good options
+compete.
+Most stated values are useless because they are unfalsifiable — no company claims to value
+dishonesty or carelessness. A value earns its place only if it can be violated and if it can
+adjudicate a hard choice. The five below are written to do exactly that: each implies a sacrifice
+the company is willing to make, which is what gives it force.
+Value 01
+Rigour
+We would rather be slow
+and correct than quick and
+wrong. Testing is not
+negotiable, even when it
+costs time or margin.
+Value 02
+Transparency
+We show the evidence,
+including what is
+uncertain. We would
+rather lose a sale than
+mislead a customer.
+Value 03
+Restraint
+We say and show less. We
+would rather be
+underestimated at a
+glance than
+misunderstood on
+inspection.
+Value 04
+Responsibility
+We treat a regulated
+product responsibly, and
+we would decline growth
+that compromises that.
+Value 05
+Craft
+We finish things properly.
+We would rather ship later
+than ship something we
+are not proud of.
+Operating principles
+Where values are beliefs, principles are decision rules. They are written as imperatives so that
+anyone in the organisation — or any partner producing work under the brand — can apply them
+without escalation.
+When restraint and expression compete, choose restraint.—
+When a claim is available but not yet proven, do not make it.—
+When clarity and cleverness compete, choose clarity.—
+When the loud option and the quiet option perform equally, choose the quiet one.—
+When a design decision cannot be justified against the strategy, remove it.—
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 21
+
+--- PAGE 26 ---
+When in doubt about tone, imagine explaining the product to an intelligent adult who is sceptical of the
+category.
+—
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 22
+
+--- PAGE 27 ---
+T
+CHAPTER ELEVEN
+Brand Story & Narrative
+A brand story is not history. It is the meaningful shape given to history —
+the reason the company's past explains why it is the right choice now.
+he Phoenix is one of the oldest symbols in human culture, and it has been trivialised by
+the vaping category into a shorthand for fire and smoke. This book reclaims it for its true
+meaning, which has nothing to do with flame. The Phoenix is the emblem of renewal
+through discipline — of something better rising from what came before, deliberately and by
+design. That is the brand's story, and it maps precisely onto both the company and its market.
+The narrative in three movements
+What came before. A category that grew too fast on products made too carelessly, that treated
+adults like children and the environment like an afterthought, and that has now been corrected by
+regulation and by its own excesses. The disposable era is the ash.
+The renewal. From that correction rises a different kind of vaping company — one that makes
+rather than merely sells, tests rather than assumes, and treats the customer as an adult. Not a
+rejection of vaping, but its maturation. The Phoenix does not escape the fire; it is defined by what
+it becomes after it.
+The standard set. Phoenix Vapers does not simply participate in the renewed market. It sets the
+standard for it — the reference point the responsible industry measures itself against. The story
+ends not with survival but with leadership.
+NARRATIVE DISCIPLINE
+The Phoenix is expressed as ascent, renewal, and rigour — never as literal fire, smoke, or flame.
+This is a firm rule of the visual system that follows. The symbol earns its gravity precisely by
+refusing the cliché the category expects of it.
+The elevator narrative
+Compressed to a single spoken paragraph, for use by anyone representing the company:
+"Phoenix Vapers is a British vaping company built on a simple idea — that a regulated product
+deserves to be made properly and checked honestly. We manufacture and test our liquids in the
+UK, we hold our quality to certified standards, and we have every product independently risk-
+assessed. In a market that spent a decade cutting corners, we are the company that didn't. That
+is the whole business, and it is the whole brand."
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 23
+
+--- PAGE 28 ---
+CHAPTER TWELVE
+Audience & Personas
+The brand is not for everyone who vapes — and its clarity depends on
+knowing precisely who it is for, and who it is willing to let go.
+Phoenix Vapers segments its audience by attitude rather than age, because attitude predicts
+behaviour and loyalty far better than demographics in this category. Three primary segments are
+served by the retail brand, and a fourth by the wholesale operation. Each persona below is a
+composite, written to make an abstract segment concrete enough to design for. All are, without
+exception, adults of legal age; the brand serves no one under eighteen, and its every behaviour
+reinforces that boundary.
+Persona A
+The Considered Switcher
+Late 30s, former smoker of fifteen years.
+Vapes to stay off cigarettes and takes it
+seriously. Reads ingredients, distrusts cheap
+imports, wants reassurance more than
+novelty. Buys on trust and stays for
+consistency. The core customer.
+Persona B
+The Quality Seeker
+Late 20s, established vaper. Has moved
+past disposables to refillable systems and
+now cares about flavour fidelity, device
+reliability, and brand credibility. Will pay a
+premium for something demonstrably better
+made. Values design.
+Persona C
+The Cautious Beginner
+40s, newly switching. Anxious about doing it
+wrong, intimidated by jargon and enthusiast
+culture. Needs guidance, plain language,
+and a sense of safety. Rewards the brand
+that treats them as capable rather than
+clueless.
+Persona D
+The Trade Partner
+Independent retailer or reseller. Under
+licensing and compliance pressure, needs a
+supplier whose credentials protect them.
+Buys the standard as much as the stock.
+Served by the wholesale brand.
+Who the brand is not for
+Clarity requires exclusion. Phoenix Vapers is not for the price-only buyer who will always chase
+the cheapest option regardless of provenance; not for the trick-cloud enthusiast for whom vaping
+is a hobby of spectacle; and, categorically, not for anyone under the age of eighteen. Designing
+away from these groups is not a loss of market. It is the discipline that makes the brand legible to
+the market it wants.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 24
+
+--- PAGE 29 ---
+THE UNIFYING INSIGHT
+Every persona the brand serves shares one thing: they want to feel like a responsible adult
+making a considered choice. That single insight — not a demographic — is the true target of
+every design and word in this book.
+PART THREE
+VerbalIdentity
+13 Tone of Voice
+14 Copywriting & Naming
+15 Compliance & Legal Language
+3
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 25
+
+--- PAGE 30 ---
+3
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 26
+
+--- PAGE 31 ---
+V
+CHAPTER THIRTEEN
+Tone of Voice
+In an advertising-restricted market, words on a label, a screen, and an
+email are among the few marketing surfaces the company still fully
+controls. How Phoenix Vapers writes is therefore not a detail. It is the
+brand made audible.
+oice is the consistent personality behind everything the company writes; tone is how that
+voice adapts to context. Phoenix Vapers has one voice — that of the Sage:
+knowledgeable, plain-spoken, calm, and respectful — and it modulates in tone from the
+reassurance of a product description to the precision of a compliance notice. The reader should
+never be able to mistake a Phoenix Vapers sentence for a competitor's, and they should never
+feel spoken down to, hyped up, or sold at.
+Four voice principles
+Voice 01
+Plain before clever
+Say the true thing simply. Clarity is a form of
+respect; cleverness that obscures is a
+failure. If a plainer word exists, use it.
+Voice 02
+Evidence, not adjectives
+Prefer a fact to a superlative. "Analysed by
+our chemists" outperforms "amazing
+quality" because it can be checked. Show;
+do not exclaim.
+Voice 03
+Calm authority
+Never anxious, never breathless, never
+urgent. The brand does not chase.
+Confidence reads as an even, unhurried
+register.
+Voice 04
+Adult to adult
+Address the reader as a capable equal. No
+infantilising, no scolding, no innuendo.
+Assume intelligence and reward it.
+The voice in practice
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 27
+
+--- PAGE 32 ---
+CONTEXT OFF-BRAND ON-BRAND
+Product intro "Get ready for an EXPLOSION of
+flavour!! 🔥 "
+"A clean, balanced strawberry. Made and tested in our UK
+lab."
+Reassurance "Trust us, it's totally safe." "Every batch is risk-assessed independently. You can read
+the assessment in store."
+Out of stock "Oops! Sold out, soz!" "Currently unavailable. We restock rather than substitute
+— it will return."
+Delivery "Your goodies are on the way!" "Your order has left our facility. Tracking is below."
+THE ONE-LINE TEST
+Before anything is published, read it aloud and ask: does this sound like a competent adult
+explaining something they know well to an adult they respect? If not, rewrite it until it does.
+Words the brand uses — and avoids
+Use
+analysed · tested · engineered · specification · batch ·
+formulated · verified · standard · precise · responsible ·
+in-house · assessed · consistent
+Avoid
+explosion · insane · killer · cloud-chasing · unbeatable ·
+cheapest · amazing · vibes · legendary · game-changing ·
+exclusive drop · fire · smoke
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 28
+
+--- PAGE 33 ---
+CHAPTER FOURTEEN
+Copywriting & Naming
+The rules that turn a voice into finished copy — and a naming architecture
+that lets a premium parent brand carry playful product lines without
+contradiction.
+Copywriting mechanics
+Consistency in the small mechanics is what makes a brand feel engineered rather than
+improvised. Phoenix Vapers writes in British English without exception — colour, flavour, analyse,
+licence, centre, organisation. Sentences are short and declarative. The active voice is preferred.
+Numerals are used for specifications and quantities. Exclamation marks are effectively banned
+outside genuine exception. Full stops are welcome; the brand is comfortable with the authority of
+a short, finished sentence.
+The naming architecture
+The company already operates proprietary e-liquid lines with expressive names such as its bar-
+salt and fifty-fifty ranges. A premium parent brand need not sterilise these — but it must frame
+them. The solution is a disciplined hierarchy in which the Phoenix Vapers masterbrand supplies
+the credibility and the product lines supply the character, each clearly subordinate and
+consistently locked-up to the parent.
+TIER ROLE NAMING CHARACTER EXAMPLE
+Masterbrand Guarantor of trust Formal, singular, unchanging Phoenix Vapers
+Ranges Product families Descriptive, restrained Phoenix Salts · Phoenix
+Shortfill
+Lines Character-led sub-
+brands
+Expressive, but locked to
+parent
+Bar Wars · FiftyFifty
+Variants Individual flavours Plain, appetising, honest Cherry Cola · Strawberry Ice
+Lead with the fact, not the feeling. The feeling follows from the fact.—
+One idea per sentence. One purpose per paragraph.—
+Specify. "60/40 VG/PG" tells the reader more than "smooth and satisfying".—
+Never promise what testing has not confirmed.—
+Cut every word that does not carry meaning. Then cut one more.—
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 29
+
+--- PAGE 34 ---
+THE ENDORSEMENT RULE
+Expressive lines are always endorsed by the masterbrand — "Bar Wars, by Phoenix Vapers" —
+never left to stand alone. The character sells the flavour; the parent sells the trust. Neither is
+asked to do the other's job.
+Naming a new flavour
+Flavour names describe the flavour. They do not borrow from confectionery brands, cartoon
+characters, or anything that could read as directed at children — a discipline that also anticipates
+the packaging and flavour-description powers granted by the Tobacco and Vapes Act. Honest,
+appetising, adult: Cedar, Blackcurrant, Menthol, Cherry Cola. The name earns appetite through
+accuracy, not through hype.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 30
+
+--- PAGE 35 ---
+CHAPTER FIFTEEN
+Compliance & Legal Language
+For most brands, legal copy is where personality goes to die. For Phoenix
+Vapers, it is where the brand's core promise is proven — so it is designed
+with the same care as everything else.
+Regulatory and legal text — age verification, nicotine warnings, ingredient disclosures, terms,
+delivery restrictions — is not a compliance tax the brand endures. It is the most literal expression
+of the brand's central claim to responsibility. Handled with clarity and dignity, it becomes
+evidence rather than fine print. Phoenix Vapers writes its mandatory copy to be read, not hidden.
+Principles for regulated copy
+Legal 01
+Clear, not buried
+Required warnings are set legibly, never
+shrunk to the legal minimum in the hope no
+one reads them. Visibility signals
+confidence.
+Legal 02
+Plain-language first
+Where the law permits, explain the
+requirement in human terms alongside the
+formal wording. The reader should
+understand, not merely be notified.
+Legal 03
+Firm on age
+Age restriction is stated plainly and enforced
+visibly. Challenge 25 and 18+ verification are
+presented as care, never as obstacle.
+Legal 04
+Never defensive
+Compliance copy is calm and matter-of-fact.
+The brand is not apologising for the rules; it
+is demonstrably ahead of them.
+Standing statements
+The following are approved standing forms. They may be shortened for space but not softened in
+meaning.
+AGE VERIFICATION
+"You must be 18 or over to purchase from Phoenix Vapers. We verify age at checkout and on
+delivery. If you look under 25, expect to be asked for identification — we would rather ask twice
+than sell once to someone underage."
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 31
+
+--- PAGE 36 ---
+PRODUCT ASSURANCE
+"This product is manufactured in the United Kingdom, notified to the MHRA, and independently
+risk-assessed. The assessment is available on request and in our stores."
+CONTAINS NICOTINE
+Where a nicotine warning is mandated, it is rendered in the system's neutral grotesque, at full
+legibility, in graphite on light or bone on dark — never disguised, never decorative. The warning
+is part of the design, not an intrusion upon it.
+PART FOUR
+VisualIdentity
+16 Logo Philosophy & Construction
+17 Clear Space, Sizing & Misuse
+18 The Colour System
+19 Colour Accessibility
+20 Typography
+21 Grid, Layout & Iconography
+22 Photography & Graphic Language
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 32
+
+--- PAGE 37 ---
+4
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 33
+
+--- PAGE 38 ---
+T
+CHAPTER SIXTEEN
+Logo Philosophy & Construction
+The mark reclaims the Phoenix from the category's cliché. There is no
+flame, no smoke, no feather rendered in literal detail — only ascent,
+expressed as pure geometry.
+he vaping category has reduced the Phoenix to a bonfire. This identity restores it to its
+meaning: renewal, rising, the disciplined ascent of something better. The mark is built
+from three chevrons of increasing lift, released by a single apex breaking free above
+them. It reads at once as upward motion, as a stylised wing, and as the peak of a rising form. It is
+drawn on a strict geometric grid so that it feels engineered rather than illustrated — the visual
+equivalent of the brand's central claim.
+PHOENIX
+V A P E R S
+FIG. 16.1 — PRIMARY HORIZONTAL LOCKUP. MARK AND WORDMARK IN FIXED RELATIONSHIP.
+The system of marks
+The identity is a family, not a single asset. The primary lockup (mark plus wordmark) is the
+default for most applications. The stacked lockup serves square and vertical formats. The mark
+alone operates where the brand is already established — app icons, embossing, small
+merchandise, the debossed base of a bottle. The wordmark alone serves running text and legal
+contexts. Each is a considered response to a real constraint, never an arbitrary variation.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 34
+
+--- PAGE 39 ---
+PHOENIXVAPE RS
+FIG. 16.2 — STACKED LOCKUP
+PHOENIXVAPERS
+FIG. 16.3 — REVERSED, ON INK
+GREEN
+Construction geometry
+The mark is constructed on a unit grid where one unit (1u) equals the stroke width. Every angle is
+a multiple of fifteen degrees; every terminal is a true radius. The chevrons ascend on a
+consistent interval, and the apex sits at a fixed remove above the uppermost chevron. Nothing in
+the mark is drawn by eye. This is the point: an engineering-led brand must have an engineered
+mark, reproducible from specification alone.
+baseline
+axis1u = stroke width · grid = 2u
+FIG. 16.4 — MARK CONSTRUCTION ON THE UNIT GRID. REPRODUCE FROM THESE RELATIONSHIPS,
+NEVER REDRAW FREEHAND.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 35
+
+--- PAGE 40 ---
+ABSOLUTE RULE
+The mark is never redrawn, re-proportioned, or reconstructed. Only the master artwork files are
+used. If the geometry appears wrong at any size, the fault is in the reproduction, not the mark.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 36
+
+--- PAGE 41 ---
+CHAPTER SEVENTEEN
+Clear Space, Sizing & Misuse
+A mark is only as strong as the space around it and the discipline applied
+to it. These rules protect the identity from the thousand small
+compromises that erode a brand over a decade.
+Clear space
+The logo is given room to breathe. The minimum exclusion zone on all sides equals the height of
+the apex element (defined as x). No text, image, rule, or competing element may enter this zone.
+More space is always acceptable; less is never. Clear space is what allows the mark to register
+as a mark rather than as one more item in a crowded field — and in a category defined by clutter,
+that separation is itself a brand signal.
+PHOENIX
+V A P E R S
+x
+FIG. 17.1 — CLEAR SPACE EQUALS X ON EVERY SIDE, WHERE X IS THE APEX HEIGHT.
+Minimum sizes
+Below a threshold, the mark's geometry degrades and legibility fails. These minimums are
+absolute. Where space forces a smaller footprint, the mark-only version is used rather than a
+shrunken lockup.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 37
+
+--- PAGE 42 ---
+APPLICATION PRIMARY LOCKUP MARK ONLY
+Print 28mm wide minimum 8mm wide minimum
+Screen 150px wide minimum 32px wide minimum
+Embossing / deboss Not used 10mm minimum
+Misuse
+The following are prohibited without exception. Each corresponds to a real temptation and each
+undermines the engineered discipline the mark exists to convey.
+✕  01
+Do not recolour
+The mark appears only in
+Phoenix Green, Ink Green,
+Bone, or single-colour
+black. Never in
+unapproved colours or
+gradients.
+✕  02
+Do not distort
+Never stretch, compress,
+skew, or rotate. The
+proportions are fixed by
+construction.
+✕  03
+Do not add effects
+No shadows, glows,
+bevels, outlines, or —
+above all — flames. The
+mark is flat, always.
+✕  04
+Do not rearrange
+Mark and wordmark keep
+their fixed relationship.
+Never resize one relative
+to the other.
+✕  05
+Do not crowd
+Never place inside the
+clear space, on a busy
+image, or on a low-
+contrast field.
+✕  06
+Do not reconstruct
+Never rebuild from
+memory or substitute a
+similar typeface. Use
+master artwork only.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 38
+
+--- PAGE 43 ---
+C
+CHAPTER EIGHTEEN
+The Colour System
+The brand green is the inheritance and the anchor. It is not replaced. It is
+disciplined — given a supporting cast of depth greens, a serious neutral
+spine, and a strictly ring-fenced set of functional signals.
+olour is the fastest brand signal the mind processes — recognised before form, before
+word. The existing Phoenix green, #08AB5E, already carries equity and must be
+retained. Its role, however, changes. In the current identity it does much of the work
+alone; in this system it becomes a precise instrument used with restraint, set against a
+sophisticated neutral palette that supplies the premium, engineered gravity the brand needs.
+Green becomes the accent of confidence, not the volume of the whole page. Used sparingly
+against Bone and Ink, it reads as considered; used everywhere, it reads as a discount sticker.
+Restraint is the entire discipline of this chapter.
+Colour psychology
+Green is the most trust-adjacent hue available to the brand. It signals safety, growth, health, and
+the natural — associations of unusual value to a company arguing that a regulated product can
+be made responsibly. This particular green sits in the emerald-to-jade region: vivid enough to
+feel modern and technological, deep enough to avoid the childish brightness of the disposable
+palette. Paired with a near-black Ink Green and a warm Bone, it acquires the quality the brand
+needs above all: it looks engineered, not sweet.
+The core palette
+#08AB5E
+Phoenix Green
+Primary · the brand signal
+RGB 8 · 171 · 94
+CMYK 95 · 0 · 45 · 33
+PANTONE 354 C / 2423 C*
+#05633A
+Deep Pine
+Green text on light · depth
+RGB 5 · 99 · 58
+CMYK 95 · 0 · 41 · 61
+PANTONE 348 C / 349 C*
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 39
+
+--- PAGE 44 ---
+#073B25
+Forest Ink
+Dividers · rich backgrounds
+RGB 7 · 59 · 37
+CMYK 88 · 0 · 37 · 77
+PANTONE 3435 C*
+#0A1512
+Ink Green
+Primary dark · covers · text
+RGB 10 · 21 · 18
+CMYK 52 · 0 · 14 · 92
+PANTONE Black 6 C*
+The neutral spine
+Neutrals carry the premium weight. The palette runs from a warm off-white through greys to
+graphite — deliberately warm rather than clinical, so the brand reads as considered and human
+rather than sterile. Bone is the default background of the brand: paper, screen, and packaging
+alike.
+Bone
+F7F6F2
+Mist
+E9E9E3
+Ash
+C7C9C4
+Slate
+6E736F
+Steel
+3A3F3C
+Graphite
+14181A
+Functional signals
+A compliance-first product needs honest interface states — caution, information, error. These
+colours are strictly functional: reserved for the digital product and safety-critical labelling, never
+used as brand or decorative colour. Segregating semantic colour from brand colour is standard
+practice in disciplined systems and prevents the palette from drifting into noise.
+#E 8A33D
+Caution Amber
+Warnings only
+#3E 7CA8
+Signal Blue
+Information only
+#C7482F
+Alert
+Errors only
+* Pantone references are nearest-match recommendations and must be confirmed against current physical colour
+standards (coated and uncoated) before production. Screen and print will not match without proofing; always sign off
+to a physical proof, not a monitor.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 40
+
+--- PAGE 45 ---
+Proportion & application
+The single most important colour rule is proportion. Across any surface, the palette should
+resolve to roughly the ratio below — a dominant neutral field, a substantial dark, and green as a
+minority accent. This proportion is what separates a premium identity from a promotional one.
+NEUTRAL · ~62% DARK · ~28% 10%
+FIG. 18.1 — TARGET COLOUR PROPORTION. GREEN IS A DELIBERATE MINORITY.
+MEDIUM GREEN USAGE GUIDANCE
+Digital #08AB5E for actions, focus,
+brand marks
+Reserve for primary actions and the mark; never for
+large fills of text
+Print (coated) Pantone spot preferred over
+CMYK build
+Spot colour holds the green far more reliably than a
+four-colour build
+Packaging Green foil or spot on Bone or
+Ink
+A single confident green element outperforms
+multiple
+Environmental /
+signage
+Green as accent on dark or
+neutral
+Match to a physical standard; verify under retail
+lighting
+Vehicle Ink Green body, green mark Legibility and restraint at distance; avoid full green
+wraps
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 41
+
+--- PAGE 46 ---
+CHAPTER NINETEEN
+Colour Accessibility
+Accessibility is not a constraint on the palette. It is a discipline that makes
+the palette work — and it produces one rule that every designer and
+developer must internalise.
+The brand green is vivid, but vividness and contrast are not the same thing. Measured against
+the WCAG contrast standard, #08AB5E on white reaches only 3.0:1 — sufficient for large text
+and interface components, but below the 4.5:1 required for normal body text. This is not a flaw to
+hide; it is a specification to design around. The system resolves it cleanly with a single governing
+rule.
+THE GOVERNING ACCESSIBILITY RULE
+Never set body text in Phoenix Green on a light background. For green text on light, use Deep
+Pine #05633A (7.36:1 — passes AAA). Reserve Phoenix Green for fills, large display type,
+interface accents, and use on dark backgrounds, where it reaches 6.2:1 on Ink Green.
+FOREGROUND BACKGROUND RATIO VERDICT
+Phoenix Green #08AB5E White 3.0:1 Large / UI only
+Phoenix Green #08AB5E Ink Green #0A1512 6.2:1 Passes AA
+Deep Pine #05633A White 7.36:1 Passes AAA
+Graphite #14181A Bone #F7F6F2 16.5:1 Passes AAA
+Slate #6E736F Bone #F7F6F2 4.47:1 Body-text minimum
+Bone #F7F6F2 Ink Green #0A1512 18.6:1 Passes AAA
+Beyond contrast
+Colour is never the sole carrier of meaning. Interface states pair colour with an icon and a label
+so that colour-blind users are never excluded — an error is red and marked and written. Green
+and its functional counterparts are chosen to remain distinguishable across the common forms of
+colour vision deficiency, and every critical combination is verified in build, not assumed.
+Accessibility, like compliance, is treated as evidence of the brand's respect for the person on the
+other side of the screen.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 42
+
+--- PAGE 47 ---
+CHAPTER TWENTY
+Typography
+Three typefaces, three jobs. A neutral grotesque for clarity, an editorial
+serif for authority, and a technical mono for evidence. Together they let
+the brand sound engineered, trustworthy, and precise in the same breath.
+Type does more of the brand's work than any other element, because most brand encounters are
+acts of reading. The system is deliberately tripartite, and each face is chosen for what it signals
+as much as for how it performs. The combination is the point: clarity, authority, and precision are
+exactly the three registers a compliance-first, engineering-led brand must command.
+PRIMARY ·
+GROTESQUE
+Phoenix Sans
+A neutral, highly legible grotesque with a large x-height and open apertures — the typeface
+of engineering-led brands. It is the workhorse: user interface, packaging data, body copy,
+signage, forms. Its neutrality is its virtue; it never editorialises. Recommended cut: Inter, with
+Inter Tight for large display. Both are variable, screen-optimised, and openly licensed for
+unlimited commercial use — a practical asset for an advertising-restricted brand that lives
+on its own owned surfaces.
+EDITORIAL · SERIF Phoenix Editorial
+A refined, contemporary serif with optical sizing, used sparingly for moments of authority
+and storytelling: chapter openers, brand statements, premium print, considered editorial. It
+supplies the heritage and gravity a pure sans cannot, and its restraint keeps the brand from
+ever feeling clinical. Recommended cut: Newsreader. Used only where a moment deserves
+weight — never for interface or data.
+TECHNICAL · MONO Phoenix Mono
+A monospace face for the language of evidence: batch codes, ingredient panels,
+specifications, lab values, kickers, and technical annotation. It makes the brand's rigour
+visible — the typographic signature of a company that tests what it makes. Recommended
+cut: IBM Plex Mono. Used in small, deliberate quantities as a mark of precision, never as
+body text.
+Aa Bb Gg Rr 0123456789 & £ % /PHOENIX VAPERS — BRAND IDENTITY SYSTEM 43
+
+--- PAGE 48 ---
+PHOENIX SANS — THE PRIMARY VOICE OF THE SYSTEM IN SETTING.
+Type hierarchy & scale
+A hierarchy exists to make importance instantly legible without the reader thinking about it. The
+system uses a restrained modular scale and heavy reliance on weight and space rather than
+colour or ornament to signal level. Whitespace is a structural element, not leftover room; the
+brand's premium quality is carried as much by what surrounds the type as by the type itself.
+LEVEL FACE / WEIGHT USE
+Display Phoenix Display 800, tight tracking Covers, hero statements, campaign
+headlines
+Heading Phoenix Display 700 Chapter and section titles
+Subhead Phoenix Sans 600 In-content structure
+Lead Phoenix Editorial 300, generous leading Standfirsts, opening statements
+Body Phoenix Sans 400, 1.6 line height Running text
+Caption /
+kicker
+Phoenix Mono 500, wide tracking,
+uppercase
+Labels, metadata, technical notes
+Setting 01
+Left-aligned, ragged right
+The brand sets ragged right for a human,
+unforced rhythm. Justified text is avoided;
+its rivers read as rigid rather than refined.
+Setting 02
+Generous leading, tight display
+Body leads open for calm; display tracks
+tight for confidence. The contrast between
+the two is a signature of the system.
+FALLBACK STACK
+Where brand fonts cannot load — email clients, third-party platforms — the approved fallback is
+a system grotesque (Helvetica Neue, Arial) for sans and Georgia for serif. Consistency of
+hierarchy matters more than fidelity of face in these constrained contexts.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 44
+
+--- PAGE 49 ---
+CHAPTER TWENTY-ONE
+Grid, Layout & Iconography
+Structure is invisible when it works and unmistakable when it fails. The
+grid is the silent proof that the same engineering discipline behind the
+product governs its communication.
+The layout grid
+All brand layouts derive from a twelve-column grid with a consistent gutter and a baseline
+rhythm. Twelve divides cleanly into halves, thirds, quarters, and sixths, giving flexibility without
+improvisation. Generous outer margins frame content and signal premium confidence — the
+brand is comfortable leaving space empty. Alignment is strict: elements share edges and
+baselines, and nothing floats. The grid is never shown to the customer, but its order is always
+felt.
+12 columns · consistent gutter · strict baseline
+FIG. 21.1 — THE TWELVE-COLUMN EDITORIAL GRID UNDERLYING ALL BRAND LAYOUTS.
+Iconography
+Icons are drawn as a single family: geometric, line-based, with a consistent stroke weight
+matched to the mark, rounded terminals, and no fill. They are functional pictograms, not
+illustrations — legible at small sizes and calm in aggregate. The style deliberately echoes the
+mark's construction so that an icon and the logo feel made by the same hand. Icons never carry
+colour beyond the system; they are graphite on light, bone on dark, green only when active.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 45
+
+--- PAGE 50 ---
+FIG. 21.2 — SAMPLE ICONS: ASSURED, VERIFIED, SECURE, TESTED, PRODUCT. ONE FAMILY, ONE STROKE,
+ONE TEMPERAMENT.
+MOTION, BRIEFLY
+Where the brand moves — interface, screens, digital — motion is calm, brief, and eased.
+Transitions are short (150–250ms), functional, and never bouncy or playful. The brand rises; it
+does not jump. Movement should feel like precision engineering settling into place.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 46
+
+--- PAGE 51 ---
+CHAPTER TWENTY-TWO
+Photography & Graphic Language
+The brand is photographed the way a precision instrument is
+photographed — with light, control, and respect for the object. No lifestyle
+clichés, no clouds of vapour, no smoke.
+Art direction
+Photography is the fastest way to betray a premium position, and the vaping category betrays it
+constantly — neon-lit clouds, party imagery, product shots that look like packaging for sweets.
+Phoenix Vapers photographs in an entirely different register. Products are shown as designed
+objects: clean surfaces, controlled directional light, honest materials, deep shadow, generous
+negative space. The reference points are the product photography of premium technology and
+design brands, not the vaping industry. Vapour, when it must appear, is a faint, controlled trace —
+never a spectacle.
+Photo 01
+Object as hero
+The product, sharply resolved, against a
+restrained field of Bone or Ink. The
+engineering is the subject; nothing distracts
+from it.
+Photo 02
+Controlled light
+Single directional source, real shadow, no
+flat over-lighting. Light models the form and
+signals seriousness.
+Photo 03
+Detail & material
+Macro on the real texture of a label, a thread,
+a machined edge. Proof of craft, shown not
+claimed.
+Photo 04
+People, rarely & real
+When people appear, they are unmistakably
+adult, calm, and unstyled — never a party,
+never youth-coded.
+Image treatment
+A consistent treatment unifies imagery from many sources: slightly desaturated, neutral-to-cool
+grade, protected shadows, no heavy filters. A single duotone in Ink Green and Bone is available
+for editorial and campaign use where a unifying wash is wanted. Green is introduced into
+imagery only through the real product or a graphic element laid over the photograph — never
+through a colour cast.
+The graphic language: The AscentPHOENIX VAPERS — BRAND IDENTITY SYSTEM 47
+
+--- PAGE 52 ---
+Beyond the logo, the brand owns one proprietary graphic device: The Ascent — the chevron
+rhythm of the mark abstracted into a structural motif. It appears as a subtle ascending line, a
+corner detail, a section marker, or a large architectural element cropped off-page. It is always
+geometric, always calm, always derived from the mark's angles. It gives the system a
+recognisable signature that works even where the full logo does not appear.
+FIG. 22.1 — THE ASCENT MOTIF: THE MARK'S GEOMETRY EXTENDED AS A SIGNATURE GRAPHIC.
+PATTERNS & TEXTURE
+Where a pattern is needed, it is built from The Ascent at low contrast — never a busy repeat.
+Texture is drawn from real materials: uncoated paper, matte polymer, machined metal. The
+brand's surfaces should feel good in the hand, because tactility is a premium signal that
+photographs cannot fake.
+ON RESTRAINT
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 48
+
+--- PAGE 53 ---
+In a category that spent a decade shouting,
+the most radical thing a brand can do is
+speak quietly, and mean it.
+PHOENIX VAPERS · BRAND PHILOSOPHY
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 49
+
+--- PAGE 54 ---
+PART FIVE
+Application
+23 Packaging System
+24 Retail, Environment & Fleet
+25 Digital Product & Design Tokens
+26 Stationery & Merchandise
+5
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 50
+
+--- PAGE 55 ---
+A
+CHAPTER TWENTY-THREE
+Packaging System
+Packaging is the brand's most important medium. In an advertising-
+restricted market it is where the sale is made, the trust is signalled, and the
+standard is proven — held in the customer's hand.
+vape bottle sits on a shelf beside dozens of competitors, most of them loud. Phoenix
+Vapers wins that shelf not by shouting louder but by looking unmistakably more serious
+— the one adult object in a display of noise. The packaging philosophy is disciplined
+minimalism: a restrained field, one confident green element, precise typographic information, and
+honest materials. The mandatory regulatory content is designed in, treated as evidence of care
+rather than as clutter to minimise.
+Packaging principles
+Pack 01
+One green moment
+A single confident use of green — a foil
+mark, a spot band — against Bone or Ink.
+Restraint reads as premium; multiplicity
+reads as promotion.
+Pack 02
+Information as design
+Strength, ratio, volume, batch, and warnings
+set in the type system with clarity and
+hierarchy. Nothing hidden, nothing shrunk.
+Pack 03
+Honest materials
+Uncoated or soft-touch stocks, recyclable
+mono-materials, minimal finishing. The pack
+should feel considered in the hand.
+Pack 04
+System, not one-offs
+Ranges share a template and vary only by a
+disciplined colour or name field, so a shelf of
+Phoenix products reads as one family.
+PHOENIX
+VAPERS
+Cedar
+10 mg/ml · 50/50 · 10ml
+CONTAINS NICOTINE.An addictive substance.
+FIG. 23.1 — 10ML TPD
+LABEL
+PHOENIX
+VAPERS
+Shortfill
+0 mg/ml · 70/30 · 100ml
+UK MADE · TESTED
+FIG. 23.2 — SHORTFILL,
+INK VARIANT
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 51
+
+--- PAGE 56 ---
+Across the packaging chain
+FORMAT TREATMENT
+Bottle labels Single template; variant differentiated by name field and strength; regulatory panel designed-
+in
+Cartons Bone or Ink; debossed mark; matte finish; batch and notification data in mono
+Gift boxes Rigid board, soft-touch, green foil mark; minimal, tactile, considered unboxing
+Shipping
+boxes
+Unbleached board, single-colour mark, printed responsibly; discreet, not a billboard
+Wholesale Functional, clearly labelled, compliance-forward; the standard visible to trade partners
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 52
+
+--- PAGE 57 ---
+CHAPTER TWENTY-FOUR
+Retail, Environment & Fleet
+The physical brand — stores, point of sale, exhibitions, vehicles, and staff —
+is where trust is either confirmed or contradicted in person.
+Retail environment
+The store is a three-dimensional argument for the brand. It should feel closer to a considered
+technology or apothecary retail space than to a conventional vape shop: calm lighting, clear
+sightlines, generous space around product, materials that match the packaging. Age verification
+is visible and matter-of-fact — a sign of care, not suspicion. The EL-Science risk assessments,
+available in store, are presented as a genuine point of pride rather than hidden in a folder.
+Everything the customer touches confirms the promise made on the label.
+Retail 01
+Fascia & signage
+Ink Green fascia, green mark, restrained.
+Environmental graphics use The Ascent.
+Legible at distance; never cluttered with
+offers.
+Retail 02
+Point of sale & display
+Modular units in system materials; products
+displayed as objects with clear specification
+cards in the type system. Order over
+abundance.
+Retail 03
+Exhibition & wholesale stand
+A calm, architectural stand that stands out
+precisely by refusing the trade-show noise
+around it. The Ascent at architectural scale.
+Retail 04
+Click & collect
+The bridge between digital and physical:
+branded, efficient, respectful of time. The
+handover is a brand moment, handled with
+care.
+Fleet & uniform
+Vehicles are Ink Green with a single green mark and minimal wording — a moving proof of a
+serious operation, not a mobile advertisement (which regulation increasingly restricts in any
+case). Uniform is simple and dignified: dark workwear or apron in system colours, a discreet
+embroidered mark, quality fabric. Staff should look like specialists, because they are. The person
+behind the counter is the final, human expression of the brand, and they are dressed to be
+trusted.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 53
+
+--- PAGE 58 ---
+PHOENIX
+V A P E R S
+Ink Green body · single m
+FIG. 24.1 — FLEET LIVERY. RESTRAINT AT SPEED AND DISTANCE.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 54
+
+--- PAGE 59 ---
+CHAPTER TWENTY-FIVE
+Digital Product & Design Tokens
+The website and future platform are not brochures. They are the brand as
+software — and in a licensed, verified, data-driven market, the digital
+product is where the company's technological future is built.
+The e-commerce platform is the brand's largest owned surface and the foundation of its ambition
+to become a technology platform. It must feel as engineered as the products it sells: fast, clear,
+calm, and trustworthy. Age and identity verification are designed as reassuring, competent
+moments rather than friction. Product pages lead with specification and evidence. The interface
+uses the type system, the neutral spine, and green reserved for action and confirmation. Nothing
+on the screen should feel improvised.
+Interface principles
+UI 01
+Evidence-forward
+Specification, provenance, and risk-
+assessment access are primary content, not
+buried tabs. The proof leads.
+UI 02
+Calm & fast
+Restrained motion, generous space,
+immediate response. Speed and stillness
+both read as competence.
+UI 03
+Verification as care
+Age checks framed as responsibility, not
+obstacle. Clear, quick, respectful of the adult
+on the other side.
+UI 04
+Accessible by default
+WCAG AA minimum; the Deep Pine rule
+enforced in code; never colour alone for
+meaning.
+Design tokens
+The visual system is expressed to engineering as tokens — named, versioned variables that keep
+design and code in perfect agreement. Tokens are the mechanism by which brand governance
+survives contact with a real codebase. The core set:
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 55
+
+--- PAGE 60 ---
+TOKEN VALUE ROLE
+color.brand.primary #08AB5E Actions, focus, brand accent
+color.brand.text-green #05633A Green text on light (accessible)
+color.ink #0A1512 Primary dark surface / text
+color.surface #F7F6F2 Default background
+color.text.secondary #6E736F Secondary text
+color.state.caution #E8A33D Warning state
+color.state.error #C7482F Error state
+font.sans Inter UI & body
+font.mono IBM Plex Mono Data & specification
+radius.base 6px Corner radius
+motion.base 200ms ease-out Default transition
+space.unit 8px Spacing base
+SINGLE SOURCE OF TRUTH
+Tokens are versioned alongside this book. A change to the palette or type is a change to the
+tokens, published once and inherited everywhere. This is how an engineering-led brand keeps
+its identity engineered rather than eroded.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 56
+
+--- PAGE 61 ---
+CHAPTER TWENTY-SIX
+Stationery & Merchandise
+The small, everyday artefacts — a business card, an invoice, a delivery note,
+a tote — are where a brand is either whole or careless. Consistency here is
+the proof of discipline everywhere.
+Corporate stationery
+Business cards, letterhead, invoices, compliment slips, and email signatures share one restrained
+system: Bone stock, generous margins, the mark, the type system, and information set with the
+same clarity as a product label. Trade and wholesale documentation carries the compliance-
+forward tone of the brand — a Phoenix Vapers invoice should feel as considered as a Phoenix
+Vapers bottle. Cards are printed on heavy uncoated stock, ideally with a debossed mark: the
+brand is felt before it is read.
+Doc 01
+Letterhead & invoices
+Bone, 12-column grid, mark top-left, mono
+for reference data. Legal footer set legibly.
+Quiet authority on paper.
+Doc 02
+Delivery & packing notes
+Part of the unboxing; a considered note, not
+a receipt. Confirms provenance and thanks
+the customer without hype.
+Merchandise
+Merchandise is produced sparingly and only to a premium standard — the brand would rather
+make nothing than make something cheap. Where it exists, it favours function and quality: a well-
+made tote in natural canvas, an enamel pin of the mark, a durable travel case for hardware. Every
+item must pass one test: would an adult who values good things actually keep it? If not, it is not
+made. Cheap promotional merchandise contradicts the entire position and is prohibited.
+THE CONSISTENCY TEST
+Lay every artefact the company produces side by side — bottle, card, invoice, box, screen, tote.
+They must look like one company made all of them, to one standard. Where an item breaks the
+family, the item is wrong, not the system.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 57
+
+--- PAGE 62 ---
+PART SIX
+Stewardship
+27 Sustainability & Responsibility
+28 Governance & Evolution
+29 Executive Statement
+6
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 58
+
+--- PAGE 63 ---
+M
+CHAPTER TWENTY-SEVEN
+Sustainability & Responsibility
+The disposable ban was, at root, an environmental judgement on the
+category. A brand claiming responsibility must answer that judgement in
+substance, not slogan.
+illions of single-use vapes were discarded every week before the 2025 ban — lithium
+batteries and plastic in landfill and on pavements. That waste is the moral backdrop
+against which every vaping brand is now read. Phoenix Vapers' commitment to
+reusable, refillable formats is not merely commercial alignment with the law; it is the practical
+expression of its responsibility value. Sustainability, for this brand, is a design and operations
+discipline, and it is stated only where it is true.
+Commitments in substance
+Env 01
+Reusable by design
+The range favours refillable and pod
+systems that keep devices in use and out of
+landfill. Longevity is designed in, not sold
+against.
+Env 02
+Honest packaging
+Recyclable mono-materials, reduced
+finishing, right-sized boxes. Restraint is also
+a material saving.
+Env 03
+Take-back & recycling
+Battery and device recycling offered in store
+— closing the loop the disposable era left
+open.
+Env 04
+No greenwashing
+Environmental claims are specific,
+measurable, and evidenced. The brand says
+less than it does, never more.
+THE RULE ON CLAIMS
+The brand never uses sustainability as decoration. A green colour is not an environmental claim.
+Every stated commitment is backed by a real practice the company can show — consistent with
+the transparency that defines everything else it does.
+Social responsibility
+Responsibility extends to who the brand reaches. Phoenix Vapers designs, names, and
+communicates in ways that are unmistakably adult and never appeal to minors — a discipline that
+also anticipates the packaging and advertising powers of the Tobacco and Vapes Act. AgePHOENIX VAPERS — BRAND IDENTITY SYSTEM 59
+
+--- PAGE 64 ---
+verification is rigorous and visible. The brand supports the legitimate public-health role of vaping
+as a smoking-cessation tool without ever overclaiming it. This is not compliance for its own sake;
+it is the brand's values made operational.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 60
+
+--- PAGE 65 ---
+CHAPTER TWENTY-EIGHT
+Governance & Evolution
+A brand system is only as strong as its enforcement. This chapter defines
+how the identity is protected, who protects it, and how it is permitted to
+change without losing itself.
+Ownership & approval
+The brand requires a single accountable owner — a brand guardian or custodian — with the
+authority to approve or reject any application of the identity. Consistency is not achieved by good
+intentions distributed across many hands; it is achieved by clear ownership and a defined
+approval path. External partners work from this book and from the master asset library, and their
+output is signed off against both before release.
+ARTEFACT APPROVAL
+New packaging or product identity Brand guardian + compliance sign-off
+Campaign or environmental graphics Brand guardian
+Digital product changes to tokens Brand guardian + engineering
+Routine collateral on template Delegated, within system rules
+Any use of the logo by a third party Brand guardian, in writing
+Asset management
+Master artwork — logos, fonts, tokens, templates, this document — lives in a single, versioned,
+access-controlled library. No one recreates an asset that already exists; no one works from a file
+pulled off a website or a colleague's desktop. Each asset is versioned, and the current version is
+the only permitted one. This is the operational backbone of consistency, and it is treated with the
+same rigour as the product's own quality management.
+Evolution roadmap
+A brand must be stable to be trusted and alive to stay relevant. Phoenix Vapers resolves this
+tension by distinguishing the fixed core — position, values, mark, green, type system — from the
+flexible edge — campaigns, photography, seasonal expression, new applications. The core
+changes rarely and only through formal review; the edge evolves continuously within the system.
+The likely evolution over the coming decade tracks the market: deeper investment in the digital
+and data platform as licensing matures, extension of the standard through wholesale, and
+readiness for whatever secondary legislation the Tobacco and Vapes Act brings. The brand isPHOENIX VAPERS — BRAND IDENTITY SYSTEM 61
+
+--- PAGE 66 ---
+built to absorb that change without a rebrand — which is precisely the point of building it
+properly now.
+2026 · Launch Platform Wholesale scale Category standard
+FIXED CORE HELD ————————————————— EDGE EVOLVES
+FIG. 28.1 — EVOLUTION MODEL: A HELD CORE, AN EVOLVING EDGE.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 62
+
+--- PAGE 67 ---
+T
+CHAPTER TWENTY-NINE
+Executive Statement
+Everything in this book reduces to one idea, and the idea is worth stating
+plainly at the end, as it was at the beginning.
+he United Kingdom vaping market has been forced to grow up. The disposable culture is
+illegal, advertising is being switched off, duty is flattening the price game, and licensing is
+rewarding the credentialled. In that corrected market, the winners will not be the loudest
+or the cheapest. They will be the most trusted. Phoenix Vapers is built — genuinely, in its
+manufacturing, its testing, its certification, and its conduct — to be exactly that. The work of this
+brand system has been to make an existing truth visible, premium, and impossible to confuse
+with the noise the country has left behind.
+The identity is restrained because the position demands restraint. The green is retained because
+equity is not discarded lightly. The typography is engineered because the brand is engineered.
+The voice is calm because trust is calm. The packaging is quiet because quiet, in this category, is
+the loudest possible signal of confidence. None of it is decoration. All of it is strategy, expressed
+as design.
+Held to consistently, protected properly, and evolved with discipline, this system will not need
+replacing. It will compound — growing more recognisable, more valuable, and more trusted with
+every year it is applied without compromise. That is the definition of a brand asset, and it is what
+this book is built to create.
+THE WHOLE BOOK IN ONE LINE
+A disposable brand sells a moment. Phoenix Vapers sells a standard.
+Everything here exists to make that standard visible — and to hold it.
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 63
+
+--- PAGE 68 ---
+The standard of trust in British vaping.
+PHOENIX VAPERS LIMITED · PETERBOROUGH · UNITED KINGDOM
+BRAND IDENTITY SYSTEM · VOLUME ONE · EDITION 1.0 · CONFIDENTIAL
+PHOENIX VAPERS — BRAND IDENTITY SYSTEM 64

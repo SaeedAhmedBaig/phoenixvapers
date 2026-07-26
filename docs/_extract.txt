@@ -1,0 +1,5346 @@
+
+--- PAGE 2 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  2 
+CONTENTS  
+Six parts · the platform from strategy to build 
+PART ONE  STRATEGY & CONTEXT 
+ 1  
+Product Vision  
+ 2  
+Scope  
+ 3  
+Users, Roles & Personas  
+ 4  
+Regulatory & Compliance Requirements  
+PART TWO  FUNCTIONAL SPECIFICATION 
+ 5  
+Storefront, Catalogue & Discovery  
+ 6  
+Accounts, Cart & Checkout  
+ 7  
+Orders & Order Management  
+ 8  
+Inventory & Warehouse  
+ 9  
+Fulfilment, Shipping & Tracking  
+10  
+Returns, Refunds & Reverse Logistics  
+11  
+Customer Management & Support (CRM)  
+12  
+Engagement: Loyalty, Subscriptions, Promotions, Reviews, Content  
+13  
+Wholesale (B2B) Portal  
+14  
+Administration, Analytics & Business Intelligence  
+15  
+Process Automation  
+PART THREE  ARCHITECTURE & ENGINEERING 
+16  
+System Architecture  
+17  
+Non
+ -
+ Functional Requirements  
+18  
+Data Model (MongoDB)  
+19  
+APIs, Events & Integrations  
+PART FOUR  EXPERIENCE (UI/UX) 
+20  
+Experience Principles  
+21  
+Key Journeys & Screens  
+22  
+Component & Interaction Specification  
+PART FIVE  QUALITY & DELIVERY 
+23  
+Quality Assurance Strategy  
+24  
+Delivery, CI/CD & Environments  
+PART SIX  OPERATIONS & THE ADMIN CONSOLE 
+25  
+Admin Console Architecture  
+26  
+Replenishment, Labelling & Barcode Serialisation  
+27  
+Inventory Management in Depth  
+28  
+Sales & Revenue Intelligence  
+29  
+Branded Communications & Document System  
+30  
+Customer, Marketing & Content Operations  
+31  
+Platform Operations & Governance  
+PART SEVEN  BUILD PROGRAMME 
+32  
+Phased Roadmap  
+33  
+Phase
+ -
+ by
+ -
+ Phase Development Prompts  
+34  
+Closing Note  
+ 
+
+--- PAGE 3 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  3 
+SECTION 0  
+ 
+Document Control 
+This document is the single, governing specification for the Phoenix Vapers commerce platform. It is 
+written to be read and worked from simultaneously by three audiences: the 
+ engineering team  
+who 
+will build the system, the 
+ quality assurance team  
+who will prove it correct, and the 
+ UI/UX team  
+who 
+will design what the customer sees and feels. Every section is written so that a competent 
+professional in any of those three disciplines can act on it without further briefing.  
+It is deliberately exhaustive. Where a decision has been made, the decision and its reasoning are both 
+recorded, so that no one downstream has to guess at intent. Where a decision has been deliberately 
+deferred, it is marked 
+ [OPEN]  
+with the criteria for resolving it. Where a requirement is legally 
+mandatory rather than a product preference, it is marked 
+ [COMPLIANCE]  
+and must never be 
+removed, weakened, or "optimised away" without written sign
+ -
+ off from the compliance owner.  
+FIELD  VALUE  
+Document  
+ Commerce Platform 
+ — 
+Product, Technical & Delivery 
+Specification  
+Edition  
+ 1.0 (Volume One)  
+Status  
+ Confidential 
+ — 
+Internal & Delivery
+ -
+ Partner Use  
+Owner  
+ Digital Platform Programme, Phoenix Vapers Limited  
+Primary audience  
+ Engineering · Quality Assurance · UI/UX  
+Regulatory baseline  
+ UK, as at the Tobacco and Vapes Act 2026 and the 
+Vaping Products Duty commencing 1 October 2026  
+Related documents  
+ Phoenix Vapers Brand Identity Book (Vol. 1); Product 
+Requirements Document  
+Language  
+ British English  
+ 
+How to read this document  
+The document runs from 
+ why  
+to 
+ what  
+to 
+ how  
+to 
+ in what order
+ . Part One frames the strategy, the 
+compliance regime, and the people. Part Two specifies every customer
+ -
+ facing functional domain. 
+Part Three defines the architecture, the stack, the repository and folder structure, the data model, and 
+the interfaces. Part  
+Four is the UI/UX specification. Part Five is the QA and delivery strategy. 
+ Part Six 
+specifies the admin console and the operations the business actually runs on  
+— 
+replenishment, 
+labelling and barcode serialisation, inventory in depth, sales and finance intelligence, branded 
+communications, and platform governance. Part Seven is the phase
+ -
+ by
+ -
+ phase build programme, 
+ending in a set of ready
+ -
+ to
+-
+ use development prompt
+ s.  
+Requirements use 
+ MUST
+ , 
+SHOULD
+ , and 
+ MAY  
+in the conventional sense (RFC 2119). A 
+ MUST  
+is non
+ -
+negotiable; a 
+ SHOULD  
+is a strong recommendation that requires justification to decline; a 
+ MAY  
+is 
+genuinely optional.  
+ 
+
+--- PAGE 5 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  5 
+SECTION 1  
+ 
+Product Vision 
+Phoenix Vapers is not building a shop. It is building the operating system of a compliance
+ -
+ first, 
+engineering
+ -
+ led vaping company 
+ — 
+the digital surface on which the brand's entire promise is either 
+kept or broken. In a market that has been forcibly matured 
+ by the disposable ban, an advertising ban, 
+a new duty, and a licensing regime, the retailers who win will be the ones customers trust. The 
+platform is the primary instrument of that trust.  
+The vision is a platform that 
+ every kind of vaper wants to use  
+— 
+the cautious newcomer switching 
+from cigarettes, the experienced hobbyist who cares about coils and wattage, the convenience
+ -
+driven customer who wants their usual order to arrive without thought, and the trade buyer stocking a 
+shop 
+ — 
+while remaining, un
+ derneath, the most rigorously compliant and operationally automated 
+commerce system in the category. The customer should feel calm, informed, and respected. The 
+business should feel a machine that runs itself: orders flow to fulfilment, stock reorders itse
+ lf, 
+revenue reconciles nightly, and the compliance posture is provable at any moment.  
+The reference points for ambition are the great commerce platforms 
+ — 
+the catalogue depth and 
+logistics of Amazon, the wholesale and B2B machinery of Alibaba, the pricing and merchandising 
+sophistication of AliExpress 
+ — 
+but the platform is not a clone of an
+ y of them. It is those capabilities, 
+rebuilt for a single regulated category, with compliance and trust designed into the foundation rather 
+than bolted on.  
+1.1 Strategic pillars 
+The platform exists to advance four commercial pillars, and every feature in this document should be 
+traceable to at least one of them.  
+– 
+ Trust as the product.  
+Provenance, testing evidence, honest information, and visible 
+compliance are first
+ -
+ class features, not footnotes. The platform sells confidence.  
+– 
+ Every vaper, one platform.  
+Retail (B2C) and wholesale (B2B) on one commercial core; 
+beginner guidance and expert depth in one catalogue; one
+ -
+ off purchase and subscription in one 
+basket.  
+– 
+ An operation that runs itself.  
+Order
+ -
+ to
+-
+ cash, procure
+ -
+ to
+-
+ restock, and fulfilment are 
+automated end
+ -
+ to
+-
+ end. Humans handle exceptions and relationships, not routine.  
+– 
+ A platform, not a website.  
+A service
+ -
+ oriented, event
+ -
+ driven core with clean APIs, so that new 
+channels (app, marketplace, new markets) are extensions, not rebuilds.  
+ 
+
+--- PAGE 6 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  6 
+1.2 Measures of success 
+The platform is successful when the numbers below are true and provable from its own dashboards. 
+Targets are directional for Edition 1.0 and will be ratified with the business before launch.  
+DOMAIN  PRIMARY METRIC  TARGET (YEAR ONE)  
+Conversion  
+ Storefront visit → paid order  
+ ≥ 3.5% blended; ≥ 6% for returning 
+customers  
+Retention  
+ 90
+ -
+ day repeat purchase rate  
+ ≥ 45%  
+Subscriptions  
+ Share of revenue from auto
+ -
+replenishment  
+≥ 25%  
+Wholesale  
+ Active trade accounts ordering 
+monthly  
+Growth month on month  
+Fulfilment  
+ Orders dispatched same working 
+day (cut
+ -
+ off met)  
+≥ 98%  
+Reliability  
+ Storefront availability (rolling 30 
+days)  
+≥ 99.95%  
+Compliance  
+ Age
+ -
+ verification pass enforced 
+before dispatch  
+100% 
+ — 
+no exceptions  
+Support  
+ First
+ -
+ response time on customer 
+contacts  
+< 4 working hours  
+ 
+ 
+
+--- PAGE 7 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  7 
+SECTION 2  
+ 
+Scope 
+2.1 In scope for Edition 1.0 
+The first edition delivers a complete, launchable commerce platform: a public storefront and product 
+catalogue; search and discovery; customer accounts with rigorous age and identity verification; cart, 
+checkout, payments, and the vaping
+ -
+ duty
+ -
+ aware pricing  
+engine; a full order
+ -
+ management system; 
+inventory across multiple locations; fulfilment with carrier integration and end
+ -
+ to
+-
+ end shipment 
+tracking; returns; a customer
+ -
+ relationship and support console; a loyalty and rewards programme; 
+subscriptions and aut
+ o
+-
+ replenishment; a wholesale (B2B) portal with trade verification; promotions 
+and content management within the bounds of advertising law; product reviews with moderation; a 
+comprehensive administration and business
+ -
+ intelligence suite covering sales, reven
+ ue, customers, 
+and operations; and the process
+ -
+ automation fabric that ties it together.  
+2.2 Out of scope for Edition 1.0 (roadmap candidates) 
+Native mobile applications (the storefront is a responsive, installable progressive web app in Edition 
+1.0); a third
+ -
+ party seller 
+ marketplace  
+(the architecture reserves for it, but Edition 1.0 sells first
+ -
+ party 
+and consigned stock only); international/multi
+ -
+ currency selling beyond the United Kingdom; and 
+physical
+ -
+ store point
+ -
+ of
+ -
+ sale integration beyond click
+ -
+ and
+ -
+ collect handover. Each is designe
+ d 
+ for  
+but 
+not 
+ built  
+in Edition 1.0.  
+2.3 Guiding constraints 
+– 
+ [COMPLIANCE] Regulated
+ -
+ product first.  
+No feature may ship that undermines age 
+restriction, product compliance (TPD/TRPR), duty accounting, or advertising rules. Compliance 
+requirements outrank UX convenience and commercial pressure.  
+– 
+ Brand
+ -
+ consistent.  
+The customer
+ -
+ facing surface MUST implement the Phoenix design system 
+(tokens, type, colour, tone) defined in the Brand Identity Book. The platform is an expression of the 
+brand, not a generic theme.  
+– 
+ Accessible by default.  
+WCAG 2.2 AA is a floor, not a goal (see §17). The "Deep Pine rule" for 
+green text is enforced in code.  
+– 
+ Evidence
+ -
+ led.  
+Every product surfaces its provenance and testing evidence. This is a 
+differentiator and a compliance asset.  
+ 
+
+--- PAGE 8 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  8 
+SECTION 3  
+ 
+Users, Roles & Personas 
+The platform serves two broad populations 
+ — 
+customers  
+(who buy) and 
+ operators  
+(who run the 
+business) 
+ — 
+across many roles. Access is governed by role
+ -
+ based access control (see §16.3); the 
+roles below are the seed set.  
+3.1 Customer personas 
+These four personas were established in the brand work and drive the storefront UX. Every major 
+flow is tested against all four.  
+A 
+ — 
+The Switcher.  
+An adult moving away from cigarettes. Anxious about getting it wrong, sensitive 
+to being judged, motivated by health and by trust. Needs plain guidance ("start here"), reassurance 
+about safety and testing, and a frictionless first purchase. The platform m
+ ust make the first ten 
+minutes calm and confidence
+ -
+ building.  
+B 
+— 
+The Enthusiast.  
+Experienced, technical, values control. Cares about VG/PG ratio, nicotine 
+strength, coil resistance, wattage, flavour nuance, and hardware compatibility. Needs deep 
+specification data, filtering by technical attributes, stock visibility, and fast re
+ -
+ order
+ ing. Will abandon a 
+shop that treats them like a beginner.  
+C 
+ — 
+The Convenience Buyer.  
+Knows what they like; wants it to arrive without effort. The prime 
+subscription and auto
+ -
+ replenishment persona. Needs saved payment and address, one
+ -
+ tap re
+ -
+ order, 
+subscription management, and reliable delivery with proactive tracking.  
+D 
+— 
+The Trade Buyer.  
+Runs or stocks a shop. Buys at wholesale, in volume, on account. Needs 
+verified trade pricing, bulk ordering, credit terms, order history, reordering, and compliance 
+documentation (invoices, notification numbers, duty records) for their own obligations.  
+3.2 Operator roles 
+ROLE  PURPOSE  REPRESENTATIVE PERMISSIONS  
+Customer Service Agent  
+ Resolve customer contacts  
+ View/search orders & customers; 
+issue refunds within limit; create 
+returns; add notes; impersonate 
+(read
+ -
+ only) with audit  
+Fulfilment Operative  
+ Pick, pack, dispatch  
+ View picklists; scan items; confirm 
+dispatch; print labels; report stock 
+discrepancies  
+Warehouse Manager  
+ Run a location  
+ Manage stock, receipts, transfers, 
+cycle counts; set reorder points; 
+view location KPIs  
+Merchandiser  
+ Curate the catalogue  
+ Create/edit products (draft → 
+review); manage collections, 
+content, on
+ -
+ site placement; no 
+compliance
+ -
+ flag override  
+Compliance Officer  
+ Guard the licence  
+ Approve product listings; set/lock 
+TPD & duty attributes; configure AV 
+rules; access full audit; halt sale of 
+any SKU  
+Pricing & Promotions Manager  
+ Manage money
+ -
+ on
+ -
+ the
+ -
+ shelf  
+ Manage price lists, duty parameters, 
+promotions within legal rules  
+
+--- PAGE 9 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  9 
+ROLE  PURPOSE  REPRESENTATIVE PERMISSIONS  
+Wholesale Account Manager  
+ Own trade relationships  
+ Approve trade accounts; set 
+account pricing/credit; manage B2B 
+orders  
+Finance / Revenue Analyst  
+ Reconcile & report  
+ Read revenue, tax/duty, 
+settlements; export ledgers; no 
+operational write access  
+Marketing Manager  
+ Lifecycle comms  
+ Manage email/SMS lifecycle 
+campaigns to opted
+ -
+ in audiences 
+within advertising law; no ad
+ -
+network integrations  
+Platform Administrator  
+ Run the system  
+ Manage roles, integrations, feature 
+flags, configuration; full audit; 
+cannot silently alter compliance logs  
+ 
+Two principles govern every role. 
+ Least privilege:  
+each role gets the minimum access to do its job. 
+[COMPLIANCE] Segregation of duties:  
+the person who can create a product cannot unilaterally clear 
+its compliance flags; the person who can issue a refund cannot also approve their own limit breach. 
+Sensitive actions require a second authorised role.  
+ 
+
+--- PAGE 10 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  10 
+SECTION 4    [COMPLIANCE]  
+ 
+Regulatory & Compliance Requirements 
+This section is the spine of the platform. It is written first among the requirements because in this 
+category compliance is not a constraint on the product 
+ — 
+it 
+is  
+the product. Every requirement here is 
+mandatory. None may be descoped for a deadline. The compliance owner signs off this section and 
+any change to it.  
+4.1 The regulatory landscape the platform must satisfy 
+The platform operates under, at minimum, the following United Kingdom regimes. Engineering must 
+treat each as a source of hard requirements, and the system must be able to 
+ prove  
+adherence on 
+demand.  
+REGIME  WHAT IT REQUIRES OF THE PLATFORM  
+Age of sale (18+) & Challenge 25  
+ No sale, and no dispatch, of any nicotine or vaping 
+product to anyone under 18. Verification at account level 
+and at delivery.  
+TPD / TRPR 2016  
+ Products must respect: nicotine strength ≤ 20 mg/ml; e
+ -
+liquid tank/bottle limits (nicotine
+ -
+ containing e
+ -
+ liquid ≤ 10 
+ml); MHRA notification before sale; ingredient and 
+emission data; mandated warnings.  
+Disposable vapes ban (in force 1 Jun 2025)  
+ Single
+ -
+ use disposable products must not be listed or 
+sold. Product
+ -
+ type compliance flag enforced at 
+catalogue and checkout.  
+Tobacco and Vapes Act 2026  
+ Advertising and sponsorship restrictions; retail licensing; 
+product registration; powers over point
+ -
+ of
+ -
+ sale display 
+and flavour/packaging appeal to minors. The platform's 
+marketing, merchandising, and content modules operate 
+within these limits.  
+Vaping Products Duty (from 1 Oct 2026)  
+ £2.20 per 10 ml on all vaping liquid (including 0 mg). 
+Duty registration, duty
+ -
+ inclusive pricing, duty 
+accounting and returns, and 
+ — 
+as the stamp scheme 
+matures 
+ — 
+duty
+ -
+ stamp handling.  
+UK GDPR / Data Protection Act 2018  
+ Lawful basis, data minimisation, retention limits, and 
+heightened care for identity and age
+ -
+ verification data 
+(see §16).  
+Consumer law (CRA 2015, Consumer Contracts Regs)  
+ Clear pricing, cancellation/returns rights, accurate 
+descriptions.  
+ 
+4.2 Age & identity verification [COMPLIANCE] 
+Age assurance is the single most important control in the platform. It is required at three moments 
+and MUST be enforced by the backend, never merely by the interface.  
+1. 
+Account
+ -
+ level verification (registration).  
+Before a customer can complete their first purchase, 
+their age MUST be verified to a high standard. The platform integrates a third
+ -
+ party age
+ -
+ verification 
+provider performing an electronic identity/database check (name, address, date of birth against 
+auth
+ oritative data sources), with document
+ -
+ and
+ -
+ liveness verification as an escalation path where the 
+database check is inconclusive. The result is stored as a verification 
+ outcome and evidence 
+reference
+ , not as raw identity documents where avoidable.  
+
+--- PAGE 11 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  11 
+2. 
+ Checkout
+ -
+ time enforcement.  
+Every checkout MUST re
+ -
+ assert that the account holds a valid, 
+unexpired age
+ -
+ verification pass. An order from an unverified or expired account MUST be blocked at 
+the server, with a clear, non
+ -
+ judgemental path to verify.  
+3. 
+ Delivery
+ -
+ time verification [COMPLIANCE].  
+The fulfilment and carrier integration MUST support 
+age
+ -
+ verification on delivery (AVOD) 
+ — 
+an 18+ check by the carrier at handover, or an equivalent 
+controlled
+ -
+ collection process for click
+ -
+ and
+ -
+ collect. Orders MUST be dispatched with the correct age
+ -
+restric
+ ted handling flags.  
+Additional rules: a hard age gate MUST precede access to the storefront where required by policy, 
+recorded per session; verification data has a defined retention and deletion schedule; repeated failed 
+verification triggers a soft lock and human review; and  
+every verification decision is written to an 
+immutable audit log. 
+ The system MUST fail closed:  
+if the verification provider is unavailable, the 
+platform blocks the sale rather than allowing an unverified one.  
+4.3 Product compliance controls [COMPLIANCE] 
+Compliance is enforced in the data model, not left to merchandiser discipline. Every sellable product 
+carries a locked 
+ compliance profile  
+(see §7.2) including product type, nicotine strength, volume, 
+MHRA/registration notification number, ingredient/emission references, mandated warnings, and a 
+duty classification
+ . A product cannot transition to 
+ sellable  
+status unless its compliance profile is 
+complete and approved by a Compliance Officer. The checkout engine re
+ -
+ validates compliance at the 
+point of sale: a product whose compliance profile is incomplete, expired, or flagged is non
+ -
+purchasable regardless of  
+catalogue state. Banned product types (e.g. single
+ -
+ use disposables) are 
+structurally un
+ -
+ listable.  
+4.4 Duty engine [COMPLIANCE] 
+From 1 October 2026 the platform MUST compute Vaping Products Duty on every unit of vaping 
+liquid sold. The duty engine calculates duty as a function of liquid volume (currently £2.20 per 10 ml, 
+applied to all liquid including 0 mg nicotine), applies it co
+ rrectly to bottles, shortfills, and nic
+ -
+ salts, and 
+records the duty component of every transaction separately from VAT and net price. Duty parameters 
+(rate, thresholds, applicability rules) are configuration, not code, so a rate change is an operational 
+ac
+ tion with an audit trail. The finance module produces duty
+ -
+ liability reports suitable for duty returns, 
+and the architecture reserves for duty
+ -
+ stamp verification as the scheme matures. Pricing displayed to 
+customers is duty
+ -
+ inclusive; invoices itemise net,  
+duty, and VAT.  
+4.5 Advertising & merchandising limits [COMPLIANCE] 
+Under the Tobacco and Vapes Act, the platform's marketing and merchandising capabilities are 
+constrained. The system MUST NOT integrate paid advertising networks or affiliate/referral 
+inducements for nicotine products. Lifecycle communications (email/SMS) 
+ are permitted only to 
+existing customers who have given a lawful, auditable opt
+ -
+ in, and every message honours instant 
+unsubscribe. On
+ -
+ site merchandising avoids content that could appeal to minors; naming and imagery 
+follow the brand's responsibility rules.  
+Promotions avoid prohibited inducements. The marketing 
+module enforces these limits as rules 
+ — 
+a campaign that violates them cannot be sent 
+ — 
+and logs 
+every send for audit.  
+4.6 Auditability 
+Everything above is worthless if it cannot be proven. The platform maintains an 
+ immutable, append
+ -
+only audit trail  
+for every compliance
+ -
+ relevant event: verification decisions, compliance
+ -
+ flag changes, 
+price/duty changes, listing approvals, marketing sends, and sensitive operator actions. Audit records 
+are tamper
+ -
+ evident, time
+ -
+ stamped, attributed to an actor, and retai
+ ned per the compliance schedule. 
+
+--- PAGE 12 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  12 
+A Compliance Officer can, at any time, produce evidence that a given order was sold and dispatched 
+to a verified adult, with a compliant product, with duty correctly accounted.  
+ 
+
+--- PAGE 14 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  14 
+SECTION 5  
+ 
+Storefront, Catalogue & Discovery 
+The storefront is the brand made interactive. It must feel calm, fast, and authoritative, and it must 
+serve the Switcher and the Enthusiast from the same pages without condescending to either.  
+5.1 Information architecture 
+The customer
+ -
+ facing IA is organised around how the four personas actually shop, not around internal 
+categories. Top
+ -
+ level navigation resolves to: 
+ Shop  
+(by product type 
+ — 
+E
+-
+ liquids, Nic Salts, Shortfills, 
+Hardware & Kits, Coils & Consumables, Accessories, CBD), 
+ Discover  
+(guidance: "New to vaping", 
+flavour finder, strength guide, hardware chooser), 
+ Our Standard  
+(the trust story: testing, provenance, 
+compliance, sustainability), 
+ Wholesale  
+(gateway to the B2B portal), and 
+ Account
+ . Every product 
+belongs to exactly one primary category and any number of merchandising collections.  
+5.2 Product listing pages (PLP) 
+A listing page presents a filtered, sorted set of products with fast, faceted refinement. Facets are 
+driven by structured product attributes and MUST include, where relevant: product type, flavour 
+profile, nicotine strength, VG/PG ratio, bottle size, brand
+ /range, price, rating, and availability. Filtering 
+and sorting are instant (no full page reload), state is reflected in the URL for shareability and SEO, and 
+results are accessible and keyboard
+ -
+ navigable. Each card shows the essentials at a glance 
+ — 
+name, 
+range, strength, size, price (duty
+ -
+ inclusive), rating, stock state 
+ — 
+with the brand's restrained, 
+evidence
+ -
+ forward styling. Out
+ -
+ of
+ -
+ stock items are shown honestly with back
+ -
+ in
+-
+ stock capture rather 
+than hidden.  
+5.3 Product detail pages (PDP) 
+The PDP is where trust is won. It leads with the product as a designed object and with its 
+ evidence
+ : 
+specification, provenance ("UK
+ -
+ made, batch
+ -
+ tested"), testing and compliance references, and 
+mandated warnings presented clearly rather than buried. Required elements: image gallery; full 
+technical specification (strength, volume, VG/PG, ingredients, suit
+ able devices, coil resistance where 
+applicable); duty
+ -
+ inclusive price with clear breakdown on request; stock and delivery estimate; 
+quantity and variant selection (e.g. strength, flavour, size); 
+ subscribe option  
+with saving shown; add
+ -
+to
+-
+ basket; structured, moderated reviews; related and compatible products; and the 
+compliance/warning block. The PDP MUST render its technical data from the structured product 
+model so it is always consistent with what fulfilment an
+ d compliance hold.  
+5.4 Search & discovery 
+Search is a primary navigation tool, especially for the Enthusiast and Convenience Buyer. The 
+platform provides a dedicated search service (see §13.4) with typo tolerance, synonyms (vaping 
+vocabulary 
+ — 
+"juice", "e
+ -
+ liquid", "shortfill"), attribute
+ -
+ aware que
+ ries ("18mg menthol"), instant 
+autosuggest, and relevance tuned to availability and popularity. Discovery is served by curated 
+collections, editorial guidance content, a 
+ flavour finder  
+and 
+ strength guide  
+for the Switcher, and a 
+recommendation service (see §12.4) offering "you may also like", "frequently bought together", and 
+"compatible with your device". All discovery respects advertising and appeal
+ -
+ to
+-
+ minors rules.  
+5.5 Content & guidance 
+The storefront carries substantial editorial content 
+ — 
+the "Our Standard" story, how
+ -
+ to guidance, the 
+flavour and strength guides, and help content 
+ — 
+managed through the CMS (§12.6). Guidance 
+
+--- PAGE 15 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  15 
+content is a conversion and trust asset for the Switcher and a compliance asset for everyone; it is 
+written in the brand voice and reviewed for compliance before publication.  
+ 
+
+--- PAGE 16 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  16 
+SECTION 6  
+ 
+Accounts, Cart & Checkout 
+6.1 Accounts & profiles 
+A customer account is the trusted container for a verified adult's relationship with Phoenix. It holds 
+identity and age
+ -
+ verification status, contact details, saved addresses, saved (tokenised) payment 
+methods, order history, subscriptions, loyalty balance,  
+communication preferences and consents, and 
+returns. Guest checkout MAY be offered, but a completed purchase always requires a verified age 
+outcome, so a "guest" is really a lightweight account created at checkout. Customers can manage 
+consents granularly  
+and exercise their data rights (export, deletion) self
+ -
+ service, subject to the 
+retention rules that compliance and finance impose on transactional and verification records. Account 
+security requires strong authentication, optional two
+ -
+ factor, and breach
+ -
+ r
+esistant credential storage 
+(§16).  
+6.2 Cart & basket 
+The basket is persistent (surviving sessions for logged
+ -
+ in customers), reflects live pricing including 
+duty, validates stock and per
+ -
+ customer limits, and clearly separates one
+ -
+ off items from subscription 
+items. It shows the full price breakdown honestly 
+ — 
+net, duty, VAT, delivery 
+ — 
+with no surprise costs 
+introduced late. The basket revalidates compliance and stock at the moment of checkout, not only at 
+add
+ -
+ to
+-
+ basket time.  
+6.3 Checkout 
+Checkout is short, calm, and reassuring. It collects or confirms delivery address, delivery method, 
+and payment; asserts age verification; and presents a final, itemised total. Design principles: minimal 
+steps, no forced account creation friction beyond wh
+ at compliance requires, address lookup, saved 
+details for returning customers, and clear articulation of delivery timing and age
+ -
+ verification
+ -
+ on
+ -
+delivery where applicable. The checkout MUST be resilient 
+ — 
+a payment failure never loses the 
+basket 
+ — 
+and MUST  
+fail closed on any compliance check. Abandoned checkouts are recoverable 
+(lawful reminder to opted
+ -
+ in customers only).  
+6.4 Payments 
+Payments are handled through a PCI
+ -
+ DSS
+ -
+ compliant payment service provider; 
+ the platform never 
+stores raw card data  
+and never processes card numbers in its own systems 
+ — 
+card data is tokenised 
+by the PSP. The integration supports the common UK methods (cards, and popular wallets/APMs), 
+Strong Customer Authentication (3
+ -
+ D Secure 2), saved tokens for returning and subscr
+ iption 
+customers, partial captures and refunds, and robust reconciliation of settlements against orders. The 
+payment domain is abstracted behind an internal interface so a second PSP can be added for 
+resilience without touching order logic. Every payment e
+ vent (authorised, captured, failed, refunded, 
+charged
+ -
+ back) is recorded and reconciled nightly by finance automation (§10).  
+6.5 Pricing, tax & duty engine [COMPLIANCE] 
+Pricing is computed by a dedicated engine, never hard
+ -
+ coded on the product. For any line item it 
+resolves: the base price (from the applicable price list 
+ — 
+retail, or trade for B2B), any eligible 
+promotions, 
+ Vaping Products Duty  
+(§4.4), and 
+ VAT
+ , producing a duty
+ -  
+and tax
+ -
+ inclusive price for 
+display and a fully itemised breakdown for invoices and finance. The engine is configuration
+ -
+ driven 
+for rates and rules, supports customer
+ -
+ group and volume pricing (essential for wholesale), enforces 
+minimum 
+ pricing rules where required, and is the single source of truth for money on the platform. 
+
+--- PAGE 18 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  18 
+SECTION 7  
+ 
+Orders & Order Management 
+7.1 Order lifecycle 
+An order is the central commercial object. Its lifecycle is an explicit state machine, and every 
+transition emits a domain event (§13.5) that drives downstream automation.  
+Created → Payment Authorised → Compliance Confirmed → Accepted → Allocated (stock 
+reserved) → Picking → Packed → Dispatched → In Transit → Delivered → Completed
+, with side
+ -
+branches for Payment Failed
+, On Hold (compliance/fraud)
+, Partially Fulfilled
+, Cancelled
+, and 
+Returned/Refunded
+. *
+[COMPLIANCE] No order may progress past 
+ Compliance Confirmed  
+without a 
+valid age
+ -
+ verification outcome and a compliant product set.
+ * State is authoritative in the Order 
+service; no other service may mutate order state directly 
+ — 
+they react to events and request 
+transitions through the order API.  
+7.2 The order & product data (summary) 
+Core entities and their essential fields are specified in §14. In brief: an 
+ Order  
+holds customer, 
+addresses, line items, price breakdown (net/duty/VAT/delivery), payment references, fulfilment 
+references, status, and a full event history. A 
+ Product/Variant  
+holds identity, category, media, the 
+structured specification
+ , the locked 
+ compliance profile  
+(type, strength, volume, notification number, 
+warnings, duty classification), and its sellable status. This separation 
+ — 
+commerce data vs. locked 
+compliance data 
+ — 
+is deliberate and enforced by permissions.  
+7.3 Order management console 
+Operators manage orders through a console that supports search and filter across every dimension 
+(customer, status, date, value, SKU, location, flag), a detailed order view with full timeline and audit, 
+and controlled actions: hold/release, edit before dis
+ patch, split across locations, cancel, refund 
+(within role limits), and manual compliance or fraud review. Every action is attributed and audited. 
+The console surfaces exceptions prominently 
+ — 
+orders on hold, failed payments, stuck shipments 
+ — 
+so operators  
+work the exceptions, not the routine.  
+ 
+
+--- PAGE 19 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  19 
+SECTION 8  
+ 
+Inventory & Warehouse 
+8.1 Multi-location inventory 
+Inventory is tracked per 
+ location  
+(central warehouse, store stockrooms, consignment) and per 
+ SKU
+ , 
+with real
+ -
+ time available
+ -
+ to
+-
+ sell derived from on
+ -
+ hand minus reserved minus safety stock. The 
+platform supports stock receipts, adjustments, transfers between locations, cycle counts, and full 
+movement history. Available
+ -
+ to
+-
+ sell is exposed to the storefro
+ nt so customers see honest availability, 
+and to the order allocator so orders are sourced from the optimal location. 
+ [COMPLIANCE] Batch/lot 
+tracking  
+is first
+ -
+ class: because products are batch
+ -
+ tested, inventory records the batch of dispatched 
+goods, enabling traceability and, if ever required, targeted recall.  
+8.2 Replenishment automation 
+The platform automates restock. Each SKU/location carries a reorder point and target level; when 
+available
+ -
+ to
+-
+ sell crosses the reorder point, the system raises a 
+ purchase/replenishment suggestion  
+(or an automatic purchase order to a supplier or the manufacturing arm, per configuration), factoring 
+lead time and demand velocity. Warehouse managers approve or let auto
+ -
+ approval handle routine 
+reorders. This is a core "runs itself" capability: stock re
+ orders before it runs out, and stockouts 
+become exceptions to investigate rather than the norm.  
+8.3 Warehouse operations 
+Fulfilment operatives work from generated 
+ picklists  
+optimised for pick paths, confirm picks by 
+scanning (barcode/handheld), pack against the order, and confirm dispatch 
+ — 
+each step updating 
+inventory and order state in real time. The system supports wave/batch picking for efficiency at 
+volume, prints compl
+ iant labels and documentation, and reconciles any discrepancy back to the 
+inventory ledger.  
+ 
+
+--- PAGE 20 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  20 
+SECTION 9  
+ 
+Fulfilment, Shipping & Tracking 
+9.1 Carrier integration 
+The platform integrates with multiple carriers through a shipping abstraction, so rules choose the 
+right service per order (speed, cost, destination, and crucially 
+ age
+ -
+ verification
+ -
+ on
+ -
+ delivery  
+capability 
+for restricted goods). It generates labels and customs/manifest data, books collections, and receives 
+tracking updates. Adding or switching a carrier is a configuration and adapter task, not a rebuild.  
+9.2 Shipment tracking [customer & operator] 
+Tracking is end
+ -
+ to
+-
+ end and visible to both sides. Customers see proactive tracking 
+ — 
+an order 
+timeline, carrier status, estimated delivery, and notifications at each milestone (dispatched, out for 
+delivery, delivered, or attention
+ -
+ needed such as a failed a
+ ge check at the door). Operators see a 
+fulfilment dashboard of every shipment, its status, and exceptions (delayed, lost, failed delivery, 
+returned
+ -
+ to
+-
+ sender), with the ability to intervene. Tracking events flow in from carriers via 
+webhook/polling and upd
+ ate the order timeline automatically. 
+ [COMPLIANCE]  
+A delivery that fails age 
+verification at the door is handled by a defined exception flow, never quietly completed.  
+9.3 Delivery options 
+Standard and expedited home delivery; 
+ click
+ -
+ and
+ -
+ collect  
+with controlled, age
+ -
+ verified handover; 
+and, for wholesale, palletised/bulk delivery. Delivery promises shown at checkout are computed from 
+real cut
+ -
+ off times, stock location, and carrier lead times, and are honoured or proactively corrected.  
+ 
+
+--- PAGE 21 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  21 
+SECTION 10  
+ 
+Returns, Refunds & Reverse Logistics 
+Returns respect consumer law while accounting for the realities of a consumable, age
+ -
+ restricted, 
+hygiene
+ -
+ sensitive category. The platform provides a self
+ -
+ service returns flow (eligible items, reason 
+capture, label generation), an operator
+ -
+ side RMA console 
+ (authorise, receive, inspect, restock or 
+dispose, refund), and full traceability. Refunds route through the payment domain and reconcile with 
+finance. 
+ [COMPLIANCE]  
+Returned consumable/nicotine stock follows a defined disposal or 
+quarantine path and is not silently restocked where regulation or hygiene forbids it; batch traceability 
+is preserved throughout. Every return is a record with a full audit trail, and return
+ s data feeds quality 
+and product analytics.  
+ 
+
+--- PAGE 22 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  22 
+SECTION 11  
+ 
+Customer Management & Support (CRM) 
+11.1 The unified customer record 
+Every customer resolves to a single record that aggregates identity and verification status, contact 
+and consent history, every order and return, subscriptions, loyalty, support interactions, and derived 
+analytics (lifetime value, order frequency, churn ri
+ sk, preferred categories). This unified view is what 
+lets support and marketing treat the customer as one person rather than a series of transactions. 
+Access is permissioned and audited; sensitive fields (verification evidence) are visible only to 
+authoris
+ ed roles.  
+11.2 Support console & ticketing 
+Customer Service Agents work from a console that opens on the unified customer record and 
+provides: omnichannel contact capture (email, contact form, chat, and 
+ — 
+via integration 
+ — 
+social/marketplace messages) as tickets; full order and account context on o
+ ne screen; canned, 
+brand
+ -
+ voiced responses; controlled actions (refund within limit, reship, create return, apply goodwill 
+credit, resolve subscription issue); and read
+ -
+ only, audited 
+ impersonation  
+to see exactly what the 
+customer sees. Service
+ -
+ level timers, queues, and escalation keep response times inside target. Every 
+interaction is logged to the customer record.  
+11.3 Segmentation & lifecycle 
+The CRM supports building audiences from any combination of attributes and behaviours (persona, 
+category affinity, recency/frequency/value, subscription status, lapsed) for lifecycle communications 
+— 
+strictly within the advertising rules of §4.5
+ : existing, opted
+ -
+ in customers only; no prohibited 
+inducements; instant unsubscribe. Typical lawful lifecycle journeys: post
+ -
+ first
+ -
+ order care for the 
+Switcher, replenishment reminders for the Convenience Buyer, win
+ -
+ back for the lapsed, and 
+subscription hea
+ lth nudges. All journeys are auditable end
+ -
+ to
+-
+ end.  
+ 
+
+--- PAGE 23 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  23 
+SECTION 12  
+ 
+Engagement: Loyalty, Subscriptions, Promotions, 
+Reviews, Content 
+12.1 Loyalty & rewards 
+A points
+ -
+ based loyalty programme rewards purchases and desirable actions (reviewing, referring 
+where lawful) and redeems against future orders. It supports tiers, earn/burn rules as configuration, 
+balances on the customer record, and clear customer
+ -
+ facing 
+ history. Loyalty mechanics respect the 
+promotional limits of §4.5 and never function as a prohibited inducement to take up nicotine.  
+12.2 Subscriptions & auto-replenishment 
+Subscriptions are a strategic revenue pillar (target ≥ 25% of revenue) and the core of the 
+Convenience Buyer proposition. Customers subscribe to any eligible consumable at a chosen 
+cadence, manage it fully self
+ -
+ service (skip, pause, swap flavour/strength, 
+ change date, change 
+address/payment), and are reminded before each renewal. The engine handles scheduled order 
+generation, tokenised recurring payment with SCA handling, 
+ [COMPLIANCE] re
+ -
+ assertion of a valid 
+age
+ -
+ verification outcome before each recurring dispatch
+ , dunning on failed payment, and churn
+ -
+reducing pauses instead of cancellations. Subscription health is a first
+ -
+ class analytics subject (active, 
+paused, churn, MRR).  
+12.3 Promotions & pricing rules 
+A promotions engine applies configurable, rules
+ -
+ based offers 
+ — 
+percentage/amount off, bundles, 
+thresholds, customer
+ -
+ group and first
+ -
+ order offers, and codes 
+ — 
+evaluated by the pricing engine so 
+duty and VAT remain correct. 
+ [COMPLIANCE]  
+Promotions are constrained by advertising law: no 
+prohibited inducements, careful framing, and full audit of what ran when and to whom. Wholesale 
+pricing and volume breaks are handled here for trade accounts.  
+12.4 Recommendations 
+A recommendation service powers "you may also like", "frequently bought together", "compatible 
+with your device", and replenishment prompts, improving discovery and average order value. It 
+blends catalogue relationships (compatibility, complements) with be
+ havioural signals, and respects 
+appeal
+ -
+ to
+-
+ minors and advertising rules in what it surfaces and how.  
+12.5 Ratings & reviews 
+Verified
+ -
+ purchase reviews build the trust the brand sells. The platform captures ratings and 
+structured reviews, ties them to verified purchases, and 
+ moderates  
+them (automated + human) for 
+compliance, prohibited claims (e.g. health claims), and abuse before publication. Reviews surface on 
+the PDP and feed product quality analytics. Operators can respond in the brand voice.  
+12.6 Content management (CMS) 
+A headless CMS powers editorial and guidance content 
+ — 
+the "Our Standard" trust story, 
+flavour/strength guides, help content, landing pages, and merchandising blocks 
+ — 
+with 
+draft/review/publish workflow, scheduling, and 
+ compliance review before publish
+ . Content is 
+delivered via API to the storefront so marketing can move without an engineering release, within 
+guard
+ -
+ rails the platform enforces.  
+12.7 Notifications 
+
+--- PAGE 25 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  25 
+SECTION 13  
+ 
+Wholesale (B2B) Portal 
+Phoenix is a manufacturer and wholesaler as well as a retailer, so the platform carries a first
+ -
+ class 
+trade  
+experience on the same commercial core 
+ — 
+the Alibaba
+ -
+ style B2B capability, scaled to a single 
+serious supplier.  
+13.0 Trade accounts & verification [COMPLIANCE] 
+A trade account is a 
+ verified business
+ : company and, as licensing matures, retail
+ -
+ licence verification, 
+plus the age/identity assurance of its authorised buyers. Trade accounts are approved by a 
+Wholesale Account Manager and carry account
+ -
+ specific pricing, credit terms, and permitted product 
+r
+anges. Unverified trade buyers see retail, not trade, terms.  
+13.1 Trade experience 
+Verified trade buyers get: trade price lists and volume/tier pricing (via the pricing engine); fast 
+ bulk 
+and repeat ordering  
+(order by SKU list, CSV upload, re
+ -
+ order from history); credit
+ -
+ terms checkout 
+(invoice/net terms) alongside card; higher order limits; 
+ compliance documentation  
+on demand 
+(invoices itemising net/duty/VAT, product notification numbers, batch/duty records for their own 
+obligations); dedicated account management; and order
+ -
+ status and statement views. The B2B UI is 
+efficiency
+ -
+ first for persona D 
+ — 
+dense, fast, keyboa
+ rd
+ -
+ friendly 
+ — 
+while remaining on
+ -
+ brand.  
+13.2 Trade operations 
+Wholesale Account Managers manage accounts, pricing, credit, and orders; finance manages trade 
+invoicing, statements, and receivables; and the same OMS, inventory, and fulfilment machinery 
+serves trade orders (with trade
+ -
+ appropriate carriers and palletised  
+delivery). Trade demand feeds the 
+same replenishment automation.  
+ 
+
+--- PAGE 26 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  26 
+SECTION 14  
+ 
+Administration, Analytics & Business Intelligence 
+The admin suite is where the business is run and understood. It is a distinct, role
+ -
+ gated application 
+(not the storefront), built on the same design system, and it turns the platform's data into decisions.  
+14.1 Operational dashboards 
+Role
+ -
+ appropriate home dashboards surface what each operator needs to act on now: exceptions 
+(orders on hold, failed payments, stuck shipments, stockouts, failed verifications), today's operational 
+load (orders to pick, dispatches due), and live KPIs. Dashb
+ oards are real
+ -
+ time or near
+ -
+ real
+ -
+ time and 
+drill down to the underlying records.  
+14.2 Sales & revenue analytics 
+A dedicated analytics area answers the money questions with rigour, sourced from the data 
+warehouse (§14.6) so heavy queries never touch the transactional system:  
+– 
+ Sales:  
+orders, units, and gross/net sales by period, category, product, channel (retail/trade), 
+location, promotion, and cohort; average order value; conversion funnel from visit to paid order; 
+basket analysis and attach rates.  
+– 
+ Revenue & finance:  
+net revenue, 
+ duty liability  
+and VAT (separated for returns), refunds and 
+chargebacks, settlement reconciliation, margin by product and category, and subscription 
+ MRR/ARR  
+with new/expansion/churn breakdown.  
+– 
+ Customers:  
+new vs returning, 
+ lifetime value
+ , retention and repeat
+ -
+ purchase curves, RFM 
+segments, churn risk, and persona mix.  
+– 
+ Products & inventory:  
+best/worst sellers, sell
+ -
+ through, stock cover and ageing, returns and 
+quality signals by product and 
+ batch
+ . 
+– 
+ Wholesale:  
+trade revenue, active accounts, receivables ageing, and order frequency.  
+Every metric has a single, documented definition (see the metrics catalogue, §14.7) so "revenue" 
+means the same thing to everyone. Reports are filterable, drillable, exportable, and schedulable to 
+stakeholders.  
+14.3 Financial reporting & reconciliation 
+Finance gets: an itemised transaction ledger (net/duty/VAT/delivery per order); daily automated 
+reconciliation of PSP settlements against orders with exceptions flagged; 
+ duty
+ -
+ liability reports  
+formatted for duty returns; VAT reporting; refund and chargeback reporting; and exports to the 
+accounting system. Reconciliation is automated (§15) 
+ — 
+humans handle the exceptions the 
+automation surfaces.  
+14.4 Compliance reporting 
+The Compliance Officer gets purpose
+ -
+ built views: age
+ -
+ verification pass/fail rates and coverage 
+(proving 100% enforcement before dispatch), product
+ -
+ compliance status across the catalogue, 
+marketing
+ -
+ send audit, duty accounting, and on
+ -
+ demand evidence packs f
+ or any order or SKU (§4.6).  
+14.5 Configuration & control 
+Admins manage, with audit: users and roles; feature flags (for safe, incremental rollout); integrations 
+and credentials (secrets stored in a vault, never in config); duty/VAT/pricing parameters; carrier and 
+fulfilment rules; and content guard
+ -
+ rails. Config
+ uration changes are versioned and reversible.  
+
+--- PAGE 27 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  27 
+14.6 Data & BI platform 
+Transactional systems emit events and change
+ -
+ data
+ -
+ capture into a 
+ data warehouse
+ /lakehouse, 
+where a modelled analytics layer (facts and dimensions 
+ — 
+orders, order
+ -
+ lines, customers, products, 
+inventory movements, shipments, subscriptions, payments) powers the analytics above and a BI tool 
+for ad
+ -
+ hoc analysis. This separation keeps anal
+ ytics fast and the shop fast, and gives data science a 
+clean foundation for future recommendation and forecasting models.  
+14.7 Metrics catalogue (extract) 
+METRIC  DEFINITION  
+Net sales  
+ Gross sales − discounts − returns, excluding duty and 
+VAT  
+Duty liability  
+ Σ Vaping Products Duty computed per line, per period, 
+per §4.4  
+AOV  
+ Net sales ÷ paid orders, in period  
+Conversion rate  
+ Paid orders ÷ unique storefront sessions  
+Repeat rate (90d)  
+ Customers with ≥ 2 orders within 90 days ÷ customers 
+ordering in window  
+LTV  
+ Modelled net margin per customer over projected 
+lifetime  
+Subscription MRR  
+ Σ expected monthly net value of active subscriptions  
+Same
+ -
+ day dispatch  
+ Orders dispatched by cut
+ -
+ off ÷ eligible orders  
+AV coverage  
+ Dispatched orders with valid age verification ÷ 
+dispatched orders (target 100%)  
+ 
+ 
+
+--- PAGE 28 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  28 
+SECTION 15  
+ 
+Process Automation 
+"An operation that runs itself" is a design requirement, not a slogan. The platform is 
+ event
+ -
+ driven
+ : 
+business events (order placed, payment captured, stock low, shipment delivered) flow onto a 
+message backbone, and automated workflows react. The automation fabric is configurable (business 
+users author rules and thresholds where safe) and observable (eve
+ ry automated action is logged and 
+traceable).  
+15.1 Core automated workflows 
+– 
+ Order
+ -
+ to
+-
+ cash.  
+Order placed → payment authorised → 
+ compliance & fraud checks  
+→ 
+accepted → stock allocated → picklist raised → packed → label generated → dispatched → tracking 
+synced → delivered → completed → revenue recognised → settlement reconciled. Humans touch 
+only exceptions.  
+– 
+ Procure
+ -
+ to
+-
+ restock.  
+Stock crosses reorder point → replenishment suggestion/PO raised 
+(lead
+ -
+ time and velocity aware) → approved (auto or manual) → received → inventory updated. 
+Stockouts become rare and investigable.  
+– 
+ Verification & onboarding.  
+New customer → age
+ -
+ verification orchestration → outcome 
+recorded → account enabled or escalated → welcome journey (lawful).  
+– 
+ Subscriptions.  
+Upcoming renewal → reminder → 
+ re
+ -
+ verify age  
+→ generate order → charge 
+token → dispatch; on failure → dunning → pause rather than silent churn.  
+– 
+ Fraud & risk.  
+Order scored on signals → low risk auto
+ -
+ proceeds; elevated risk holds for 
+review; rules and (later) models tuned on outcomes.  
+– 
+ Finance.  
+Nightly settlement reconciliation, duty/VAT accrual, refund/chargeback processing, 
+and exception reporting.  
+– 
+ Returns.  
+RMA authorised → label → received → inspected → restock/dispose (compliance
+ -
+aware) → refund → analytics updated.  
+– 
+ Lifecycle marketing.  
+Behaviour/attribute triggers → eligibility & consent check (§4.5) → send 
+→ log 
+ — 
+with non
+ -
+ compliant sends structurally prevented.  
+– 
+ Operational alerting.  
+Thresholds breached (stuck shipments, failed payments spike, low 
+stock, verification
+ -
+ provider outage) → alert the right role → track to resolution.  
+15.2 Automation principles 
+Automation 
+ fails safe  
+(a failed compliance or verification step blocks, never bypasses), is 
+ idempotent  
+(events may be redelivered without double
+ -
+ charging or double
+ -
+ shipping), is 
+ auditable  
+(who/what/when for every automated action), and is 
+ observable  
+(dashboards and alerts on the health 
+of every workflow). Business
+ -
+ authored rules run inside guard
+ -
+ rails that engineering defines; 
+compliance
+ -
+ critical logic is never left to unguarded user configuration.  
+ 
+
+--- PAGE 30 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  30 
+SECTION 16  
+ 
+System Architecture 
+16.1 Architectural approach 
+The platform is a 
+ domain
+ -
+ oriented, event
+ -
+ driven system
+ . Edition 1.0 is delivered as a 
+ NestJS 
+modular monolith with strict bounded contexts  
+— 
+one deployable API, cleanly separated internal 
+modules, each owning its own MongoDB collections 
+ — 
+which gives a small team speed and 
+operational simplicity now, while the module boundaries and the event backbone make later 
+extraction into independent se
+ rvices a mechanical, low
+ -
+ risk step rather than a rewrite. Modules 
+communicate through well
+ -
+ defined internal interfaces (Nest providers) and asynchronous domain 
+events, never by reading another module's collections directly. Where an operation must be atomi
+ c 
+across several documents, it uses MongoDB multi
+ -
+ document transactions within a single module's 
+boundary. High
+ -
+ traffic or independently scaling concerns (storefront rendering, search, media) run as 
+separate services and processes from day one.  
+This is a deliberate, reasoned choice: the reference platforms (Amazon et al.) are extreme
+ -
+ scale 
+microservice estates, but adopting that topology prematurely would buy operational complexity the 
+business does not yet need. The architecture earns microservi
+ ces as scale demands them, guided by 
+the seams already drawn here.  
+16.2 Bounded contexts (domains) 
+Identity & Access · Age Verification · Catalogue · Search · Pricing, Tax & Duty · Cart · Checkout & 
+Payments · Orders · Inventory & Warehouse · Fulfilment & Shipping · Returns · Customer/CRM · 
+Loyalty · Subscriptions · Promotions · Reviews · Content (CMS) 
+ · Notifications · Wholesale/B2B · 
+Compliance & Audit · Analytics/BI · Administration. Each owns its data and exposes a clear API; each 
+publishes and subscribes to domain events. The 
+ Compliance & Audit  
+context is cross
+ -
+ cutting and 
+privileged: it observes and records, and it can veto (block a sale, halt a SKU).  
+16.3 Technology stack [DECISION] 
+The stack is 
+ fixed  
+for Edition 1.0. It is a deliberately small, modern, TypeScript
+ -
+ end
+ -
+ to
+-
+ end stack built 
+on 
+ Next.js, NestJS, and MongoDB
+ , chosen for one shared language across the whole platform, fast 
+delivery by a lean team, and a clean path to scale. Substitutions require a written architecture 
+decision record (ADR).  
+LAYER  TECHNOLOGY  VERSION / NOTES  
+Storefront  
+ Next.js (App Router, React, 
+TypeScript)  
+as an installable PWA  
+Next.js 15+, React 19+; Server 
+Components + Server Actions; 
+SSR/ISR for SEO and speed  
+Admin app  
+ Next.js (App Router, TypeScript)  
+ Same framework and design system 
+as storefront; role
+ -
+ gated internal 
+console  
+Styling / UI  
+ Tailwind CSS + shared design
+ -
+system package  
+Phoenix design tokens (colour, type, 
+spacing, motion) from the Brand 
+Identity Book  
+Backend  
+ NestJS (Node.js LTS, TypeScript)  
+modular monolith  
+One deployable API; one module per 
+bounded context (§16.2)  
+Database  
+ MongoDB  
+with 
+ Mongoose  
+ODM  
+ Document model per §18; replica set 
+(transactions + change streams); 
+Atlas or self
+ -
+ managed  
+
+--- PAGE 31 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  31 
+LAYER  TECHNOLOGY  VERSION / NOTES  
+API  
+ REST (OpenAPI 3) + GraphQL BFF  
+for the storefront  
+REST between modules/clients; a 
+GraphQL layer aggregates for the UI  
+Cache / sessions  
+ Redis  
+ Baskets, sessions, rate
+ -
+ limits, hot 
+reads, job queues (BullMQ)  
+Search  
+ OpenSearch / Elasticsearch  
+ Faceted, typo
+ -
+ tolerant discovery 
+(§5.4); catalogue indexed from 
+MongoDB  
+Messaging / events  
+ RabbitMQ  
+(or Kafka at higher scale)  
+ Domain
+ -
+ event backbone; MongoDB 
+change streams  
+feed CDC to 
+search & analytics  
+Background jobs  
+ BullMQ (Redis
+ -
+ backed)  
+ Scheduled and async work: 
+subscriptions, dunning, 
+reconciliation, notifications  
+Object storage  
+ S3
+ -
+ compatible  
++ CDN  
+ Media, documents, exports  
+Analytics store  
+ MongoDB analytics nodes / 
+warehouse (BigQuery or 
+Snowflake)  
+Reporting isolated from the 
+transactional cluster (§14.6)  
+Validation / types  
+ Zod  
+(runtime) + shared TypeScript 
+types package  
+One source of truth for shapes 
+across API and UI  
+Auth  
+ OAuth2 / OIDC
+ , JWT access + 
+refresh, optional MFA  
+Passport strategies in NestJS  
+Secrets  
+ Vault / cloud secrets manager  
+ No credentials in code or config  
+Infra  
+ Cloud (AWS), Docker containers, 
+Terraform (IaC)  
+Reproducible environments  
+CI/CD  
+ GitHub Actions  
+(or equivalent): test, 
+scan, a11y, deploy  
+Safe, frequent, reversible releases  
+Observability  
+ OpenTelemetry  
++ 
+metrics/logs/traces + alerting  
+Grafana/Datadog; see §17  
+Monorepo tooling  
+ Turborepo + pnpm workspaces  
+ One repository, shared packages, 
+fast incremental builds (§16.6)  
+ 
+16.4 Security architecture [COMPLIANCE-adjacent] 
+Security is designed in. Requirements include: TLS everywhere; OAuth2/OIDC
+ -
+ based authentication 
+with optional MFA; role
+ -
+ based access control with least privilege and 
+ segregation of duties  
+(§3.2); 
+encryption at rest for sensitive data with special handling and minimised retention for age/identity 
+data; tokenised payments (no card data on platform); secrets in a vault; input validation and output 
+encoding against injection/XSS; CSRF protecti
+ on; rate limiting and bot defence on public and auth 
+endpoints; dependency and container scanning in CI; least
+ -
+ privilege service and infra IAM; 
+comprehensive, tamper
+ -
+ evident audit logging (§4.6); and a documented incident
+ -
+ response and 
+breach
+ -
+ notification p
+ rocess meeting UK GDPR timelines. Regular penetration testing and a 
+vulnerability
+ -
+ disclosure process are mandatory before and after launch.  
+16.5 Data protection & privacy [COMPLIANCE] 
+The platform implements privacy by design: a lawful basis for every processing purpose; data 
+minimisation (collect only what is needed, especially for verification); defined retention and 
+automated deletion schedules per data class; granular consent captur
+ e and honouring; self
+ -
+ service 
+data export and erasure (bounded by legal retention of transactional/verification records); a 
+maintained Record of Processing Activities; and Data Protection Impact Assessments for high
+ -
+ risk 
+
+--- PAGE 32 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  32 
+processing (notably age/identity verification). Personal, verification, and payment data are classified 
+and handled per class.  
+16.6 Repository & folder structure 
+The platform lives in a single 
+ Turborepo monorepo  
+managed with 
+ pnpm workspaces
+ . One repository 
+holds the storefront, the admin console, the NestJS API, and every shared package, so that types, the 
+design system, and configuration are defined once and consumed everywhere. The top
+ -
+ level layout 
+is fixed as follows.  
+phoenix-platform/ 
+├─ apps/ 
+│  ├─ web/                      # Next.js storefront (customer PWA) 
+│  ├─ admin/                    # Next.js admin & operations console 
+│  └─ api/                      # NestJS modular-monolith backend 
+├─ packages/ 
+│  ├─ design-system/            # Phoenix UI components + tokens (Brand Identity Book) 
+│  ├─ types/                    # Shared TypeScript types + Zod schemas (API contracts) 
+│  ├─ config/                   # Shared eslint, tsconfig, tailwind, prettier presets 
+│  ├─ sdk/                      # Typed API client consumed by web & admin 
+│  ├─ utils/                    # Cross-cutting helpers (money, dates, ids) 
+│  └─ compliance/               # Shared compliance primitives (duty calc, AV types, audit) 
+├─ infra/ 
+│  ├─ terraform/                # IaC: environments, cluster, Mongo, Redis, queues 
+│  ├─ docker/                   # Dockerfiles + docker-compose for local dev 
+│  └─ ci/                       # Pipeline definitions 
+├─ docs/                        # ADRs, runbooks, this specification 
+├─ turbo.json                   # Turborepo pipeline 
+├─ pnpm-workspace.yaml 
+└─ package.json 
+ 
+Three rules govern the monorepo. 
+ Shared before duplicated:  
+anything used by more than one app 
+(types, UI, config, the compliance primitives) lives in packages/ 
+and is imported, never copied. 
+Contracts in one place:  
+every API shape is a Zod schema and TypeScript type in packages/types
+, so 
+the API and both front
+ -
+ ends cannot drift. 
+ The design system is the only styling source:  apps/web 
+and 
+apps/admin 
+import Phoenix components and tokens from packages/design-system
+; no app defines its 
+own colours or type scale.  
+16.7 Backend structure (NestJS) 
+The API in apps/api 
+is a 
+ modular monolith
+ : one NestJS application composed of one 
+ feature module 
+per bounded context  
+(§16.2). Each module is self
+ -
+ contained 
+ — 
+its own controllers, services, 
+MongoDB schemas, DTOs, events, and tests 
+ — 
+and exposes a narrow public provider interface to 
+other modules. No module imports another module's Mongoose models; cross
+ -
+ module work happe
+ ns 
+through injected service interfaces or domain events.  
+apps/api/src/ 
+├─ main.ts                      # bootstrap, global pipes, OpenAPI, telemetry 
+├─ app.module.ts                # composes all feature modules 
+├─ common/                      # guards, interceptors, filters, decorators, pipes 
+│  ├─ auth/                     # JWT/OIDC guards, RBAC, segregation-of-duties 
+│  ├─ audit/                    # append-only audit interceptor (§4.6) 
+│  ├─ events/                   # event bus (RabbitMQ) publisher/consumer base 
+│  └─ db/                       # Mongoose connection, transaction helper 
+├─ modules/ 
+│  ├─ identity/                 # accounts, auth, addresses, consents 
+│  ├─ verification/             # age/identity verification (fails closed) [COMPLIANCE] 
+│  ├─ catalogue/                # products, variants, compliance profile 
+│  ├─ search/                   # index sync + query 
+│  ├─ pricing/                  # price lists, promotions, VAT, DUTY engine [COMPLIANCE] 
+│  ├─ cart/                     # basket 
+│  ├─ checkout/                 # quote, confirm (asserts AV + compliance) 
+│  ├─ payments/                 # PSP adapter, tokens, refunds 
+│  ├─ orders/                   # order aggregate + state machine 
+
+--- PAGE 33 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  33 
+│  ├─ inventory/                # multi-location stock, batches, replenishment 
+│  ├─ fulfilment/              # warehouse ops, carriers, shipments, tracking 
+│  ├─ returns/                  # RMA, dispositions 
+│  ├─ crm/                      # unified customer record, support tickets 
+│  ├─ loyalty/                  # points, tiers, ledger 
+│  ├─ subscriptions/            # auto-replenishment (re-verifies AV) [COMPLIANCE] 
+│  ├─ reviews/                  # ratings, moderation 
+│  ├─ content/                  # CMS delivery 
+│  ├─ notifications/            # email/SMS/push, templates, consent 
+│  ├─ wholesale/               # trade accounts, trade pricing, credit 
+│  ├─ compliance/               # profiles, AV rules, duty params, audit views [COMPLIANCE] 
+│  ├─ analytics/                # reporting read-models 
+│  └─ admin/                    # config, roles, feature flags 
+└─ each module/ 
+   ├─ <name>.module.ts 
+   ├─ <name>.controller.ts      # REST endpoints (OpenAPI-decorated) 
+   ├─ <name>.service.ts         # business logic 
+   ├─ schemas/                  # Mongoose schemas (this module's collections only) 
+   ├─ dto/                      # request/response DTOs (Zod-derived) 
+   ├─ events/                   # event definitions + handlers 
+   └─ <name>.spec.ts            # unit tests 
+ 
+A shipped feature is a module with controllers, service logic, schemas, DTOs, events, and tests 
+ — 
+no 
+partial modules. Compliance
+ -
+ critical modules ( verification
+, pricing
+, compliance
+, subscriptions
+) 
+carry the highest test coverage and are the first place review attention goes.  
+16.8 Frontend structure (Next.js) 
+Both apps/web 
+and apps/admin 
+are 
+ Next.js App Router  
+applications in TypeScript, using React Server 
+Components by default and Client Components only where interactivity requires. They share the 
+design system, the typed SDK, and the shared types package. The storefront is an installable PWA.  
+apps/web/ 
+├─ app/                         # App Router 
+│  ├─ (shop)/                   # storefront route group 
+│  │  ├─ page.tsx               # home 
+│  │  ├─ c/[category]/          # PLP with faceted filters 
+│  │  ├─ p/[slug]/              # PDP 
+│  │  ├─ search/                # search results 
+│  │  ├─ basket/                # cart 
+│  │  └─ checkout/              # multi-step checkout (asserts AV) 
+│  ├─ (account)/                # account, orders, subscriptions, returns 
+│  ├─ (trust)/                  # "Our Standard", guidance, help 
+│  ├─ api/                      # route handlers / BFF proxying to NestJS 
+│  ├─ layout.tsx                # root layout, providers, PWA shell 
+│  └─ manifest.ts               # PWA manifest 
+├─ components/                  # app-specific composed components 
+├─ features/                    # feature slices (cart, verification, subscribe) 
+├─ lib/                         # sdk client, server actions, helpers 
+├─ hooks/                       # client hooks 
+├─ styles/                      # Tailwind entry (tokens from design-system) 
+├─ public/                      # static assets, icons 
+└─ tests/                       # component + e2e (Playwright) 
+ 
+Data fetching prefers Server Components and Server Actions calling the typed SDK; client state is 
+minimal (basket, filters) via lightweight state (e.g. Zustand) or URL state. Every page defines its 
+loading, empty, and error states, and meets WCAG 2.2 AA. T
+ he admin 
+app follows the same shape 
+with an operations
+ -
+ oriented route tree (orders, catalogue, inventory, customers, reports, settings).  
+16.9 Configuration & environments 
+Configuration is 
+ environment
+ -
+ driven and validated at boot
+ . Each app reads configuration from 
+environment variables, parsed and validated with Zod on startup; the app refuses to start if required 
+configuration is missing or malformed. Secrets never live in the repository 
+ — 
+locally they come from 
+
+--- PAGE 34 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  34 
+an untracked .env.local
+, and in every deployed environment from the secrets manager. A 
+committed .env.example 
+documents every variable.  
+VARIABLE (REPRESENTATIVE)  PURPOSE  
+MONGODB_URI 
+ MongoDB replica
+ -
+ set connection string  
+REDIS_URL 
+ Cache, sessions, BullMQ  
+RABBITMQ_URL 
+ Event backbone  
+SEARCH_URL 
+ OpenSearch/Elasticsearch endpoint  
+JWT_SECRET 
+/ OIDC_* 
+ Auth signing and identity provider  
+PSP_API_KEY 
+/ PSP_WEBHOOK_SECRET 
+ Payment provider (server
+ -
+ side only)  
+AGE_VERIFICATION_API_KEY 
+ Verification provider (server
+ -
+ side only) [COMPLIANCE]  
+CARRIER_* 
+ Carrier integrations  
+DUTY_RATE_PER_10ML 
+ Vaping Products Duty parameter (config, not code) 
+[COMPLIANCE]  
+S3_* 
+/ CDN_URL 
+ Media and asset delivery  
+OTEL_EXPORTER_* 
+ Telemetry export  
+ 
+Compliance
+ -
+ sensitive parameters (duty rate, verification rules) are configuration so they can change 
+under audit without a code release.  
+16.10 Coding standards & conventions 
+Consistency is enforced by tooling, not goodwill. The repository ships shared 
+ ESLint
+ , 
+Prettier
+ , and 
+tsconfig  
+presets from packages/config
+; TypeScript runs in 
+ strict  
+mode everywhere; any 
+is 
+disallowed without an explicit, justified suppression. Commit hooks (lint
+ -
+ staged + Husky) format and 
+lint on commit, and CI re
+ -
+ checks. Conventions: 
+ Conventional Commits  
+for messages; 
+ feature
+ -
+branch + pull request  
+with at least one review (two for compliance
+ -
+ critical modules); trunk
+ -
+ based, 
+short
+ -
+ lived branches behind feature flags. Naming: kebab-case 
+files, PascalCase 
+React components 
+and Nest classes, camelCase 
+variables, collections named as plural nouns. Every public function and 
+endpoint is typed end to end via packages/types
+; runtime input is validated with Zod at the boundary. 
+Errors are typed and mapped to consistent API problem responses 
+ — 
+never leaked stack traces. 
+Definition of done includes tests, accessibility, and documentation, and 
+ — 
+for [COMPLIANCE] 
+code 
+ — 
+a 
+compliance reviewer.  
+16.11 Local development & tooling 
+A new engineer is productive in one command. pnpm install 
+then pnpm dev 
+starts the whole platform 
+via 
+ Docker Compose  
+(MongoDB replica set, Redis, RabbitMQ, OpenSearch, and the local S3/mail 
+mocks) with the three apps running in watch mode through Turborepo. Seed scripts load realistic 
+synthetic  
+catalogue, customers, and orders 
+ — 
+never real identity or verification data. External 
+providers (payments, verification, carriers) run in sandbox or mock mode locally, including a 
+ fault
+ -
+injection mode  
+so developers and QA can exercise the fail
+ -
+ closed compliance paths (verification 
+outage, payment decline, carrier failure). Standard scripts: pnpm dev
+, pnpm test
+, pnpm test:e2e
+, pnpm 
+lint
+, pnpm typecheck
+, pnpm build
+, pnpm seed
+. The same Compose stack underpins CI, so "works on 
+my machine" and "works in CI" are the same machine.  
+ 
+
+--- PAGE 35 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  35 
+SECTION 17  
+ 
+Non-Functional Requirements 
+ATTRIBUTE  REQUIREMENT  
+Performance  
+ Storefront Largest Contentful Paint < 2.5 s on a median 
+mobile connection; PLP/search response < 300 ms 
+server
+ -
+ side; PDP interactive < 2 s; API p95 < 400 ms for 
+reads, < 800 ms for writes.  
+Scalability  
+ Handle 10× baseline traffic for launch/peak (e.g. 
+campaign days) via horizontal scaling of storefront, 
+search, and API tiers; asynchronous processing for 
+spikes.  
+Availability  
+ Storefront and checkout ≥ 99.95% monthly; graceful 
+degradation (browse/queue) if a non
+ -
+ critical 
+dependency fails; 
+ checkout fails closed on compliance, 
+open on nothing
+ . 
+Resilience  
+ No single point of failure in critical paths; retries with 
+backoff; circuit breakers; idempotent event handling; 
+disaster
+ -
+ recovery with defined RPO ≤ 15 min and RTO ≤ 
+1 h for critical services.  
+Accessibility  
+ WCAG 2.2 AA minimum
+ , storefront and admin; the 
+brand's "Deep Pine" green
+ -
+ text contrast rule enforced; 
+full keyboard operation; screen
+ -
+ reader support; 
+reduced
+ -
+ motion honoured (§18.6).  
+Security  
+ Per §16.4; OWASP ASVS
+ -
+ aligned; regular pen
+ -
+ testing.  
+Observability  
+ Centralised logs, metrics, and distributed traces 
+(OpenTelemetry); business and technical dashboards; 
+actionable alerting on SLOs and on compliance
+ -
+ critical 
+failures (e.g. verification
+ -
+ provider outage).  
+Maintainability  
+ Clear module boundaries; documented APIs (OpenAPI); 
+≥ 80% meaningful test coverage on core commerce and 
+compliance logic; infrastructure as code.  
+Internationalisation  
+ UK
+ -
+ first, but content, currency, and tax abstracted so 
+future markets are configuration, not rework.  
+Compliance  
+ Every requirement marked [COMPLIANCE]  
+is a non
+ -
+functional constraint on the whole system and is verified 
+in QA (§20).  
+ 
+ 
+
+--- PAGE 36 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  36 
+SECTION 18  
+ 
+Data Model (MongoDB) 
+The database is 
+ MongoDB
+ , modelled as a set of 
+ collections owned by their bounding module  
+(§16.7). The modelling philosophy is standard and deliberate: 
+ embed what is read and written 
+together and does not grow unbounded; reference what is large, shared, or independently 
+mutable.  
+An order embeds its own line items and price breakdown (they are read and written as one 
+unit and never separately); it 
+ references  
+the customer and the product variants (which live and 
+change on their own). Every collection carries _id
+, createdAt
+, updatedAt
+, and a schemaVersion 
+for 
+safe migrations. Money is stored in minor units (integer pence) with an explicit breakdown 
+ — 
+never a 
+single float. Documents are validated at the application boundary with Mongoose schemas and Zod.  
+The core collections and their shape (representative, not exhaustive):  
+`customers`  
+— 
+contact (email, phone), name, status; 
+ `ageVerification` { status, evidenceRef, 
+method, verifiedAt, expiresAt }  [COMPLIANCE]
+ ; embedded addresses[] 
+and consents[]
+; references 
+to loyaltyAccountId
+; payment tokens held as references only (never card data). Indexes: unique 
+email
+; ageVerification.status
+, ageVerification.expiresAt
+. 
+`products`  
+— 
+name, brand/range, category, slug, media[], 
+ embedded `specification` { strength, 
+volumeMl, vgPg, ingredients[], compatibleDevices[], coilOhms }
+ , embedded variants[] 
+{ sku, 
+attributes, barcode, weight, dims }, and the 
+ embedded, locked `complianceProfile`  [COMPLIANCE]  
+{ 
+productType, notificationNumber, mandatedWarnings[], 
+ dutyClassification
+ , approvedBy, 
+approvedAt, locked }, plus status 
+(draft/review/
+ sellable
+ /retired). Variants are embedded because 
+they are small, bounded, and always read with the product. Indexes: unique slug
+; unique 
+variants.sku
+; category
+, status
+; text index for fallback search.  
+`priceLists`  
+/ 
+`prices`  
+— priceList 
+(retail/trade/tier), variantSku
+, netMinor
+, currency
+, validFrom/To
+. 
+Referenced by SKU; the pricing engine (§6.5) reads these, never the product.  
+`inventory`  
+— 
+one document per { sku, locationId }
+: onHand
+, reserved
+, safetyStock
+, 
+reorderPoint
+, targetLevel
+, and embedded batches[] [COMPLIANCE]  
+{ batchNo, qty, receivedAt }. 
+stockMovements 
+is a separate, append
+ -
+ only collection (it grows unbounded). Indexes: compound 
+unique { sku, locationId }
+; onHand
+. 
+`orders`  
+— customerId 
+(ref), channel 
+(retail/trade), status 
+(state machine, §7.1), embedded 
+deliveryAddress
+/billingAddress 
+(snapshotted at purchase), 
+ embedded `lines[]`  
+{ sku, qty, 
+unitNetMinor, 
+ unitDutyMinor
+ , unitVatMinor, batchDispatched, subscriptionId? }, 
+ embedded 
+`priceBreakdown` { netMinor, dutyMinor, vatMinor, deliveryMinor, totalMinor }
+ , paymentRefs[]
+, 
+fulfilmentRefs[]
+, and embedded timeline[] 
+of state events. Addresses and prices are 
+snapshotted  
+(copied in), not referenced, so an order is a faithful historical record. Indexes: 
+customerId
+, status
+, createdAt
+, channel
+. 
+`payments`  
+— orderId 
+(ref), pspReference
+, type 
+(auth/capture/refund/chargeback), amountMinor
+, 
+status
+. 
+Tokens only 
+ — 
+no raw card data ever.  
+Indexes: orderId
+, pspReference
+. 
+`shipments`  
+— orderId 
+(ref), carrier
+, service
+, 
+`avodRequired` (age
+ -
+ verification
+ -
+ on
+ -
+ delivery)  
+[COMPLIANCE]
+ , labelRef
+, trackingNumber
+, status
+, embedded events[]
+, locationId
+. Indexes: 
+orderId
+, trackingNumber
+, status
+. 
+`returns`  
+— orderId 
+(ref), embedded lines[]
+, reason
+, status
+, 
+`disposition` 
+(restock/dispose/quarantine)  [COMPLIANCE]
+ , refundRef
+. 
+
+--- PAGE 37 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  37 
+`subscriptions`  
+— customerId 
+(ref), embedded items[]
+, cadence
+, nextRunAt
+, status 
+(active/paused/cancelled), paymentTokenRef
+, addressRef
+. Indexes: customerId
+, status
+, nextRunAt 
+(drives the renewal job).  
+`loyaltyAccounts`  
+— customerId 
+(ref), balance
+, tier
+, embedded recent ledger[] 
+(older entries in a 
+separate loyaltyLedger 
+collection to bound document size).  
+`promotions`  
+— type
+, embedded rules
+, eligibility
+, code?
+, validFrom/To
+, audit
+. Index: unique 
+code
+. 
+`reviews`  
+— customerId 
+(ref), sku
+, rating
+, body
+, 
+`verifiedPurchase`
+ , moderationStatus
+. Indexes: 
+sku
+, moderationStatus
+. 
+`tradeAccounts`  
+— company
+, 
+`verification` { status, refs }  [COMPLIANCE]
+ , priceList
+, creditTerms
+, 
+permittedRanges[]
+, embedded buyers[]
+. Index: verification.status
+. 
+`auditEvents`  [COMPLIANCE]  
+— actor
+, action
+, subjectRef
+, before
+, after
+, at
+. 
+Append
+ -
+ only and 
+immutable
+ : writes only, enforced at the data layer (no update/delete role), ideally on a write
+ -
+ once 
+collection or with a verifiable hash chain. Indexes: subjectRef
+, actor
+, at
+. 
+`users`  
+(operators) 
+ — name
+, email
+, roles[]
+, status
+, mfa
+, lastLogin
+. Index: unique email
+. 
+Read models for analytics  
+are projected out of these collections via change streams into the 
+analytics store (§14.6), so reporting never burdens the transactional cluster. Migrations are versioned 
+scripts keyed on schemaVersion
+, applied forward
+ -
+ only and backward
+ -
+ compatible during rollout.  
+ 
+
+--- PAGE 38 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  38 
+SECTION 19  
+ 
+APIs, Events & Integrations 
+19.1 API design 
+Internal service APIs are 
+ REST, documented with OpenAPI
+ , versioned, and consistent (resource
+ -
+oriented, standard status codes, pagination, filtering, idempotency keys on writes). The storefront 
+consumes a 
+ GraphQL BFF  
+that aggregates across contexts for efficient, tailored queries. All APIs 
+enforce authn/authz, validate input, rate
+ -
+ limit, and emit audit and telemetry. A representative (non
+ -
+exhaustive) surface:  
+DOMAIN  REPRESENTATIVE ENDPOINTS  
+Catalogue  GET /products
+, GET /products/{id}
+, GET 
+/variants/{id}
+, POST /admin/products 
+Search  GET /search?q=&facets= 
+Cart  POST /carts
+, POST /carts/{id}/items
+, GET /carts/{id} 
+Checkout  POST /checkout/quote
+, POST /checkout/confirm 
+(asserts AV + compliance)  
+Orders  GET /orders
+, GET /orders/{id}
+, POST 
+/orders/{id}/transitions 
+Verification  POST /verification/initiate
+, POST 
+/verification/callback 
+Inventory  GET /inventory?sku=&location=
+, POST 
+/admin/stock/movements 
+Fulfilment  POST /shipments
+, GET /shipments/{id}
+, POST 
+/shipments/webhook 
+Subscriptions  POST /subscriptions
+, PATCH /subscriptions/{id} 
+Wholesale  POST /trade/accounts
+, GET /trade/price-lists 
+Analytics  GET /admin/reports/{name} 
+ 
+19.2 Domain events (backbone) 
+Events are the integration and audit substrate. A representative catalogue: customer.verified
+, 
+customer.verification_failed
+, cart.checked_out
+, order.created
+, payment.authorised
+, 
+payment.captured
+, payment.failed
+, order.compliance_confirmed
+, order.accepted
+, 
+inventory.reserved
+, inventory.low_stock
+, order.picked
+, order.packed
+, shipment.dispatched
+, 
+shipment.updated
+, shipment.delivered
+, shipment.delivery_failed
+, return.created
+, 
+return.completed
+, subscription.renewal_due
+, subscription.charged
+, 
+subscription.payment_failed
+, review.submitted
+, marketing.message_sent
+, 
+compliance.flag_changed
+, duty.parameters_changed
+. Consumers are idempotent; the stream is 
+replayable and feeds the warehouse and the audit store.  
+19.3 External integrations 
+INTEGRATION  PURPOSE  
+Payment service provider(s)  
+ Card/wallet processing, SCA/3
+ -
+ DS2, tokenisation, 
+settlement (PCI
+ -
+ DSS)  
+
+--- PAGE 39 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  39 
+INTEGRATION  PURPOSE  
+Age
+ -
+ verification provider  
+ Electronic identity/database + document/liveness 
+checks (§4.2)  
+Carriers  
+ Labels, booking, 
+ age
+ -
+ verification
+ -
+ on
+ -
+ delivery
+ , tracking 
+webhooks (§9)  
+Tax/duty data  
+ VAT and Vaping Products Duty parameters/updates 
+(§4.4)  
+Email/SMS/push  
+ Transactional and lawful lifecycle delivery  
+Accounting/ERP  
+ Ledger, invoicing, receivables export  
+Analytics/BI & consent  
+ Privacy
+ -
+ respecting analytics under a compliant consent 
+banner  
+Trade/company verification  
+ Business and (as it matures) retail
+ -
+ licence verification 
+for B2B  
+ 
+Every integration sits behind an internal abstraction so a provider can be replaced without disturbing 
+domain logic, holds credentials in the vault, degrades gracefully, and 
+ — 
+where compliance
+ -
+ critical 
+(verification) 
+ — 
+fails closed
+ . 
+ 
+
+--- PAGE 41 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  41 
+SECTION 20  
+ 
+Experience Principles 
+The interface is the brand in the customer's hands. It inherits the Phoenix design system 
+ — 
+colour, 
+type, tone, grid, iconography 
+ — 
+from the Brand Identity Book, and applies it to a commerce 
+experience that must feel, above all, 
+ calm, trustworthy, and effortless
+ . Six principles govern every 
+screen.  
+– 
+ Evidence
+ -
+ forward.  
+Trust signals 
+ — 
+provenance, testing, compliance, honest stock and 
+delivery 
+ — 
+are primary content, not fine print. The interface's job is to make confidence effortless.  
+– 
+ Calm over loud.  
+Generous space, restrained colour (green as accent, not wallpaper), quiet 
+motion. The interface is the antidote to the shouting the category is known for.  
+– 
+ One catalogue, every vaper.  
+The same pages serve the Switcher and the Enthusiast 
+ — 
+progressive disclosure gives beginners a clear path and experts full depth without either getting in 
+the other's way.  
+– 
+ Frictionless, within the rules.  
+Every step that can be removed is removed 
+ — 
+except the 
+compliance steps, which are framed as care, not obstacle.  
+– 
+ Honest by default.  
+Real prices (duty
+ -
+ inclusive), real stock, real delivery dates, real reviews. 
+No dark patterns, ever.  
+– 
+ Accessible as a baseline.  
+WCAG 2.2 AA is the floor; the experience is designed for keyboard, 
+screen
+ -
+ reader, and reduced
+ -
+ motion from the first sketch.  
+ 
+
+--- PAGE 42 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  42 
+SECTION 21  
+ 
+Key Journeys & Screens 
+The UI/UX team designs and prototypes the following journeys end
+ -
+ to
+-
+ end, testing each against all 
+four personas. Each screen is specified for its content, primary actions, empty/loading/error states, 
+and responsive behaviour.  
+21.1 First-time purchase (Switcher) 
+Home → guidance ("New to vaping") → strength/flavour guide → PLP → PDP → add to basket → 
+register + age verification  
+→ checkout → confirmation → proactive tracking. The critical design 
+problem is the verification moment: it must feel like a mark of a serious, responsible shop, not a 
+barrier 
+ — 
+clear explanation, minimal data, quick outcome, and a graceful escalation path  
+if the instant 
+check is inconclusive. The first
+ -
+ purchase journey is the single most important flow in the platform.  
+21.2 Expert re-order (Enthusiast) 
+Search or account → fast filter by technical attributes → PDP with full specification → add multiple → 
+basket → one
+ -
+ tap checkout with saved details. Design for speed and density: powerful filtering, 
+complete spec data, stock visibility, and re
+ -
+ order from h
+ istory in as few actions as possible.  
+21.3 Subscription (Convenience Buyer) 
+PDP subscribe → cadence selection with saving shown → manage subscription 
+(skip/pause/swap/change) → pre
+ -
+ renewal reminder → automatic order. Design for control and 
+reassurance: the customer must always feel they, not the platform, are in charge, with pausi
+ ng 
+offered before cancelling.  
+21.4 Trade ordering (Trade Buyer) 
+Trade login → trade dashboard → bulk order (SKU list / CSV / re
+ -
+ order) → credit
+ -
+ terms checkout → 
+documentation download. Design for efficiency and trust: dense, fast, keyboard
+ -
+ friendly, with 
+compliance documentation one click away.  
+21.5 Core screen inventory 
+Home; PLP (with facets); PDP; Search results; Basket; Checkout 
+(address/delivery/payment/verify/review); Order confirmation; Account home; Orders & tracking; 
+Subscriptions; Addresses & payment methods; Loyalty; Returns; "Our Standard" trust pages; 
+Guidance
+ /editorial; Wholesale gateway + trade dashboard; Auth & verification; Help/support. Each is 
+delivered as a designed, prototyped, accessible, responsive artefact with documented states.  
+ 
+
+--- PAGE 43 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  43 
+SECTION 22  
+ 
+Component & Interaction Specification 
+22.1 Design system & component library 
+The UI is built from a documented 
+ component library  
+implementing the Phoenix design tokens 
+(colour, type scale, spacing, radius, motion) from the Brand Identity Book, shared across storefront 
+and admin. Components are accessible by construction, themeable via tokens, documented in a living 
+catalogue (e.g. 
+ Storybook), and cover: buttons and actions; forms and inputs (with validation states); 
+product card; facet/filter controls; price display (with duty breakdown); quantity/variant selectors; 
+basket line; stepper (checkout); status/timeline (orders, shipments
+ ); tables (admin, trade); tabs, 
+accordions (progressive disclosure); modals and sheets; notifications/toasts; empty, loading 
+(skeleton), and error states; and the age
+ -
+ verification flow components.  
+22.2 States & feedback 
+Every interactive element specifies its 
+ default, hover, focus, active, disabled, loading, and error  
+states. Focus states are always visible (accessibility and brand). Loading uses skeletons, not 
+spinners, for perceived speed. Errors are specific, human, and recoverable, in the brand voice 
+ — 
+never a raw code. Success is confirmed clearly. Destructive or 
+ irreversible actions require 
+confirmation.  
+22.3 Motion 
+Motion is calm, brief (150
+ –
+250 ms), and eased, per the brand's motion guidance 
+ — 
+functional 
+transitions, never decorative bounce. 
+ Reduced
+ -
+ motion preferences are always honoured.  
+22.4 Responsive & PWA 
+The storefront is 
+ mobile
+ -
+ first and fully responsive
+ , delivered as an installable 
+ progressive web app  
+(offline
+ -
+ tolerant browsing, add
+ -
+ to
+-
+ home
+ -
+ screen, push notifications for tracking and lawful lifecycle). 
+Layouts use the brand's 12
+ -
+ column grid, reflowing gracefully from phone to desktop. Touch targets, 
+tap ergonomics, and thumb
+ -
+ reach are designed for, not  
+inherited.  
+22.5 Content & microcopy 
+Copy is a design material. All interface copy follows the brand tone 
+ — 
+calm, precise, adult, never 
+hype 
+ — 
+and is reviewed for compliance where it touches product claims. Microcopy does real work: 
+explaining the verification step, clarifying the duty line o
+ n the price, reassuring at checkout, and 
+turning errors into next steps. The UI/UX team owns a microcopy library aligned to the brand voice.  
+22.6 Accessibility specification [COMPLIANCE-adjacent] 
+WCAG 2.2 AA is mandatory. Concretely: colour contrast meets AA (and the 
+ Deep Pine rule  
+— 
+never 
+brand
+ -
+ green body text on light); every function is keyboard
+ -
+ operable with a logical focus order and 
+visible focus; semantic HTML and ARIA where needed; form fields have labels, descriptions, and 
+programmatic error association; images have meaningf
+ ul alt text; media respects reduced
+ -
+ motion; 
+the age
+ -
+ verification and checkout flows are fully accessible; and accessibility is tested with 
+automated tools 
+ and  
+assistive technology (§20). Accessibility is not a phase 
+ — 
+it is a property of 
+every component and every screen.  
+ 
+
+--- PAGE 45 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  45 
+SECTION 23  
+ 
+Quality Assurance Strategy 
+Quality is everyone's responsibility, but the QA team owns the strategy that proves the platform 
+correct 
+ — 
+with special, unrelenting focus on the compliance controls, where a defect is not a bug but 
+a legal and reputational risk.  
+23.1 Testing philosophy 
+The platform follows the 
+ test pyramid
+ : many fast unit tests, a solid layer of integration and contract 
+tests, and a focused set of end
+ -
+ to
+-
+ end tests for critical journeys. Tests are automated and run in CI 
+on every change; a change does not merge unless its tests pass. 
+ Compliance
+ -
+ critical logic (age 
+verification, product compliance, duty calculation, audit) carries the highest coverage and is 
+additionally verified by dedicated compliance test suites.  
+Quality gates block release, and no gate is 
+waived for a deadline.  
+23.2 Test types & scope 
+TEST TYPE  SCOPE  
+Unit  
+ Domain logic in isolation 
+ — 
+especially pricing/duty/VAT 
+maths, order state machine, promotion rules, verification 
+decisioning. ≥ 80% meaningful coverage on core & 
+compliance logic.  
+Integration  
+ Context
+ -
+ to
+-
+ context and context
+ -
+ to
+-
+ datastore behaviour; 
+event publish/consume; idempotency.  
+Contract  
+ API producer/consumer contracts (storefront 
+ ↔ 
+BFF 
+ ↔ 
+services; external adapters) to prevent breaking 
+changes.  
+End
+ -
+ to
+-
+ end  
+ The critical journeys of §21 driven through the UI in a 
+browser, across the four personas.  
+Compliance  
+ Dedicated suites proving: no sale/dispatch without valid 
+AV; non
+ -
+ compliant/banned products un
+ -
+ purchasable; 
+duty computed correctly across scenarios; marketing 
+rules enforced; audit written and immutable.  
+Accessibility  
+ Automated (axe) on every screen 
+ plus  
+manual keyboard 
+and screen
+ -
+ reader testing; WCAG 2.2 AA checklist per 
+screen.  
+Performance/load  
+ NFR targets (§17) validated under baseline and 10× 
+peak; checkout and search stressed specifically.  
+Security  
+ SAST/DAST/dependency & container scanning in CI; 
+periodic penetration testing; auth/RBAC and 
+segregation
+ -
+ of
+ -
+ duties tested explicitly.  
+Resilience/chaos  
+ Dependency
+ -
+ failure behaviour 
+ — 
+verify checkout 
+ fails 
+closed  
+on verification/compliance outage and degrades 
+gracefully elsewhere.  
+UAT  
+ Business and compliance stakeholders validate against 
+acceptance criteria before launch.  
+ 
+23.3 Sample acceptance criteria (illustrative) 
+Acceptance criteria are written per user story in Given/When/Then form. Representative examples 
+that MUST hold:  
+
+--- PAGE 46 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  46 
+– 
+ Age gate at checkout [COMPLIANCE].  
+Given  
+an account without a valid age
+ -
+ verification 
+pass, 
+ when  
+the customer attempts to confirm checkout, 
+ then  
+the order is blocked server
+ -
+ side, no 
+payment is captured, and the customer is offered a clear path to verify.  
+– 
+ Verification
+ -
+ provider outage [COMPLIANCE].  
+Given  
+the verification provider is unavailable, 
+when  
+a customer attempts first
+ -
+ purchase verification, 
+ then  
+the sale is blocked (fails closed), the 
+customer sees a helpful message, and an operational alert is raised.  
+– 
+ Duty calculation [COMPLIANCE].  
+Given  
+a 10 ml e
+ -
+ liquid (including a 0 mg variant), 
+ when  
+it is 
+priced, 
+ then  
+Vaping Products Duty is applied per §4.4, itemised separately from VAT, and stored in 
+the order breakdown.  
+– 
+ Banned product [COMPLIANCE].  
+Given  
+a product typed as a single
+ -
+ use disposable, 
+ when  
+a 
+merchandiser attempts to publish it, 
+ then  
+the system prevents it reaching sellable status.  
+– 
+ Subscription re
+ -
+ verification [COMPLIANCE].  
+Given  
+a subscription due to renew for an 
+account whose verification has expired, 
+ when  
+the renewal runs, 
+ then  
+dispatch is withheld pending re
+ -
+verification and the customer is prompted.  
+– 
+ Stock honesty.  
+Given  
+a variant with zero available
+ -
+ to
+-
+ sell, 
+ when  
+shown on PLP/PDP, 
+ then  
+it is 
+marked out of stock and cannot be added to basket, with back
+ -
+ in
+-
+ stock capture offered.  
+– 
+ Segregation of duties.  
+Given  
+a Merchandiser role, 
+ when  
+they edit a product, 
+ then  
+they cannot 
+clear or alter its locked compliance flags.  
+– 
+ Accessibility.  
+Given  
+any core screen, 
+ when  
+audited, 
+ then  
+it passes WCAG 2.2 AA (automated 
++ manual), including visible focus and full keyboard operability.  
+23.4 Test data & environments 
+Environments: 
+ local → development → staging (production
+ -
+ like) → production
+ , with ephemeral 
+preview environments per change where feasible. Realistic, 
+ anonymised/synthetic  
+test data 
+ — 
+never 
+real customer identity or verification data in lower environments. External providers (payments, 
+verification, carriers) are used in sandbox/mock modes below production; a mock
+ -
+ provider harness 
+enables deterministic compliance testing (i
+ ncluding forced outages and edge outcomes).  
+23.5 Defect management & quality gates 
+Defects are triaged by severity; 
+ any compliance
+ -
+ affecting defect is P0  
+and blocks release. Quality 
+gates in CI/CD: all tests pass, coverage thresholds met on core/compliance code, no high/critical 
+security findings, accessibility checks pass, and performance budgets respected. Release requires 
+green gates plus, for launch an
+ d major releases, compliance sign
+ -
+ off.  
+ 
+
+--- PAGE 47 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  47 
+SECTION 24  
+ 
+Delivery, CI/CD & Environments 
+24.1 Ways of working 
+Delivery is iterative and trunk
+ -
+ based
+ -
+ friendly: small, frequent, well
+ -
+ tested changes behind 
+ feature 
+flags
+ , enabling continuous integration and safe, incremental rollout. Work is specified as user stories 
+with acceptance criteria drawn from this document; definition
+ -
+ of
+ -
+ done includes tests, accessibility, 
+documentation, and (where relevant) compliance review.  
+24.2 CI/CD 
+Every change runs the automated test suite, security and accessibility checks, and builds immutable 
+artefacts; infrastructure is provisioned via 
+ Terraform
+ ; deployments are automated, observable, and 
+reversible (blue
+ -
+ green or canary for the storefront and API). Database changes are versioned 
+migrations, forward
+ -
+ only and backward
+ -
+ compatible during rollout. Secrets flow from the vault, never 
+from source.  
+24.3 Observability & runbooks 
+Production is observable by default (§17): dashboards for business and system health, alerting on 
+SLOs and on 
+ compliance
+ -
+ critical failures
+ , and runbooks for the exceptions the automation surfaces 
+(verification outage, payment
+ -
+ provider degradation, carrier failure, stock discrepancy). On
+ -
+ call and 
+incident processes are defined before launch.  
+24.4 Launch readiness 
+Before public launch: full regression green; performance validated at peak; security pen
+ -
+ test passed; 
+accessibility audit passed; 
+ compliance sign
+ -
+ off obtained  
+(AV enforcement, product compliance, 
+duty, marketing, audit all proven); disaster
+ -
+ recovery rehearsed; runbooks and on
+ -
+ call in place; and a 
+controlled rollout plan (soft launch / limited traffic → full) with rollback ready.  
+ 
+
+--- PAGE 48 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  48 
+PART SIX  
+OPERATIONS & THE ADMIN 
+CONSOLE 
+ 
+ 
+
+--- PAGE 49 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  49 
+SECTION 25  
+ 
+Admin Console Architecture 
+The admin console is not a settings screen bolted to a shop. It is the 
+ operating system of the 
+business  
+— 
+the surface on which merchandisers, warehouse teams, label coordinators, compliance 
+officers, support agents, account managers, and finance actually do their day's work. It is a first
+ -
+class product, designed and built to the same standard as the storefr
+ ont, on the same Phoenix design 
+system.  
+25.1 Console shell & information architecture 
+The console is a single Next.js application ( apps/admin
+) with a persistent left navigation, a global 
+command bar, and a work
+ -
+ focused main region. Navigation is 
+ role
+ -
+ aware
+ : an operator only sees the 
+areas their role permits (§3.2), and the console never renders an action the backend would refuse. 
+The top
+ -
+ level areas are:  
+Home (role dashboard)  
+· 
+Orders  
+· 
+Customers  
+· 
+Catalogue  
+· 
+Inventory  
+· 
+Replenishment & Labelling  
+· 
+Fulfilment  
+· 
+Returns  
+· 
+Wholesale  
+· 
+Marketing & Comms  
+· 
+Content  
+· 
+Analytics  
+· 
+Finance  
+· 
+Compliance  
+· 
+Settings
+ . 
+25.2 Console-wide capabilities 
+These behaviours exist on every screen in the console, and are specified once here rather than 
+repeated per module. They are what separate a usable operations tool from a database viewer.  
+– 
+ Command palette (`⌘K`).  
+Jump to any order, customer, SKU, or screen; run permitted 
+actions by name. The primary navigation method for expert operators.  
+– 
+ Global search.  
+One search box resolving across orders, customers, SKUs, batches, 
+shipments, tickets, and 
+ barcodes/serials  
+— 
+scanning a label anywhere in the console jumps straight 
+to its unit, batch, and order.  
+– 
+ Saved views.  
+Any filtered list can be named, saved, shared with a role, and pinned. Operators 
+build their own queues rather than re
+ -
+ filtering daily.  
+– 
+ Bulk actions.  
+Multi
+ -
+ select on every list with permitted bulk operations (hold, release, print 
+labels, adjust stock, export), always previewed with an affected
+ -
+ record count and confirmation 
+before execution.  
+– 
+ Inline audit.  
+Every record shows 
+ who changed what, when, and from what to what  
+(§4.6). 
+Audit is a visible feature of the UI, not a hidden table.  
+– 
+ Exception
+ -
+ first dashboards.  
+Home surfaces what needs a human 
+ — 
+orders on hold, failed 
+payments, failed verifications, stuck shipments, low stock, overdue label orders, unreconciled 
+settlements 
+ — 
+not vanity totals.  
+– 
+ Operator inbox & notifications.  
+Assignable tasks and alerts routed to the right role, with SLA 
+timers and escalation.  
+– 
+ Impersonation (read
+ -
+ only, audited).  
+Support can see exactly what a customer sees, never 
+act as them silently.  
+– 
+ Universal export.  
+Any list or report exports to CSV/XLSX; large exports run as background 
+jobs and notify on completion.  
+– 
+ Optimistic, reversible actions.  
+Destructive or irreversible actions require typed confirmation 
+and, where compliance
+ -
+ relevant, a second authorised role (segregation of duties).  
+– 
+ Full keyboard operation and WCAG 2.2 AA  
+— 
+the console is used all day, by people who 
+deserve an accessible, fast tool.  
+
+--- PAGE 51 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  51 
+SECTION 26    [COMPLIANCE]  
+ 
+Replenishment, Labelling & Barcode Serialisation 
+This is the operational heart of a vape manufacturer
+ -
+ retailer, and it is far more than "stock is low, 
+raise a purchase order". When a flavour runs out on the shop floor, a chain of coordinated work 
+begins: the store raises a restock request; the warehouse 
+ consolidates requests into a restock list; 
+the warehouse discovers it holds bulk liquid but 
+ not the finished, labelled bottles
+ ; labels must be 
+commissioned per flavour, per strength, per bottle size, from the label production team, against 
+compliance
+ -
+ approved artwork; 
+ every single label carries its own unique barcode
+ ; the labels are 
+printed, verified, and received; a bottling and labelling work order produces finished, batch
+ -
+ stamped 
+units; and only then does stock move to the store. The platform models this chain explicitly, end to 
+end, because it is where compliance,  
+traceability, and margin all live.  
+26.1 The replenishment chain 
+The chain is a sequence of linked, auditable documents, each with its own state machine. Nothing in 
+it is a spreadsheet or an email.  
+  Stock depletion signal  (store / warehouse / channel) 
+            │ 
+            ▼ 
+  [1] RESTOCK REQUEST          raised by Store Manager, or auto-raised at reorder point 
+            │                   lines: SKU, qty needed, urgency, destination location 
+            ▼ 
+  [2] REPLENISHMENT RUN        Warehouse consolidates open requests into one RESTOCK LIST 
+            │                   nets against available finished stock + inbound 
+            ▼ 
+       finished stock available? ──── yes ──▶ [7] STOCK TRANSFER 
+            │ no 
+            ▼ 
+  [3] LABEL REQUIREMENT        computed per flavour × strength × bottle size 
+            │                   qty = units to produce + wastage allowance 
+            ▼ 
+  [4] LABEL ORDER              raised to the Label Production team / print supplier 
+            │                   artwork version (compliance-locked) + barcode range 
+            ├──▶ ARTWORK APPROVAL      [COMPLIANCE] Compliance Officer signs the artwork 
+            ├──▶ BARCODE ALLOCATION    unique serial per label, reserved from the pool 
+            ├──▶ PRINT RUN             printed, then VERIFIED (scan-grade check) + QC sample 
+            ▼ 
+  [5] LABEL GOODS-IN           labels received as stock; printed vs delivered reconciled 
+            │ 
+            ▼ 
+  [6] BOTTLING & LABELLING     WORK ORDER: bulk liquid + bottles + labels ──▶ finished SKU 
+            │                   each unit scanned; serial ↔ batch ↔ SKU bound permanently 
+            │                   [COMPLIANCE] batch/lot + expiry stamped; QC hold/release 
+            ▼ 
+  [7] STOCK TRANSFER           finished units transferred to destination; receipt confirmed 
+            │ 
+            ▼ 
+       Restock Request CLOSED; store shelf replenished 
+ 
+26.2 Restock requests & replenishment runs 
+A 
+ Restock Request  
+may be raised manually by a Store Manager (who can see the shelf) or 
+automatically by the platform when available
+ -
+ to
+-
+ sell for a {sku, location} 
+crosses its reorder point 
+(§8.2). Each request carries lines, an urgency, a destination location, and a requester. Requests are 
+visible to the warehouse in a live queue.  
+A 
+ Replenishment Run  
+is the warehouse's consolidation step: it gathers all open requests over a 
+window, nets demand against finished stock on hand and inbound production, and produces a single 
+Restock List  
+— 
+the authoritative document the warehouse works from. Where finished labelled stock 
+
+--- PAGE 52 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  52 
+exists, the run resolves straight to a stock transfer. Where it does not, the run raises label 
+requirements and a production work order. Runs are auditable: an operator can always answer 
+ why  
+a 
+given label order exists by tracing it back to the requests that caused it.  
+State machine: Draft → Submitted → Under Review → Consolidated → In Production → Fulfilled 
+→ Closed
+, with Rejected 
+and Cancelled 
+branches, each transition attributed and audited.  
+26.3 Label requirement calculation 
+Labels are not fungible. A label is specific to a 
+ flavour × nicotine strength × bottle size
+ , and it carries 
+compliance
+ -
+ mandated content. The platform computes, for each finished SKU to be produced:  
+labels_required = units_to_produce × (1 + wastage_allowance) 
+The wastage allowance is configurable per label type and per printer, and is reconciled after every 
+run (§26.7) 
+ — 
+because when every label bears a unique barcode, printed
+ -
+ but
+ -
+ unused labels are not 
+stock, they are 
+ retired serials  
+that must be accounted for.  
+Each label requirement resolves to a 
+ Label SKU  
+with: artwork reference and version; the flavour, 
+strength, and volume it declares; the mandated warnings, ingredient statement, and notification 
+number drawn from the product's locked complianceProfile 
+(§4.3); the duty classification; and the 
+barcode format.  
+26.4 Label orders, artwork & compliance approval [COMPLIANCE] 
+A 
+ Label Order  
+is a document raised against the Label Production team (internal) or an external print 
+supplier. It records the label SKU, quantity, artwork version, allocated barcode range, required
+ -
+ by 
+date, and supplier. It cannot be released to print until two gates p
+ ass:  
+1. 
+Artwork approval.  
+The artwork version is approved and 
+ locked  
+by a Compliance Officer. Artwork 
+carries the mandated warnings, nicotine strength, volume, notification number, and duty markings. A 
+change to any compliance
+ -
+ relevant field on the product 
+ invalidates the artwork version  
+and forces 
+re
+-
+ approval 
+ — 
+the system will not let an out
+ -
+ of
+ -
+ date label be printed against a changed product.  
+2. 
+ Barcode allocation.  
+A contiguous, unique serial range is reserved from the barcode pool (§26.5) 
+and bound to the order.  
+State machine: Draft → Awaiting Artwork Approval → Approved → Sent to Printer → Printing → 
+Printed → Verified → Received → Closed
+, with Rejected
+, Reprint Required
+, and Cancelled 
+branches. Overdue label orders surface as exceptions on the warehouse dashboard, because a late 
+label is a stockout the customer will feel.  
+26.5 Barcode & serial management [COMPLIANCE] 
+Every single label has a different barcode.  
+This is the requirement that makes the whole subsystem 
+non
+ -
+ trivial, and the platform treats it with the seriousness of a financial ledger.  
+– 
+ Two identifiers, not one.  
+The 
+ GTIN  
+identifies the 
+ product  
+(the SKU) and is shared by every 
+unit of it. The 
+ serial  
+identifies the 
+ individual unit
+ , and is unique for all time. Together they form a 
+serialised identifier (an SGTIN), encoded on the label 
+ — 
+a 
+ GS1
+ -
+ 128 or 2D DataMatrix  
+symbol carrying 
+GTIN + batch + expiry + serial, alongside a human
+ -
+ readable rendering.  
+– 
+ The barcode pool.  
+Serials are drawn from a managed pool with reserved, non
+ -
+ overlapping 
+ranges. A serial is 
+ never reused
+ , never re
+ -
+ issued, and never guessed: allocation is transactional and 
+recorded. The pool monitors depletion and alerts before exhaustion.  
+– 
+ Allocation.  
+When a Label Order is approved, its range is reserved and its serials created in 
+Allocated 
+state. Serial lifecycle: Allocated → Printed → Verified → Applied → Dispatched
+, with 
+
+--- PAGE 53 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  53 
+terminal states Scrapped 
+(misprint, damage) and Voided 
+(order cancelled, range retired). Every 
+transition is timestamped and attributed.  
+– 
+ Verification.  
+After printing, a sample is 
+ scan
+ -
+ verified  
+for symbol grade and data accuracy, 
+and the run is either accepted or sent for reprint. Unverifiable labels are scrapped, not applied.  
+– 
+ Binding.  
+At the labelling step, scanning a serial binds it permanently to its 
+ batch/lot
+ , its 
+finished SKU, and its production work order. When the unit is packed, the serial binds to the 
+ order 
+and shipment
+ . 
+– 
+ Traceability [COMPLIANCE].  
+From any serial, an operator can reach the batch, the liquid lot, 
+the label order, the artwork version, the QC record, the order, and the customer 
+ — 
+and, in reverse, 
+from a batch to every unit and every customer who received one. This is what makes a targ
+ eted 
+recall possible in hours rather than weeks, and it is the single most valuable compliance asset the 
+platform holds.  
+26.6 Bottling & labelling work orders 
+A 
+ Work Order  
+consumes inputs (bulk liquid lot, bottles, caps, labels) and produces output (finished, 
+labelled, batch
+ -
+ stamped units of a SKU). It records the bill of materials, the operator, the line, start 
+and finish times, the 
+ batch/lot number and expiry  
+stamped on output, QC checks and their outcome, 
+and a 
+ QC hold/release  
+gate before finished stock becomes available
+ -
+ to
+-
+ sell. Yield is recorded: units 
+produced versus units expected, with variance explained. Output posts into inventory as finished 
+goods with full batch and serial detail.  
+26.7 Reconciliation & wastage [COMPLIANCE] 
+Because serials are unique and finite, every label printed must be accounted for. After each run the 
+platform reconciles 
+ printed = applied + scrapped + retained
+ , and any discrepancy is an exception 
+requiring explanation and sign
+ -
+ off. Scrapped serials are recorded with a reason and can never re
+ -
+enter circulation. Wastage rates by label type, printer, and operator are reported and trended 
+ — 
+a 
+rising scrap rate is a
+ n early signal of a print or process problem, and a compliance risk.  
+26.8 Supplier & label production management 
+The console holds label suppliers and the internal production team as managed parties: contacts, 
+lead times, price per thousand, artwork capabilities, minimum order quantities, and performance 
+history (on
+ -
+ time rate, scrap rate, verification pass rate). Lab
+ el orders are issued, tracked, chased, and 
+received against them, and lead time feeds back into the reorder
+ -
+ point calculation so the platform 
+learns how early a label must be commissioned to avoid a stockout.  
+ 
+
+--- PAGE 54 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  54 
+SECTION 27  
+ 
+Inventory Management in Depth 
+Section 8 established the model. This section specifies the working tool: what an inventory manager 
+sees, decides, and does every day.  
+27.1 Structure: locations, zones, bins 
+Inventory is held at 
+ locations  
+(central warehouse, store stockrooms, production floor, quarantine, 
+consignment), and within a location at 
+ zones  
+and 
+ bins
+ . A bin is the smallest addressable place a unit 
+can be. Bin
+ -
+ level accuracy is what makes pick paths efficient and cycle counts meaningful. Every 
+movement 
+ — 
+receipt, put
+ -
+ away, pick, transfer, adjustment, scrap 
+ — 
+names a source and destination 
+bin and is wr
+ itten to the append
+ -
+ only stockMovements 
+ledger. Stock can never change without a 
+movement record; the ledger is the truth and the balance is derived from it.  
+27.2 Stock states 
+A unit of stock is always in exactly one state, and only some states are sellable.  
+STATE  SELLABLE  MEANING  
+Available  
+ Yes  
+ On hand, unreserved, released by 
+QC  
+Reserved  
+ No  
+ Allocated to an accepted order  
+QC Hold  
+ No  
+ Produced but awaiting quality 
+release [COMPLIANCE]  
+Quarantine  
+ No  
+ Returned, damaged, suspect, or 
+recalled [COMPLIANCE]  
+In Transit  
+ No  
+ Moving between locations  
+Damaged / Scrap  
+ No  
+ Written off, pending disposal  
+Bulk / Unlabelled  
+ No  
+ Liquid or components awaiting a 
+work order (§26.6)  
+ 
+The distinction between 
+ Bulk/Unlabelled  
+and 
+ Available  
+is the one the whole labelling chain turns on: 
+a warehouse can be "full of stock" and still unable to fulfil an order.  
+27.3 Goods-in & receiving 
+Inbound deliveries (raw liquid, bottles, labels, finished goods, supplier stock) are received against a 
+purchase or label order: booked in, counted, inspected, matched to the expected quantity, put away 
+to bins, and posted to the ledger with batch and expi
+ ry. Discrepancies (short, over, damaged) raise 
+an exception against the supplier and feed supplier performance. Receiving is barcode
+ -
+ driven: scan 
+the delivery, scan the item, scan the bin.  
+27.4 Batch, lot & expiry management [COMPLIANCE] 
+Every finished unit carries a batch/lot and, where applicable, an expiry or best
+ -
+ before date. The 
+console provides 
+ batch search  
+(find every unit, order, and customer for a batch), 
+ expiry monitoring  
+(FEFO 
+ — 
+first
+ -
+ expired
+ -
+ first
+ -
+ out 
+ — 
+picking, and alerts on approaching expiry), and a 
+ recall workflow
+ : 
+select a batch, freeze it across all locations, quarantine remaining stock, identify affected orders and 
+customers, and generate the contact list and evidence pack. This capability is the operational 
+expression of the brand's entire promise.  
+
+--- PAGE 56 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  56 
+SECTION 28  
+ 
+Sales & Revenue Intelligence 
+Finance and commercial teams do not want a table of orders; they want to 
+ see  
+the shape of the 
+business. This section specifies the analytics surface concretely 
+ — 
+the widgets, their chart types, 
+their interactions, and their definitions. All figures derive from the metrics catalogue (§14.7) and are 
+served from the analytics store (
+ §14.6), never from the transactional cluster.  
+28.1 Charting standards 
+Charts are built with a single library (
+ Recharts  
+or 
+ ECharts
+ ) wrapped in Phoenix design
+ -
+ system 
+components, so every chart in the console shares one visual language: the brand palette (green as 
+the accent, neutrals as the field), Phoenix Mono for axis and data labels, restrained gridlines, and no 
+chartjunk. Charting  
+rules, applied without exception:  
+– 
+ Never colour alone.  
+Series are distinguished by label, pattern, or direct annotation as well as 
+hue 
+ — 
+required for accessibility and for print.  
+– 
+ Accessible alternative.  
+Every chart exposes a 
+ "view as table"  
+toggle and an export; screen
+ -
+reader users receive a data table, not an image.  
+– 
+ Honest axes.  
+Bar charts start at zero. Truncated axes are labelled as such. Dual axes are 
+avoided.  
+– 
+ Interaction.  
+Hover reveals a precise tooltip; click 
+ drills through  
+to the underlying records; 
+every chart respects the global date range, channel (retail/trade), and location filters.  
+– 
+ Comparison built in.  
+Every time series shows the prior period and prior year as a faint 
+reference.  
+– 
+ Loading and empty states  
+are designed, not blank.  
+28.2 The sales dashboard 
+WIDGET  CHART TYPE  CONTENT & PURPOSE  
+KPI tiles  
+ Number + sparkline + delta  
+ Net sales, orders, AOV, conversion 
+rate, refund rate 
+ — 
+each with trend 
+and period
+ -
+ on
+ -
+ period delta  
+Revenue trend  
+ Line / area  
+ Net sales by day/week/month, with 
+prior
+ -
+ period and prior
+ -
+ year overlays  
+Sales funnel  
+ Funnel  
+ Sessions → product views → add
+ -
+to
+-
+ basket → checkout started → 
+ age 
+verified  
+→ paid order, with drop
+ -
+ off 
+% and absolute loss at each step  
+Revenue mix  
+ Donut  
+ Share of net sales by category (E
+ -
+liquid, Nic Salts, Shortfills, 
+Hardware, Coils, CBD, Accessories) 
+— 
+click a segment to filter the 
+dashboard  
+Channel split  
+ Stacked bar  
+ Retail vs Wholesale over time  
+Sales heat map  
+ Heat map (hour × weekday)  
+ When orders actually happen 
+ — 
+drives dispatch cut
+ -
+ offs, staffing, 
+and send times  
+Geographic heat map  
+ Choropleth (UK postcode areas)  
+ Where demand concentrates; 
+informs store, carrier, and stock
+ -
+location decisions  
+
+--- PAGE 57 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  57 
+WIDGET  CHART TYPE  CONTENT & PURPOSE  
+Top / bottom SKUs  
+ Horizontal bar  
+ Best and worst sellers by units and 
+by margin, side by side  
+Pareto / ABC  
+ Pareto (bar + cumulative line)  
+ Which 20% of SKUs make 80% of 
+revenue  
+Basket analysis  
+ Matrix / network  
+ What sells with what 
+ — 
+drives 
+bundles and recommendations  
+Promotion performance  
+ Bar + table  
+ Uplift, redemption, and margin 
+impact per promotion  
+Cohort retention  
+ Cohort grid (heat)  
+ Repeat purchase by acquisition 
+month over subsequent months  
+Subscription health  
+ Stacked area + waterfall  
+ Active/paused/churned; MRR 
+movement (new, expansion, 
+contraction, churn)  
+Customer mix  
+ Donut + bar  
+ New vs returning revenue; persona 
+mix; RFM segment distribution  
+Product treemap  
+ Treemap  
+ Revenue by category → range → 
+SKU, sized by revenue, coloured by 
+margin  
+ 
+28.3 The finance dashboard 
+WIDGET  CHART TYPE  CONTENT & PURPOSE  
+Revenue bridge  
+ Waterfall  
+ Opening → gross sales → discounts 
+→ returns → net sales, period on 
+period  
+Gross margin  
+ Line + bar  
+ Margin % and margin £ by category 
+and SKU; margin erosion alerts  
+Duty liability  [COMPLIANCE]  
+ Bar + running total  
+ Vaping Products Duty accrued per 
+period, by product type, formatted 
+for the duty return  
+VAT summary  
+ Table + bar  
+ Output VAT by rate, net of returns  
+Settlement reconciliation  
+ Status donut + exception list  
+ PSP settlements matched / 
+unmatched / disputed, with the 
+exception queue  
+Refunds & chargebacks  
+ Line + reason donut  
+ Rate, value, and reason mix; 
+chargeback win rate  
+Cash & receivables (trade)  
+ Ageing bar  
+(30/60/90+)  
+ Wholesale debtor ageing, credit 
+limits, overdue accounts  
+Payment method mix  
+ Donut  
+ Cards, wallets, trade credit 
+ — 
+with 
+acceptance and failure rates  
+Cost of goods & inventory value  
+ Line  
+ COGS and closing inventory 
+valuation, reconciled to the ledger  
+P&L by SKU  
+ Table + treemap  
+ Revenue, duty, COGS, shipping, 
+promotions, contribution margin per 
+SKU  
+ 
+28.4 Operations & compliance dashboards 
+Fulfilment: same
+ -
+ day dispatch rate (gauge), orders by state (funnel), carrier performance and 
+delivery success (bar), 
+ failed age
+ -
+ verification
+ -
+ on
+ -
+ delivery (trend)  [COMPLIANCE]
+ , shipment 
+
+--- PAGE 58 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  58 
+exceptions (queue). Compliance: 
+ age
+ -
+ verification coverage 
+ — 
+must read 100%  
+(gauge with hard 
+alert on any deviation), verification pass/fail and provider
+ -
+ outage trend, product
+ -
+ compliance status 
+across the catalogue (stacked bar), artwork approval backlog, 
+ label/serial reconciliation variance
+ , 
+marketing
+ -
+ send audit, and one
+ -
+ click evidence packs.  
+28.5 Reporting, alerting & self-service 
+Every dashboard is filterable by date range, channel, category, location, and customer segment, and 
+every widget drills through to records. Reports can be 
+ scheduled  
+(daily flash, weekly trading, 
+monthly board pack) and delivered as branded PDF or XLSX to named recipients. 
+ Threshold alerts  
+notify the right role when a metric breaches a bound (conversion drop, refund spike, margin erosion, 
+duty variance, AV coverage below 100%). A governed self
+ -
+ service layer lets analysts build their own 
+views against the modelled analytics layer without tou
+ ching production.  
+ 
+
+--- PAGE 59 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  59 
+SECTION 29  
+ 
+Branded Communications & Document System 
+Every message and document the company sends is a brand encounter, and in an advertising
+ -
+restricted market these owned surfaces are among the 
+ only  
+places the brand may speak. They are 
+therefore designed, not defaulted. Nothing leaves the platform in a system font on a white rectangle.  
+29.1 The email design system 
+Emails are built from a 
+ shared, versioned email component library  
+— 
+authored with 
+ React Email / 
+MJML
+ , compiled to table
+ -
+ based, client
+ -
+ safe HTML 
+ — 
+that mirrors the Phoenix design system: Ink 
+Green header, Bone field, Phoenix Green reserved for a single action, Phoenix Sans for text, Phoenix 
+Mono for reference data (order numbers, batch codes, tracking num
+ bers). Requirements for every 
+email:  
+– 
+ Responsive and dark
+ -
+ mode aware
+ , tested across the major clients (Gmail, Apple Mail, 
+Outlook desktop and web, iOS, Android).  
+– 
+ A plain
+ -
+ text alternative  
+always accompanies the HTML part.  
+– 
+ Accessible
+ : semantic structure, meaningful alt text, ≥ 4.5:1 contrast (the Deep Pine rule 
+applies 
+ — 
+no Phoenix Green text on light), a single unambiguous call to action, and never colour or 
+image alone to convey meaning. Images
+ -
+ off must still read correctly.  
+– 
+ One template, one purpose.  
+No repurposing a transactional shell to carry marketing (which 
+would also breach §4.5).  
+– 
+ Preview and test
+ -
+ send  
+from the console; every template versioned, reviewed, and 
+ — 
+where it 
+carries product or compliance content 
+ — 
+compliance
+ -
+ approved before activation
+ . 
+29.2 Transactional email catalogue 
+Transactional messages are always sent (they are service messages, not marketing, and are not 
+subject to marketing consent 
+ — 
+but they must never carry promotional content, which would make 
+them marketing).  
+TRIGGER  EMAIL  NOTABLE CONTENT  
+Registration  
+ Welcome & verify your email  
+ Brand introduction; what happens 
+next  
+Verification started  
+ Age verification in progress  
+ Reassurance, expected timing 
+[COMPLIANCE]  
+Verification passed  
+ You're verified  
+ Calm confirmation; no celebration of 
+nicotine purchase  
+Verification failed / inconclusive  
+ Next steps to verify  
+ Non
+ -
+ judgemental escalation path 
+[COMPLIANCE]  
+Order placed  
+ Order confirmation  
+ Itemised 
+ net / duty / VAT / delivery  
+breakdown, delivery estimate  
+Payment failed  
+ Payment issue on your order  
+ Clear recovery action  
+Order on hold  
+ We're checking your order  
+ Honest, brief, human  
+Dispatched  
+ Your order is on its way  
+ Tracking link, 
+ age check on delivery  
+notice where applicable  
+Out for delivery  
+ Arriving today  
+ Carrier, window  
+Delivery attempted / AV failed  
+ We couldn't complete delivery  
+ What happens next [COMPLIANCE]  
+
+--- PAGE 60 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  60 
+TRIGGER  EMAIL  NOTABLE CONTENT  
+Delivered  
+ Delivered  
+ Care guidance; review invitation 
+(verified purchase)  
+Return initiated / received / 
+refunded  
+Returns series  
+ Status, timing, refund confirmation  
+Subscription created  
+ Your subscription is set up  
+ Full self
+ -
+ service management links  
+Subscription pre
+ -
+ renewal  
+ Renewing in 3 days  
+ Skip / pause / swap / change 
+ — 
+control first  
+Subscription re
+ -
+ verification needed  
+ Verify to continue  
+ Dispatch withheld pending re
+ -
+verification [COMPLIANCE]  
+Subscription payment failed  
+ Dunning series (3 steps)  
+ Recovery, then pause 
+ — 
+never silent 
+cancellation  
+Back in stock  
+ It's back  
+ Only where explicitly requested  
+Trade  
+ Order confirmation, invoice, 
+statement, credit reminder  
+Itemised duty/VAT, notification 
+numbers, batch records  
+Account  
+ Password reset, new device, data 
+export ready, closure confirmation  
+Security
+ -
+ critical, no marketing  
+ 
+29.3 The weekly newsletter [COMPLIANCE] 
+The newsletter is the brand's regular editorial voice 
+ — 
+and it is tightly governed. It may be sent 
+ only 
+to existing customers who hold a lawful, auditable opt
+ -
+ in
+, never to purchased or scraped lists, and it 
+must not constitute prohibited advertising or inducement under the Tobacco and Vapes Act (§4.5). Its 
+content leans on what the brand is permitted and pleased to talk about: the standard (testing, 
+provenance, co
+ mpliance), guidance and education, sustainability and take
+ -
+ back, company and store 
+news, and restrained product information.  
+Operationally, the console provides: an editorial 
+ calendar and workflow  
+(draft → editorial review → 
+compliance approval  
+→ schedule → send), a block
+ -
+ based composer using the email design system 
+(no free
+ -
+ form HTML), 
+ audience selection from governed segments only  
+(with an eligibility check 
+that structurally excludes unverified or unsubscribed contacts), send
+ -
+ time scheduling with time
+ -
+ zone 
+awareness, seed
+ -
+ list and inbox
+ -
+ placement testing, and a full 
+ post
+ -
+ send report  
+(delivered, opened, 
+clicked, unsubscribed, complained, revenue attributed). Every send is written to the marketing audit 
+log with its audience definition, content version, and approver 
+ — 
+so the company can prove, months 
+later, exactly what was sent to who
+ m and who authorised it. A/B testing is permitted on subject and 
+layout, never on compliance content.  
+29.4 Preference centre, consent & deliverability 
+A single 
+ preference centre  
+lets customers choose channel (email, SMS, push) and content type, with 
+a prominent one
+ -
+ click unsubscribe honoured immediately and globally. Consent is captured with 
+timestamp, source, and wording shown, and is auditable. 
+ Suppression lists  
+(unsubscribed, 
+complained, hard
+ -
+ bounced) are enforced at send time and cannot be overridden by an operator. 
+Deliverability is engineered: authenticated sending domains (
+ SPF, DKIM, DMARC
+ , and BIMI where 
+supported), a warmed dedicated IP or reputable shared pool, bounce and complaint handling, list 
+hygiene, and monitoring of reputation and inbox placement. Transactional and marketing traffic are 
+sent on 
+ separate subdomains  
+so a marketing reputation problem can never stop an order 
+confirmation.  
+29.5 SMS, push & in-app 
+
+--- PAGE 61 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  61 
+SMS and push are used sparingly and only where they beat email: dispatch and out
+ -
+ for
+ -
+ delivery 
+notifications, delivery exceptions, subscription pre
+ -
+ renewal, and payment failures. Each is consent
+ -
+gated (transactional exempt), rate
+ -
+ limited, brand
+ -
+ voiced, and 
+ short. The storefront PWA carries the 
+same messages as in
+ -
+ app notifications.  
+29.6 Branded documents 
+The platform generates every customer
+ -  
+and trade
+ -
+ facing document from a shared, branded 
+template system, as accessible, tagged PDFs: 
+ invoices and credit notes  
+(itemising net, duty, VAT), 
+packing slips and delivery notes
+ , 
+returns labels and RMA slips
+ , 
+trade statements and pro
+ -
+ forma 
+invoices
+ , 
+compliance evidence packs  
+(notification numbers, batch and duty records), 
+ scheduled 
+report packs  
+(§28.5), and 
+ — 
+through the labelling subsystem 
+ — 
+product label artwork  
+and 
+barcode/serial manifests  
+(§26). All carry the Phoenix mark, type system, and colour discipline. 
+Templates are versioned and, where they carry regulated content, compliance
+ -
+ approved.  
+ 
+
+--- PAGE 62 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  62 
+SECTION 30  
+ 
+Customer, Marketing & Content Operations 
+30.1 Customer operations 
+Beyond the support console (§11.2), the console gives customer teams: a 
+ segment builder  
+over any 
+attribute or behaviour with live count and export; 
+ customer 360  
+with lifetime value, order and 
+subscription history, verification status, support history, and churn risk; 
+ merge and de
+ -
+ duplication  
+with audit; 
+ goodwill and credit  
+issuance within role limits; 
+ churn and win
+ -
+ back queues
+ ; and 
+ VIP / at
+ -
+risk  
+flags surfaced to agents at the top of the record.  
+30.2 Marketing operations 
+A 
+ campaign and journey builder  
+composes lifecycle journeys from triggers, waits, conditions, and 
+sends 
+ — 
+every one passing an automated 
+ eligibility and compliance gate  
+(§4.5) before it can be 
+activated: opted
+ -
+ in existing customers only, no prohibited inducement, no appeal to minors, 
+unsubscribe honoured. Journeys ship with a preview of who would receive them and why. 
+Performance is measured per journey (delivered, engag
+ ed, converted, revenue, unsubscribes) and 
+every send is auditable. Attribution is first
+ -
+ party and privacy
+ -
+ respecting; 
+ no third
+ -
+ party ad networks 
+or affiliate inducements are integrated  
+— 
+this is a platform constraint, not an omission.  
+30.3 Content operations 
+The CMS console (§12.6) manages the editorial estate 
+ — 
+"Our Standard" trust pages, guidance 
+(flavour finder, strength guide, new
+ -
+ to
+-
+ vaping), help centre, landing pages, and merchandising 
+blocks 
+ — 
+with draft/review/
+ compliance
+ -
+ approve
+ /publish workflow, scheduling, versioning and 
+rollback, preview on the real storefront, and structured content models so marketing composes 
+pages from approved components rather than free HTML. Reviews moderation (§12.5) runs as a 
+queue in the same console
+ , with automated pre
+ -
+ screening for prohibited claims and abuse, and a 
+human decision recorded on each.  
+ 
+
+--- PAGE 63 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  63 
+SECTION 31  
+ 
+Platform Operations & Governance 
+The final console area is the one that keeps the platform trustworthy over years.  
+– 
+ Audit explorer.  
+Search the immutable audit trail (§4.6) by actor, action, subject, or time; 
+reconstruct exactly what happened to any order, product, price, serial, or customer. Exportable as an 
+evidence pack.  
+– 
+ Role & permission administration.  
+Manage users, roles, and permissions with 
+ segregation
+ -
+of
+ -
+ duties  
+enforcement 
+ — 
+the system refuses role combinations that would let one person both create 
+and approve the same compliance
+ -
+ critical artefact.  
+– 
+ Feature flags.  
+Enable, disable, and progressively roll out features by environment, role, or 
+customer cohort; kill
+ -
+ switch any feature without a deploy.  
+– 
+ Configuration.  
+Duty parameters, VAT rates, pricing rules, reorder policies, carrier rules, cut
+ -
+off times, wastage allowances, and thresholds 
+ — 
+versioned, audited, and reversible. 
+ Compliance
+ -
+critical parameters require a second approver.  
+– 
+ Integration health.  
+Live status of every external dependency (PSP, age verification, carriers, 
+search, email) with latency, error rate, and recent failures; 
+ an age
+ -
+ verification outage raises a P0 
+alert and the platform fails closed  
+(§4.2).  
+– 
+ Job & queue monitor.  
+Every background job and event consumer (subscription renewals, 
+dunning, reconciliation, index sync, label reconciliation) with throughput, lag, failures, retries, and a 
+dead
+ -
+ letter queue an operator can inspect and replay.  
+– 
+ Data operations.  
+Governed exports, retention and deletion schedules per data class (§16.5), 
+data
+ -
+ subject request handling (export/erasure), and backup/restore status with the last successful 
+restore rehearsal date.  
+– 
+ Runbooks & incidents.  
+Linked from the alert that raises them; incident timeline, on
+ -
+ call, and 
+post
+ -
+ incident review recorded in the console.  
+ 
+
+--- PAGE 65 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  65 
+SECTION 32  
+ 
+Phased Roadmap 
+The platform is built in eleven phases. Each delivers something coherent and testable, sequenced so 
+that foundations and 
+ compliance controls come before commerce  
+— 
+the platform must be able to 
+verify an adult and account for duty before it can take a penny. The admin console is not a final 
+phase: each phase ships the operator screens for the capability it builds. UI/UX and QA run 
+continuously.  
+PHASE  NAME  DELIVERS  DEPENDS ON  
+0 
+ Foundations  
+ Monorepo, NestJS module skeleton, 
+Next.js apps, 
+MongoDB/Redis/RabbitMQ/OpenSearch, 
+CI/CD, IaC, design system, admin shell  
+— 
+1 
+ Catalogue & Storefront  
+ Product model, embedded compliance 
+profile, catalogue admin, PLP/PDP, 
+search  
+0 
+2 
+ Identity & Age 
+Verification 
+[COMPLIANCE]  
+Accounts, auth, AV provider, verification 
+flows, audit  
+0, 1 
+3 
+ Cart, Checkout, 
+Payments & Duty 
+[COMPLIANCE]  
+Basket, pricing/VAT/
+ duty  
+engine, 
+checkout, PSP, order creation  
+1, 2 
+4  
+ Orders & Inventory  
+ Order state machine, OMS console, 
+multi
+ -
+ location stock, bins, batches, 
+allocation  
+3 
+5 
+ Replenishment, 
+Labelling & Barcode 
+Serialisation  
+[COMPLIANCE]  
+Restock requests, replenishment runs, 
+label orders, artwork approval, 
+ unique 
+barcode/serial pool
+ , work orders, 
+reconciliation  
+4  
+6 
+ Fulfilment, Tracking & 
+Returns  
+Warehouse ops, carriers, 
+ AVOD
+ , 
+tracking, click
+ -
+ and
+ -
+ collect, RMA  
+4, 5  
+7 
+ Customer, CRM, 
+Support & Branded 
+Comms  
+Customer 360, support console, 
+ email 
+design system
+ , transactional catalogue, 
+preference centre, deliverability  
+4  
+8 
+ Engagement  
+ Loyalty, subscriptions, promotions, 
+reviews, recommendations, CMS, 
+weekly newsletter  
+3, 7  
+9 
+ Wholesale (B2B)  
+ Trade accounts & verification, trade 
+pricing, bulk ordering, credit terms, 
+documentation  
+3, 4  
+10 
+ Admin Intelligence, 
+Automation & Launch  
+Analytics store, 
+ sales/finance 
+dashboards (funnel, donut, heat maps, 
+cohort, waterfall)
+ , compliance 
+reporting, automation fabric, hardening, 
+launch  
+all 
+ 
+ 
+
+--- PAGE 66 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  66 
+SECTION 33  
+ 
+Phase-by-Phase Development Prompts 
+The prompts below are written to be handed directly to an engineering team or a capable AI coding 
+agent. Each is self
+ -
+ contained: give the agent 
+ this specification document plus the phase prompt
+ . 
+Standing rules for every phase.  
+Use the fixed stack of §16.3 (Next.js · NestJS · MongoDB) and the 
+repository, backend, and frontend structures of §16.6
+ –
+§16.8 exactly. Respect the bounded contexts 
+(§16.2) 
+ — 
+no module reads another module's collections. Implement the Phoenix design system  
+on all 
+UI, storefront and admin alike (§25). 
+ Ship the operator screens for whatever you build  
+— 
+no 
+capability is done until the console can run it. Write tests as you build and keep core/compliance 
+coverage ≥ 80%. Every requirement marked 
+ [COMPLIANCE]  
+is mandatory and 
+ fails closed
+ . All 
+sensitive actions are audited (§4.6). Meet WCAG 2.2 AA on every screen and in every email. Ship 
+behind feature flags with green CI gates. Never store raw card data or unnecessary identity data. Ask 
+for clarification on anything marked 
+ [OPEN]  
+rather than guessing.  
+Phase 0 
+ — 
+Foundations  
+BUILD PROMPT  
+Build the technical foundation for the Phoenix Vapers commerce platform. Set up the 
+ Turborepo + 
+pnpm monorepo  
+exactly as §16.6 defines ( apps/web
+, apps/admin
+, apps/api
+, shared packages/
+), and 
+the 
+ NestJS modular
+ -
+ monolith  
+skeleton per §16.7 (one module per bounded context of §16.2). Both 
+front
+ -
+ ends are 
+ Next.js App Router (TypeScript)  
+apps per §16.8; the storefront is a PWA. Provision 
+local, development, and staging environments with Terraform; establish CI/CD (GitHub Actions) with 
+test, security
+ -
+ scan, and accessibility gates; stand up 
+ MongoDB replica set (Mongoose)
+ , Redis (+ 
+BullMQ), RabbitMQ, OpenSearch, object storage, and OpenTelemetry observability. Provide the 
+docker-compose 
+local stack, seed scripts, and fault
+ -
+ injection mode of §16.11, plus boot
+ -
+ time env 
+validation (§16.9). Build the shared design-system 
+package with Phoenix tokens and a Storybook 
+catalogue, and the 
+ admin console shell  
+of §25.1
+ –
+§25.2: role
+ -
+ aware navigation, command palette, 
+global search, saved views, bulk
+ -
+ action framework, inline audit component, and the exception
+ -
+ led 
+dashboard scaffold. Output: running skeleton, IaC, CI/CD, design system, admin shell, developer docs.  
+ 
+Phase 1 
+ — 
+Catalogue & Storefront  
+BUILD PROMPT  
+Implement the Catalogue and Search modules and the storefront browse experience. Build the 
+products 
+collection with embedded variants, structured specification
+, and the 
+ locked, embedded 
+`complianceProfile`  
+(§7.2, §18): a product cannot reach 
+ sellable  
+without a complete profile approved 
+by a Compliance Officer, and banned product types (single
+ -
+ use disposables) can never be listed. 
+Build catalogue admin (draft → review → sellable) where Merchandisers cannot touch compliance 
+flags. Index into OpenSearch 
+ and implement faceted, typo
+ -
+ tolerant search (§5.4). Build storefront 
+Home, PLP (instant faceted filtering, URL state, SEO) and PDP (evidence
+ -
+ forward, full specification, 
+warnings, stock, related products) per §5 and §20, fully responsive and WCAG 2.2 AA. P
+ rices may be 
+stubbed until Phase 3, but the price component must render the net/duty/VAT breakdown. Output: 
+catalogue, search, catalogue admin, browsable storefront, tests.  
+ 
+Phase 2 
+ — 
+Identity & Age Verification [COMPLIANCE]  
+BUILD PROMPT  
+Implement Identity & Access and Age Verification. Build accounts, profiles, addresses, consents, and 
+secure auth (OIDC/JWT, optional MFA). Integrate the age
+ -
+ verification provider behind an internal 
+
+--- PAGE 67 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  67 
+abstraction: electronic identity/database check with document
+ -
+ and
+ -
+ liveness escalation (§4.2). Enforce 
+verification at registration, assert it at checkout, and model the flags needed for delivery
+ -
+ time 
+verification 
+ — 
+storing only outcome, evidence reference,  
+and expiry, under a defined 
+retention/deletion schedule. 
+ The system must fail closed
+ : provider unavailable ⇒ block the sale, raise 
+a P0 alert. Write every decision to the immutable audit store. Build the customer
+ -
+ facing verification UX 
+so it reads as responsible care, not obstacle, and the operator views for verification status and 
+except
+ ions. Output: accounts, auth, verification, audit, and compliance tests including forced
+ -
+ outage 
+and inconclusive
+ -
+ check paths.  
+ 
+Phase 3 
+ — 
+Cart, Checkout, Payments & Duty [COMPLIANCE]  
+BUILD PROMPT  
+Implement Cart, Pricing/Tax/Duty, Checkout, Payments, and order creation. Build the persistent 
+basket (live pricing, stock and limit validation, one
+ -
+ off vs subscription lines). Build the 
+ pricing engine  
+as the single source of truth for money: price list, promotions hook, 
+ Vaping Products Duty  
+per §4.4 
+(configuration
+ -
+ driven, all liquid including 0 mg), and VAT 
+ — 
+producing duty
+ -
+ inclusive display prices 
+and a stored itemised breakdown in integer pence. Unit
+ -
+ test the duty/VAT maths exhaustively across 
+bottles, shortfills, nic salts, and 0 mg. Inte
+ grate a PCI
+ -
+ DSS PSP behind an internal interface (tokenised 
+cards/wallets, 3
+ -
+ DS2, saved tokens, partial capture/refund, settlement data); 
+ never store raw card 
+data
+ . Build a short, calm, accessible checkout that 
+ asserts valid age verification and product 
+compliance server
+ -
+ side before payment capture and order creation, failing closed
+ . Output: basket, 
+pricing/duty engine, checkout, payments, orders, compliance and pricing test suites.  
+ 
+Phase 4 
+ — 
+Orders & Inventory  
+BUILD PROMPT  
+Implement Orders and Inventory. Build the Order as an explicit state machine (§7.1) 
+ — 
+no order passes 
+Compliance Confirmed  
+without valid AV and a compliant product set 
+ — 
+authoritative in the Orders 
+module, emitting a domain event on every transition. Build the order
+ -
+ management console (§7.3): 
+search/filter on every dimension, order timeline with inline audit, and controlled, 
+ audited actions 
+(hold/release, edit
+ -
+ before
+ -
+ dispatch, split, cancel, refund within role limits), exception
+ -
+ first. Build 
+Inventory per §8 and §27: 
+ locations, zones, bins
+ ; the stock states of §27.2 including 
+ Bulk/Unlabelled  
+and 
+ QC Hold
+ ; the append
+ -
+ only stockMovements 
+ledger as the source of truth; goods
+ -
+ in and put
+ -
+ away 
+(barcode
+ -
+ driven); 
+ batch, lot and expiry  
+with FEFO picking and a 
+ recall workflow  
+(freeze batch, 
+quarantine, identify affected orders and customers); cycle counting with ABC weighting, variance 
+approval, and shrinkage KPIs; and the exception
+ -
+ led inventory dashboard of §27.8. Implement the 
+order allocator (reserve from the optimal locat
+ ion) and the planning engine of §27.6 
+ — 
+demand 
+velocity, safety stock, and reorder points whose 
+ lead time includes label commissioning and 
+production
+ . Output: orders + console, inventory + console, allocation, planning, tests.  
+ 
+Phase 5 
+ — 
+Replenishment, Labelling & Barcode Serialisation [COMPLIANCE]  
+BUILD PROMPT  
+Implement the replenishment and labelling chain of §26 end to end 
+ — 
+the operational heart of the 
+business. Build 
+ Restock Requests  
+(manual by Store Manager, or auto
+ -
+ raised at reorder point) and 
+Replenishment Runs  
+that consolidate open requests into a 
+ Restock List
+ , netting demand against 
+finished stock and inbound production, each with the state machines and audit of §26.2. Where 
+finished labelled stock is insufficient, compute 
+ label requirements  
+per flavour × strength × bottle size 
+including a configurable wastage allowance (§26.3), and raise 
+ Label Orders  
+against the internal label 
+production team or an external supplier (§26.4). A Label Order cannot be released to print until (a) the 
+artwork version is approved and locked by a Compliance Officer
+ , with compliance
+ -
+ relevant product 
+changes automatically invalidating the artwork version, and (b) a 
+ unique barcode/serial range is 
+
+--- PAGE 68 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  68 
+reserved
+ . Build the 
+ barcode & serial subsystem  
+of §26.5 as rigorously as a financial ledger: GTIN 
+identifies the SKU, a 
+ never
+ -
+ reused serial identifies every individual unit
+ ; a managed serial pool with 
+reserved non
+ -
+ overlapping ranges, transactional allocation, depletion alerts, and the serial lifecycle 
+Allocated → Printed → Verified → Applied → Dispatched 
+with terminal Scrapped
+/Voided
+; GS1
+ -
+ 128 
+or 2D DataMatrix encoding GTIN + batch + expiry + serial; post
+ -
+ print 
+ scan verification  
+and QC 
+sampling. Build 
+ label goods
+ -
+ in
+, then 
+ bottling & labelling Work Orders  
+(§26.6) consuming bulk liquid, 
+bottles, and labels to produce finished, batch
+ -
+ stamped, expiry
+ -
+ dated units behind a 
+ QC hold/release 
+gate
+ , binding each scanned serial permanently to its batch, SKU, and work order. Build 
+ reconciliation  
+(§26.7): printed = applied + scrapped + retained, with variances raised as exceptions requiring sign
+ -
+off, scrap reasons recorded, and scrap
+ -
+ rate trending by label type, printer, and operator. Build 
+supplier/label
+ -
+ production management  
+(§26.8) with lead times feeding back into reorder points, and 
+the full
+ -
+ chain 
+ traceability  
+query: from any serial to batch, lot, label order, artwork version, QC record, 
+order, and customer 
+ — 
+and in reverse for recall. Ship the complete warehouse and label
+ -
+ coordinator 
+console screens, including the overdue
+ -
+ label
+ -
+ order and barcode
+ -
+ pool
+ -
+ depletion  
+exceptions. Output: 
+restock requests, replenishment runs, label orders, artwork approval, serial pool, work orders, 
+reconciliation, supplier management, traceability, console screens, and compliance tests.  
+ 
+Phase 6 
+ — 
+Fulfilment, Tracking & Returns  
+BUILD PROMPT  
+Implement Fulfilment & Shipping and Returns. Build warehouse operations (§8.3): pick
+ -
+ path
+ -
+ optimised 
+picklists, scan
+ -
+ confirmed picking and packing (
+ binding each unit serial to its order and shipment
+ ), 
+and dispatch confirmation updating inventory and order state. Integrate multiple carriers behind a 
+shipping abstraction: rule
+ -
+ based service selection including 
+ age
+ -
+ verification
+ -
+ on
+ -
+ delivery  
+for 
+restricted goods, label/manifest generation, collection booking, and tracking ingestion by webhook. 
+Build end
+ -
+ to
+-
+ end tracking for customers (proactive timeline, milestone notifications, delivery
+ -
+ failed 
+and AV
+ -
+ failed states) and operators (fulfilment d
+ ashboard, exception handling). Implement click
+ -
+ and
+ -
+collect with age
+ -
+ verified handover. Build the returns/RMA flow (§10): self
+ -
+ service initiation, operator 
+authorise/receive/inspect/disposition, 
+ compliance
+ -
+ aware restock/dispose/quarantine preserving 
+batch and serial traceability
+ , and refunds reconciled with payments. Output: warehouse ops, carriers, 
+tracking, click
+ -
+ and
+ -
+ collect, returns, tests.  
+ 
+Phase 7 
+ — 
+Customer, CRM, Support & Branded Communications  
+BUILD PROMPT  
+Implement CRM, Support, and the full communications stack. Build the unified customer record (§11.1) 
+with verification status, orders, returns, subscriptions, loyalty, support history, and derived analytics 
+(LTV, frequency, churn risk), permissioned and au
+ dited. Build the support console (§11.2): 
+omnichannel tickets, full context, brand
+ -
+ voiced canned responses, controlled actions, SLA timers, 
+escalation, and 
+ read
+ -
+ only audited impersonation
+ . Then build the 
+ branded communications system 
+of §29
+ : a versioned 
+ email component library  
+(React Email/MJML) mirroring the Phoenix design 
+system 
+ — 
+Ink Green header, Bone field, single green action, Phoenix Mono for reference data 
+ — 
+responsive, dark
+ -
+ mode aware, with a plain
+ -
+ text alternative, ≥ 4.5:1 contrast (Deep Pine rule), images
+ -
+off legibil
+ ity, and client testing across Gmail/Apple Mail/Outlook/iOS/Android. Implement the 
+ entire 
+transactional catalogue of §29.2  
+(verification series, order, payment, dispatch with AVOD notice, 
+delivery and failed
+ -
+ delivery, returns series, subscription series including re
+ -
+ verification and 3
+ -
+ step 
+dunning, trade and account emails), each versioned and compliance
+ -
+ approved where it car
+ ries 
+regulated content. Build the 
+ preference centre
+ , consent capture with audit, enforced 
+ suppression 
+lists
+ , and deliverability engineering (§29.4): SPF/DKIM/DMARC, separate transactional and marketing 
+subdomains, bounce/complaint handling, reputation monitoring. Build the 
+ branded document system  
+(§29.6): accessible tagged PDF invoices and credit notes itemising net/duty/VAT, packing slips, 
+returns labels, trade statements, and compliance evidence packs. Output: CRM, support console, 
+email design system, transactional emails, preference centre, de
+ liverability, branded documents, tests.  
+
+--- PAGE 69 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  69 
+ 
+Phase 8 
+ — 
+Engagement & the Weekly Newsletter  
+BUILD PROMPT  
+Implement Loyalty, Subscriptions, Promotions, Reviews, Recommendations, and Content. Build points
+ -
+based loyalty (configurable earn/burn, tiers, ledger) within promotional limits. Build 
+subscriptions/auto
+ -
+ replenishment  
+(§12.2): subscribe on PDP, full self
+ -
+ service management 
+(skip/pause/swap/reschedule), pre
+ -
+ renewal reminders, scheduled order generation, tokenised 
+recurring charge with SCA and dunning, and 
+ re
+ -
+ assertion of valid age verification before every 
+recurring dispatch (fails closed)
+ ; expose subscription health analytics. Build the promotions engine 
+(evaluated through the pricing engine so duty and VAT stay correct) within advertising
+ -
+ law constraints 
+and full audit. Build verified
+ -
+ purchase reviews with a moderation queue (automated pr
+ e
+-
+ screening for 
+prohibited health claims and abuse, human decision recorded). Build recommendations respecting 
+appeal
+ -
+ to
+-
+ minors rules. Integrate the headless CMS with draft → review → 
+ compliance
+ -
+ approve  
+→ 
+publish, versioning, rollback, and structured content models (§30.3). Then build the 
+ weekly 
+newsletter system of §29.3
+ : editorial calendar and workflow with mandatory 
+ compliance approval
+ , a 
+block
+ -
+ based composer on the email design system (no free
+ -
+ form HTML), 
+ audience selection from 
+governed segments only  
+with an eligibility gate that structurally excludes unverified, unsubscribed, 
+and suppressed contacts, send
+ -
+ time scheduling, seed
+ -
+ list and inbox
+ -
+ placement testing, post
+ -
+ send 
+reporting (delivered, opened, clicked, unsubscribed, complained, revenue attribut
+ ed), and a marketing 
+audit log recording audience definition, content version, and approver. A/B testing on subject and 
+layout only 
+ — 
+never on compliance content. Output: loyalty, subscriptions, promotions, reviews, 
+recommendations, CMS, newsletter system,  
+tests.  
+ 
+Phase 9 
+ — 
+Wholesale (B2B)  
+BUILD PROMPT  
+Implement Wholesale on the shared commercial core (§13). Build trade accounts as 
+ verified 
+businesses  
+(company and, as licensing matures, retail
+ -
+ licence verification, plus buyer age/identity 
+assurance), approved by a Wholesale Account Manager, carrying account price lists, credit terms, and 
+permitted ranges. Build the trade experience: trade/tier/volume p
+ ricing via the pricing engine; fast bulk 
+and repeat ordering (SKU list, CSV upload, re
+ -
+ order from history); credit
+ -
+ terms (invoice/net) checkout 
+alongside card; higher limits; and one
+ -
+ click 
+ compliance documentation  
+(invoices itemising 
+net/duty/VAT, notification numbers, batch and duty records). Reuse the same OMS, inventory, 
+labelling, and fulfilment machinery, with trade carriers and palletised delivery, and feed trade demand 
+into the replenishment chain of Phase 5
+ . Build trade operations for account managers and finance: 
+pricing, credit control, invoicing, statements, and 
+ receivables ageing  
+(§28.3). Output: trade accounts, 
+trade pricing, B2B ordering UI, credit checkout, documentation, trade ops, tests.  
+ 
+Phase 10 
+ — 
+Admin Intelligence, Automation & Launch  
+BUILD PROMPT  
+Complete the analytics, automation, and governance surfaces, then harden and launch. Stand up the 
+analytics store fed by MongoDB change streams and events (§14.6) and model the analytics layer 
+against the single metrics catalogue (§14.7). Build the 
+ charting foundation of §28.1  
+— 
+one library 
+(Recharts/ECharts) wrapped in Phoenix design
+ -
+ system components, with the non
+ -
+ negotiable rules: 
+never colour alone, a 
+ "view as table"  
+accessible alternative and export on every chart, zero
+ -
+ based 
+bar axes, click
+ -
+ through drill
+ -
+ down, prior
+ -
+ period and prior
+ -
+ year comparison, and designed 
+loading/empty states. Then build the 
+ sales dashboard of §28.2  
+(KPI tiles with sparklines; revenue 
+trend; the 
+ sales funnel  
+from sessions → views → basket → checkout → 
+ age verified  
+→ paid order; the 
+revenue
+ -
+ mix donut  
+with click
+ -
+ to
+-
+ filter; channel split; the 
+ hour × weekday sales heat map
+ ; the 
+ UK 
+postcode geographic heat map
+ ; top/bottom SKUs; 
+ Pareto/ABC
+ ; basket analysis; promotion 
+performance; 
+ cohort retention grid
+ ; subscription health with an 
+ MRR waterfall
+ ; customer mix; product 
+
+--- PAGE 70 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  70 
+treemap  
+sized by revenue and coloured by margin) and the 
+ finance dashboard of §28.3  
+(revenue
+ -
+bridge 
+ waterfall
+ ; gross margin; 
+ duty liability  
+formatted for the duty return; VAT summary; settlement 
+reconciliation with exception queue; refunds and chargebacks; 
+ receivables ageing
+ ; payment
+ -
+ method 
+mix; COGS and inventory valuation; 
+ P&L by SKU
+ ). Build the operations and compliance dashboards of 
+§28.4, including the 
+ age
+ -
+ verification coverage gauge that must read 100% and alerts on any 
+deviation  
+and the 
+ label/serial reconciliation variance  
+widget. Add scheduled branded report packs 
+and threshold alerting (§28.5). Complete the 
+ process
+ -
+ automation fabric of §15  
+(order
+ -
+ to
+-
+ cash, 
+procure
+ -
+ to
+-
+ restock 
+ including the labelling chain
+ , verification/onboarding, subscriptions, fraud 
+scoring, finance reconciliation, returns, lifecycle, operational alerting) 
+ — 
+event
+ -
+ driven, idempotent, 
+fail
+ -
+ safe, auditable, observable. Build the platform
+ -
+ governance console of §31: audit explorer, role 
+admi
+ nistration with 
+ segregation
+ -
+ of
+ -
+ duties enforcement
+ , feature flags, versioned configuration with 
+second
+ -
+ approver on compliance
+ -
+ critical parameters, integration health with 
+ P0 on age
+ -
+ verification 
+outage
+ , job/queue monitor with dead
+ -
+ letter replay, data operations and DSAR handling, and 
+runbooks/incidents. Then harden: meet all NFR targets under 10× peak; pass penetration testing; pass 
+a full WCAG 2.2 AA audit (automated + assistive technology) across stor
+ efront, console, and emails; 
+rehearse disaster recovery; establish on
+ -
+ call; and obtain 
+ compliance sign
+ -
+ off  
+across AV enforcement, 
+product compliance, duty, labelling/serialisation, marketing, and audit. Execute a controlled rollout 
+(soft launch → full) with rollback ready. Output: analytics store, dashboards, automation fabric, 
+governance console, hardening ev
+ idence, launched platform.  
+ 
+ 
+
+--- PAGE 71 ---
+PHOENIX VAPERS — COMMERCE PLATFORM SPECIFICATION  71 
+SECTION 34  
+ 
+Closing Note 
+This document specifies a platform, not a website: a compliance
+ -
+ first, event
+ -
+ driven commercial 
+system that serves every kind of vaper, gives the business an operations console it can actually run 
+on, and automates the chain from an empty shelf to a labelle
+ d, serialised, batch
+ -
+ traceable bottle in a 
+customer's hand.  
+Two things in it are easy to underestimate and expensive to get wrong. The first is 
+ serialisation
+ : 
+because every label carries a unique barcode, labels are not consumables to be counted loosely but 
+serials to be accounted for exactly 
+ — 
+and the reward for that rigour is a recall capability measured in 
+hours. The second is 
+ the compliance gates
+ : they are not friction to be optimised away under 
+deadline pressure, they are the licence to trade. Built to this specification, and never descoping what 
+is marked [COMPLIANCE]
+ , Phoenix Vapers will operate the most trustworthy, most traceable, and most 
+automated commerce platform in the United Kingdom vaping market.  
+Anything marked 
+ [OPEN]  
+is an explicit invitation to decide, not an omission to paper over. Bring those 
+decisions to the platform owner and the compliance owner, record them as ADRs, and proceed.  
+ 

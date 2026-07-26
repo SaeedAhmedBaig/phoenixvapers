@@ -1,0 +1,16 @@
+{
+  "name": "@phoenix/utils",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cross-cutting helpers shared by every app (money, dates, ids). Plain JavaScript with JSDoc so both the JSX front-ends and the TypeScript API consume it natively.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./money": "./src/money.js",
+    "./rbac": "./src/rbac.js"
+  },
+  "files": [
+    "src"
+  ]
+}

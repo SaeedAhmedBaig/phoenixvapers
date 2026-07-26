@@ -1,0 +1,12 @@
+# Workspace layout per specification §16.6 — apps are deployables, packages are shared code.
+packages:
+  - "apps/*"
+  - "packages/*"
+# Native build scripts we explicitly trust (pnpm blocks all others by default):
+# sharp — Next.js image optimisation; msgpackr-extract — BullMQ serialisation;
+# unrs-resolver — ESLint import resolution.
+allowBuilds:
+  argon2: true
+  msgpackr-extract: true
+  sharp: true
+  unrs-resolver: true

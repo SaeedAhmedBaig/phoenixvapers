@@ -1,0 +1,13 @@
+{
+  "name": "@phoenix/config",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared tooling presets (Prettier now; ESLint/Tailwind presets as they are needed) so formatting and lint rules are defined once (spec §16.10).",
+  "type": "module",
+  "exports": {
+    "./prettier": "./prettier.config.js"
+  },
+  "files": [
+    "prettier.config.js"
+  ]
+}

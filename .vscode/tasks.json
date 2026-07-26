@@ -1,0 +1,47 @@
+{
+  // VS Code tasks — Terminal > Run Task…  (or Ctrl+Shift+B for the default)
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dev: Everything (services + web + admin + api)",
+      "type": "shell",
+      "command": "pnpm dev",
+      "group": { "kind": "build", "isDefault": true },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Storefront only (:3000)",
+      "type": "shell",
+      "command": "pnpm dev:web",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Admin console only (:3001)",
+      "type": "shell",
+      "command": "pnpm dev:admin",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: API only (:4000)",
+      "type": "shell",
+      "command": "pnpm dev:api",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Services: start Redis + MongoDB",
+      "type": "shell",
+      "command": "pnpm redis:start; pnpm mongo:start",
+      "problemMatcher": []
+    },
+    {
+      "label": "Seed catalogue",
+      "type": "shell",
+      "command": "pnpm seed",
+      "problemMatcher": []
+    }
+  ]
+}

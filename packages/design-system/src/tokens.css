@@ -1,0 +1,131 @@
+/*
+ * Phoenix design tokens — Brand Identity Book Vol. 1 (Ch. 18–19, 25).
+ * Deep Pine rule: text-pine on light surfaces, never phoenix-green body text.
+ * Ink Green chrome for header/footer/admin sidebar (both themes).
+ */
+
+:root {
+  --background: #f7f6f2;
+  --foreground: #14181a;
+
+  --card: #ffffff;
+  --card-foreground: #14181a;
+  --popover: #ffffff;
+  --popover-foreground: #14181a;
+
+  --primary: #08ab5e;
+  --primary-foreground: #ffffff;
+  --secondary: #e9e9e3;
+  --secondary-foreground: #14181a;
+  --muted: #f0efeb;
+  --muted-foreground: #6e736f;
+  --accent: #edf7f1;
+  --accent-foreground: #05633a;
+
+  --destructive: #c7482f;
+  --destructive-foreground: #fff5f3;
+  --success: #05633a;
+  --success-foreground: #e8f8ef;
+  --warning: #e8a33d;
+  --warning-foreground: #1c1408;
+  --info: #3e7ca8;
+  --info-foreground: #f0f7fc;
+
+  --border: #e0e0da;
+  --input: #c7c9c4;
+  --ring: #08ab5e;
+  --pine: #05633a;
+
+  --surface-sunken: #f0efeb;
+  --surface-elevated: #ffffff;
+  --chrome: #0a1512;
+  --chrome-fg: #f7f6f2;
+  --forest-ink: #073b25;
+  --product-well: #f0ede6;
+}
+
+.dark {
+  --background: #080a09;
+  --foreground: #f0f2f1;
+  --card: #101412;
+  --card-foreground: #f0f2f1;
+  --popover: #141816;
+  --popover-foreground: #f0f2f1;
+  --primary: #08ab5e;
+  --primary-foreground: #ffffff;
+  --secondary: #161b18;
+  --secondary-foreground: #f0f2f1;
+  --muted: #141816;
+  --muted-foreground: #9aa5a0;
+  --accent: #0f1f16;
+  --accent-foreground: #6fd9a0;
+  --destructive: #e07a6a;
+  --destructive-foreground: #1c0806;
+  --success: #34d399;
+  --success-foreground: #04140b;
+  --warning: #fbbf24;
+  --warning-foreground: #1c1408;
+  --info: #5a9ec4;
+  --info-foreground: #041018;
+  --border: #1f2824;
+  --input: #2a332f;
+  --ring: #08ab5e;
+  --pine: #6fd9a0;
+  --surface-sunken: #0c0f0d;
+  --surface-elevated: #121614;
+  --chrome: #0a1512;
+  --chrome-fg: #f7f6f2;
+  --forest-ink: #073b25;
+  --product-well: #1a1d1b;
+}
+
+@theme {
+  --color-ink-green: #0a1512;
+  --color-bone: #f7f6f2;
+  --color-phoenix-green: #08ab5e;
+  --color-deep-pine: #05633a;
+  --color-forest-ink: #073b25;
+  --color-graphite: #14181a;
+  --color-slate: #6e736f;
+  --color-mist: #e9e9e3;
+  --color-ash: #c7c9c4;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-pine: var(--pine);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-chrome: var(--chrome);
+  --color-chrome-fg: var(--chrome-fg);
+  --color-forest-ink: var(--forest-ink);
+  --color-product-well: var(--product-well);
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+}

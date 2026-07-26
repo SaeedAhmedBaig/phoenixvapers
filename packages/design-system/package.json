@@ -1,0 +1,12 @@
+{
+  "name": "@phoenix/design-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Phoenix design tokens and shared UI foundations. The single styling source for apps/web and apps/admin — no app defines its own colours or type scale (spec §16.6).",
+  "exports": {
+    "./tokens.css": "./src/tokens.css"
+  },
+  "files": [
+    "src"
+  ]
+}
