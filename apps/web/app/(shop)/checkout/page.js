@@ -58,7 +58,7 @@ export default async function CheckoutPage() {
                 UK law requires us to confirm you are 18 or over before we can sell you vaping products. Your basket is saved — complete verification and come straight back to checkout.
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
-                <Button asChild className="rounded-none"><Link href="/account/verify">Verify my age</Link></Button>
+                <Button asChild className="rounded-none"><Link href="/verify">Verify my age</Link></Button>
                 <Button asChild variant="outline" className="rounded-none"><Link href="/basket">Back to basket</Link></Button>
               </div>
             </div>

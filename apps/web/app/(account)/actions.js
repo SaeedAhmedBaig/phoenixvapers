@@ -44,7 +44,7 @@ export async function registerAction(formData) {
   await setSession(result);
   // Carry a guest basket over into the new account (§6.2).
   await mergeGuestCartAfterLogin(result.accessToken);
-  redirect("/account/verify");
+  redirect("/verify");
 }
 
 export async function loginAction(formData) {
@@ -158,7 +158,7 @@ export async function initiateVerificationAction() {
     redirectWithError("/account", error.message ?? "Verification could not start");
     return;
   }
-  redirect("/account/verify?saved=1");
+  redirect("/verify?saved=1");
 }
 
 export async function escalateVerificationAction() {
@@ -168,5 +168,5 @@ export async function escalateVerificationAction() {
     redirectWithError("/account", error.message ?? "Escalation failed");
     return;
   }
-  redirect("/account/verify?saved=1");
+  redirect("/verify?saved=1");
 }

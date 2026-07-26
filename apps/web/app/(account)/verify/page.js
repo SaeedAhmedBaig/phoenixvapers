@@ -14,7 +14,7 @@ export default async function VerifyPage({ searchParams }) {
     verification = await customerApi("/verification/status");
   } catch (error) {
     if (error instanceof AuthRequiredError) {
-      redirect(`/auth/refresh?next=${encodeURIComponent("/account/verify")}`);
+      redirect(`/auth/refresh?next=${encodeURIComponent("/verify")}`);
     }
     throw error;
   }

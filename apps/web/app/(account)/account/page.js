@@ -68,7 +68,7 @@ export default async function AccountPage({ searchParams }) {
           <VerificationPanel verification={verification} compact />
           {avStatus !== "passed" ? (
             <p className="text-muted-foreground mt-4 text-sm">
-              <Link href="/account/verify" className="text-pine font-medium hover:underline">Open full verification guide →</Link>
+              <Link href="/verify" className="text-pine font-medium hover:underline">Open full verification guide →</Link>
             </p>
           ) : null}
         </CardContent>
