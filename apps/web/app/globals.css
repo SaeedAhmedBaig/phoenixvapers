@@ -76,3 +76,47 @@ body {
 .phx-card:hover {
   box-shadow: 0 4px 16px rgb(20 24 26 / 0.06);
 }
+
+/* Spotlight card — a restrained, cursor-following glow for CLICKABLE cards
+   only (categories, personas). Pine-tinted, capped opacity, no blur/glass —
+   the interaction signals "this opens something", not decoration for its
+   own sake (components/ui/spotlight-card.jsx). */
+.phx-spotlight {
+  --spot-x: 50%;
+  --spot-y: 50%;
+}
+
+.phx-spotlight:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 25%, var(--color-border));
+}
+
+.phx-spotlight-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  background: radial-gradient(
+    240px circle at var(--spot-x) var(--spot-y),
+    color-mix(in srgb, var(--color-primary) 10%, transparent),
+    transparent 70%
+  );
+}
+
+.phx-spotlight:hover .phx-spotlight-glow {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phx-spotlight-glow {
+    transition: none;
+  }
+}
+
+@media (hover: none) {
+  /* No pointer to follow on touch — a static glow would just flash on tap. */
+  .phx-spotlight-glow {
+    display: none;
+  }
+}

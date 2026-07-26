@@ -5,7 +5,9 @@ import { ProductCard } from "@/components/catalog/product-card";
 import { CategoryTile } from "@/components/catalog/category-tile";
 import { SectionEyebrow } from "@/components/home/section-eyebrow";
 import { TrustStrip } from "@/components/home/trust-strip";
+import { RevealHeading } from "@/components/motion/reveal-heading";
 import { Button } from "@/components/ui/button";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { apiGet } from "@/lib/api";
 import { CATEGORIES } from "@/lib/categories";
 
@@ -81,11 +83,15 @@ export default async function HomePage() {
       <section className="phx-hero border-border border-b">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 lg:py-28">
           <SectionEyebrow className="mb-4">UK-made · Batch-tested · MHRA notified</SectionEyebrow>
-          <h1 className="font-display text-4xl leading-[1.1] font-medium tracking-tight sm:text-5xl lg:text-[3.5rem]">
-            The Standard
-            <br />
-            <span className="text-pine">of Trust.</span>
-          </h1>
+          <RevealHeading
+            className="font-display text-4xl leading-[1.1] font-medium tracking-tight sm:text-5xl lg:text-[3.5rem]"
+            words={[
+              { text: "The" },
+              { text: "Standard" },
+              { text: "of", break: true },
+              { text: "Trust.", className: "text-pine" },
+            ]}
+          />
           <p className="text-muted-foreground mx-auto mt-6 max-w-xl text-base leading-relaxed sm:text-lg">
             UK-made, batch-tested vaping products with duty-inclusive pricing and age-verified dispatch. Built for adults who expect evidence — not hype.
           </p>
@@ -107,7 +113,7 @@ export default async function HomePage() {
         <h2 className="font-display mt-2 text-2xl font-medium sm:text-3xl">One catalogue. Every vaper.</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PERSONAS.map((p) => (
-            <Link key={p.title} href={p.href} className="phx-card group flex flex-col p-5 transition-shadow">
+            <SpotlightCard key={p.title} as={Link} href={p.href} className="flex flex-col p-5">
               <div className="mb-4 flex items-start justify-between">
                 <span className="bg-accent text-pine rounded-none px-2.5 py-0.5 text-[10px] font-semibold uppercase">{p.tag}</span>
                 <p.icon className="text-pine size-5 opacity-70" />
@@ -117,7 +123,7 @@ export default async function HomePage() {
               <span className="text-pine mt-4 inline-flex items-center gap-1 text-sm font-medium group-hover:underline">
                 {p.cta} <ArrowRight className="size-3.5" />
               </span>
-            </Link>
+            </SpotlightCard>
           ))}
         </div>
       </section>
