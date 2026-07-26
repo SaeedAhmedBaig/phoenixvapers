@@ -51,7 +51,7 @@ const PERSONAS = [
 const GUIDES = [
   { icon: Scale, tag: "Strength", title: "Strength guide", desc: "Match nicotine intake to the right mg/ml.", href: "/guidance/strength" },
   { icon: FlaskConical, tag: "Flavours", title: "Flavour finder", desc: "Explore profiles from menthol to dessert.", href: "/guidance/flavours" },
-  { icon: Beaker, tag: "Devices", title: "Device chooser", desc: "Pod, MTL, or mod — what suits your style.", href: "/guidance" },
+  { icon: Beaker, tag: "Devices", title: "Device chooser", desc: "Pod, MTL, or mod — what suits your style.", href: "/guidance/devices" },
 ];
 
 const PROCESS = [
@@ -113,7 +113,7 @@ export default async function HomePage() {
         <h2 className="font-display mt-2 text-2xl font-medium sm:text-3xl">One catalogue. Every vaper.</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PERSONAS.map((p) => (
-            <SpotlightCard key={p.title} as={Link} href={p.href} className="flex flex-col p-5">
+            <SpotlightCard key={p.title} href={p.href} className="flex flex-col p-5">
               <div className="mb-4 flex items-start justify-between">
                 <span className="bg-accent text-pine rounded-none px-2.5 py-0.5 text-[10px] font-semibold uppercase">{p.tag}</span>
                 <p.icon className="text-pine size-5 opacity-70" />
@@ -177,17 +177,17 @@ export default async function HomePage() {
         <p className="text-muted-foreground mt-2 max-w-xl text-sm">Guided paths for switchers — calm, plain, evidence-based.</p>
         <div className="mt-8 grid gap-5 sm:grid-cols-3">
           {GUIDES.map((g) => (
-            <div key={g.title} className="phx-card flex flex-col p-5">
+            <SpotlightCard key={g.title} href={g.href} className="flex flex-col p-5">
               <div className="mb-4 flex items-start justify-between">
                 <span className="bg-accent text-pine rounded-none px-2.5 py-0.5 text-[11px] font-semibold">{g.tag}</span>
                 <g.icon className="text-pine size-5" />
               </div>
               <h3 className="font-medium">{g.title}</h3>
               <p className="text-muted-foreground mt-2 flex-1 text-sm leading-relaxed">{g.desc}</p>
-              <Link href={g.href} className="text-pine mt-4 inline-flex items-center gap-1 text-sm font-medium hover:underline">
+              <span className="text-pine mt-4 inline-flex items-center gap-1 text-sm font-medium group-hover:underline">
                 Read guide <ArrowRight className="size-3.5" />
-              </Link>
-            </div>
+              </span>
+            </SpotlightCard>
           ))}
         </div>
       </section>

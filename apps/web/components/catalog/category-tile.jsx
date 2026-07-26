@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { SpotlightCard } from "@/components/ui/spotlight-card";
@@ -6,7 +5,7 @@ import { CategoryIcon } from "@/lib/category-icons";
 
 export function CategoryTile({ category }) {
   return (
-    <SpotlightCard as={Link} href={`/c/${category.slug}`} className="flex flex-col p-6">
+    <SpotlightCard href={`/c/${category.slug}`} className="flex flex-col p-6">
       <div className="bg-accent flex size-12 items-center justify-center rounded-none transition-colors group-hover:bg-primary/10">
         <CategoryIcon slug={category.slug} className="text-pine size-6" />
       </div>

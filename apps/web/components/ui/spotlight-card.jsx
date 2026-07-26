@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef } from "react";
+import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 
@@ -16,11 +17,19 @@ import { cn } from "@/lib/utils";
  * roles list) keep the flat `.phx-card` untouched; not every box needs the
  * same treatment, which is the point (§ "same card pattern everywhere").
  *
- *   <SpotlightCard as={Link} href="/c/e-liquids" className="flex flex-col p-6">
+ * `Link` is resolved INSIDE this client component when `href` is given —
+ * never accept a component/function reference (e.g. `as={Link}`) as a prop
+ * from a Server Component caller: passing a function across the Server→
+ * Client boundary throws ("Functions cannot be passed directly to Client
+ * Components") the moment the page actually renders, even though the build
+ * itself succeeds. `as` here only ever takes a plain HTML tag NAME (a
+ * string, which is serialisable) for the rare non-link case.
+ *
+ *   <SpotlightCard href="/c/e-liquids" className="flex flex-col p-6">
  *     ...
  *   </SpotlightCard>
  */
-export function SpotlightCard({ as: Component = "div", className, children, ...props }) {
+export function SpotlightCard({ as = "div", href, className, children, ...props }) {
   const ref = useRef(null);
 
   const handleMouseMove = useCallback((event) => {
@@ -31,15 +40,18 @@ export function SpotlightCard({ as: Component = "div", className, children, ...p
     el.style.setProperty("--spot-y", `${event.clientY - rect.top}px`);
   }, []);
 
+  const Tag = href ? Link : as;
+
   return (
-    <Component
+    <Tag
       ref={ref}
+      href={href}
       onMouseMove={handleMouseMove}
       className={cn("phx-card phx-spotlight group relative isolate", className)}
       {...props}
     >
       <span className="phx-spotlight-glow" aria-hidden />
       {children}
-    </Component>
+    </Tag>
   );
 }
