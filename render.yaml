@@ -1,15 +1,34 @@
+# Render blueprint for the Phoenix Vapers API (NestJS).
+# The storefront (Next.js) deploys to Vercel — see the repo README / deploy
+# notes for the Vercel Root Directory + env setup.
 services:
   - type: web
     name: phoenix-api
     runtime: node
+    # Build the API workspace from the monorepo root.
     buildCommand: pnpm install && pnpm --filter api build
     startCommand: node --max-old-space-size=512 apps/api/dist/main.js
-    envVars:
-      - key: NODE_OPTIONS
-        value: --max-old-space-size=512
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 4000
     healthCheckPath: /v1/health
     autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Cap V8 heap for small instances (matches the start flag).
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=512
+      # Render injects PORT automatically; main.ts binds to it (0.0.0.0).
+
+      # ── Secrets & environment-specific — set in the Render dashboard ──
+      # JWT_SECRET is auto-generated (>=32 chars) so it never lives in git.
+      - key: JWT_SECRET
+        generateValue: true
+      # MongoDB Atlas SRV connection string (required from Phase 1).
+      - key: MONGODB_URI
+        sync: false
+      # Managed Redis URL (Upstash / Render Key Value / etc.).
+      - key: REDIS_URL
+        sync: false
+      # Your Vercel storefront origin, e.g. https://phoenixvapers.vercel.app
+      # (used for CORS — no trailing slash).
+      - key: WEB_ORIGIN
+        sync: false

@@ -41,12 +41,13 @@ async function bootstrap(): Promise<void> {
   // Ensure onApplicationShutdown hooks run (Redis/queue connections close cleanly).
   app.enableShutdownHooks();
 
-  const port = config.getOrThrow<number>('API_PORT');
-  await app.listen(port);
+  // Honour the platform-injected PORT (Render and most PaaS set it) and fall
+  // back to the validated API_PORT locally. Bind 0.0.0.0 so the container is
+  // reachable from outside its network namespace.
+  const port = Number(process.env.PORT) || config.getOrThrow<number>('API_PORT');
+  await app.listen(port, '0.0.0.0');
 
-  new Logger('Bootstrap').log(
-    `Phoenix API listening on http://localhost:${port}/v1`,
-  );
+  new Logger('Bootstrap').log(`Phoenix API listening on port ${port} (/v1)`);
 }
 
 void bootstrap();
