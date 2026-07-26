@@ -40,5 +40,5 @@ playwright-report/
 # Redis dumps — runtime data (sessions/carts), never committed
 *.rdb
 
-# Claude Code — personal/local settings only (shared settings.json may commit)
-.claude/settings.local.json
+# Claude Code — local agent/editor config, not part of the product
+.claude/
