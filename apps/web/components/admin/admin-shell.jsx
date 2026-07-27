@@ -62,7 +62,10 @@ export function AdminShell({ operator, nav, children }) {
     <div className="bg-background flex min-h-screen">
       {/* ───────────────── Sidebar (desktop) ───────────────── */}
       <aside className="bg-forest-ink text-chrome-fg hidden w-64 shrink-0 flex-col md:flex">
-        <div className="border-chrome-fg/10 border-b px-5 py-4">
+        {/* Fixed h-16 — matches the top bar's h-16 exactly, so the sidebar's
+            bottom border and the top bar's bottom border sit on the same
+            horizontal line regardless of either block's content. */}
+        <div className="border-chrome-fg/10 flex h-16 flex-col justify-center border-b px-5">
           <Link href="/admin" className="flex items-center gap-2.5">
             <span className="bg-primary text-primary-foreground inline-flex size-6 shrink-0 items-center justify-center text-[13px] font-bold">
               P
@@ -127,7 +130,7 @@ export function AdminShell({ operator, nav, children }) {
       {/* ───────────────── Main column ───────────────── */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Executive top bar (desktop) */}
-        <header className="border-border bg-card sticky top-0 z-30 hidden items-center gap-4 border-b px-6 py-2.5 md:flex">
+        <header className="border-border bg-card sticky top-0 z-30 hidden h-16 items-center gap-4 border-b px-6 md:flex">
           <div className="min-w-0">
             <p className="text-muted-foreground text-[11px] leading-none">Phoenix Console</p>
             <h1 className="font-display mt-0.5 truncate text-sm leading-none font-medium">{pageTitle}</h1>

@@ -2,6 +2,7 @@ import { formatPence } from "@phoenix/utils/money";
 
 import { OrderFunnel } from "@/components/admin/charts/order-funnel";
 import { RevenueDonut } from "@/components/admin/charts/revenue-donut";
+import { KpiCard } from "@/components/admin/kpi-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { operatorApi } from "@/lib/admin";
 import { orderStatusLabel } from "@/lib/orders";
@@ -60,10 +61,10 @@ export default async function ReportsPage({ searchParams }) {
       </form>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Kpi label="Accepted orders" value={r.orders} />
-        <Kpi label="Net revenue" value={formatPence(r.netMinor)} />
-        <Kpi label="Vaping duty" value={formatPence(r.dutyMinor)} />
-        <Kpi label="VAT" value={formatPence(r.vatMinor)} />
+        <KpiCard label="Accepted orders" value={r.orders} />
+        <KpiCard label="Net revenue" value={formatPence(r.netMinor)} />
+        <KpiCard label="Vaping duty" value={formatPence(r.dutyMinor)} />
+        <KpiCard label="VAT" value={formatPence(r.vatMinor)} />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -94,16 +95,5 @@ export default async function ReportsPage({ searchParams }) {
         </Card>
       </div>
     </div>
-  );
-}
-
-function Kpi({ label, value }) {
-  return (
-    <Card className="rounded-none shadow-sm">
-      <CardContent className="py-5">
-        <p className="text-muted-foreground text-xs uppercase tracking-wide">{label}</p>
-        <p className="font-display mt-1 text-2xl font-medium tabular-nums">{value}</p>
-      </CardContent>
-    </Card>
   );
 }

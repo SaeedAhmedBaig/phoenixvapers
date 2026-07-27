@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { createProductAction } from "../actions";
+import { ProductImageUploader } from "@/components/admin/product-image-uploader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -69,10 +70,15 @@ export default async function NewProductPage({ searchParams }) {
         </Card>
 
         <Card className="rounded-none shadow-sm">
-          <CardHeader><CardTitle className="text-base">Media &amp; provenance</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">Images</CardTitle></CardHeader>
+          <CardContent>
+            <ProductImageUploader />
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-none shadow-sm">
+          <CardHeader><CardTitle className="text-base">Provenance</CardTitle></CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2"><Label htmlFor="mediaUrl">Image URL (optional)</Label><Input id="mediaUrl" name="mediaUrl" placeholder="https://…" /></div>
-            <div className="space-y-2"><Label htmlFor="mediaAlt">Image alt (optional)</Label><Input id="mediaAlt" name="mediaAlt" /></div>
             <div className="space-y-2"><Label htmlFor="madeIn">Made in</Label><Input id="madeIn" name="madeIn" defaultValue="United Kingdom" /></div>
             <label className="flex items-center gap-2 pt-6 text-sm">
               <input type="checkbox" name="batchTested" defaultChecked className="size-4" /> Batch tested

@@ -321,6 +321,63 @@ export class OrdersService {
     };
   }
 
+  /**
+   * Sales heatmap (spec §28) — order volume by day-of-week × hour-of-day,
+   * over realised (ACCEPTED) orders, matching financeSummary's definition
+   * of a "sale" so the two reports never disagree on what counts as one.
+   * Densified to a full 7×24 grid so the frontend never handles missing
+   * cells — the same zero-filling spirit as financeSummary's statusCounts.
+   */
+  async salesHeatmap(fromISO?: string, toISO?: string) {
+    const createdAt: Record<string, Date> = {};
+    if (fromISO) createdAt.$gte = new Date(fromISO);
+    if (toISO) createdAt.$lte = new Date(`${toISO}T23:59:59.999Z`);
+    const dateMatch = Object.keys(createdAt).length ? { createdAt } : {};
+
+    const rows = await this.model.aggregate<{
+      _id: { dow: number; hour: number };
+      orders: number;
+      revenue: number;
+    }>([
+      { $match: { ...dateMatch, status: OrderStatus.ACCEPTED } },
+      {
+        $project: {
+          // Mongo's $dayOfWeek is 1=Sunday..7=Saturday; shift to 0=Sun..6=Sat
+          // so the frontend can index a plain 0-based day-label array.
+          dow: { $subtract: [{ $dayOfWeek: '$createdAt' }, 1] },
+          hour: { $hour: '$createdAt' },
+          totalMinor: '$totals.totalMinor',
+        },
+      },
+      {
+        $group: {
+          _id: { dow: '$dow', hour: '$hour' },
+          orders: { $sum: 1 },
+          revenue: { $sum: '$totalMinor' },
+        },
+      },
+    ]);
+
+    const byKey = new Map(rows.map((r) => [`${r._id.dow}:${r._id.hour}`, r]));
+    const cells: Array<{
+      dow: number;
+      hour: number;
+      orders: number;
+      revenueMinor: number;
+    }> = [];
+    let maxOrders = 0;
+    for (let dow = 0; dow < 7; dow += 1) {
+      for (let hour = 0; hour < 24; hour += 1) {
+        const row = byKey.get(`${dow}:${hour}`);
+        const orders = row?.orders ?? 0;
+        maxOrders = Math.max(maxOrders, orders);
+        cells.push({ dow, hour, orders, revenueMinor: row?.revenue ?? 0 });
+      }
+    }
+
+    return { range: { from: fromISO ?? null, to: toISO ?? null }, maxOrders, cells };
+  }
+
   /* ─────────────────────────── internals ─────────────────────────── */
 
   private async nextOrderNumber(): Promise<string> {

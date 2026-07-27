@@ -12,10 +12,31 @@ import { redirect } from "next/navigation";
 
 import { operatorApi } from "@/lib/admin";
 
+/**
+ * Parse the ProductImageUploader's hidden JSON field into a validated
+ * `{url, alt}[]`. The uploader's own `required minLength={3}` on the alt
+ * input already blocks a normal submission with bad entries — this is
+ * defense in depth for a submission that bypassed client-side JS/HTML
+ * validation, mirroring the API's own mediaItemSchema (alt >= 3 chars).
+ */
+function parseMediaJson(raw) {
+  if (!raw) return [];
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return [];
+  }
+  if (!Array.isArray(parsed)) return [];
+  return parsed
+    .filter((m) => m && typeof m.url === "string" && typeof m.alt === "string")
+    .map((m) => ({ url: m.url.trim(), alt: m.alt.trim() }))
+    .filter((m) => m.url && m.alt.length >= 3)
+    .slice(0, 12); // mirrors the API's media.max(12)
+}
+
 /** Map the flat form into the create/update product DTO. */
 function parseProductForm(formData) {
-  const mediaUrl = String(formData.get("mediaUrl") ?? "").trim();
-  const mediaAlt = String(formData.get("mediaAlt") ?? "").trim();
   const netPrice = formData.get("netPriceMinor");
   const strength = formData.get("strengthMgPerMl");
   const volume = formData.get("volumeMl");
@@ -26,7 +47,7 @@ function parseProductForm(formData) {
     range: String(formData.get("range") ?? "").trim() || undefined,
     category: String(formData.get("category") ?? ""),
     description: String(formData.get("description") ?? "").trim(),
-    media: mediaUrl && mediaAlt ? [{ url: mediaUrl, alt: mediaAlt }] : [],
+    media: parseMediaJson(String(formData.get("mediaJson") ?? "")),
     specification: {
       ...(strength ? { strengthMgPerMl: Number(strength) } : {}),
       ...(volume ? { volumeMl: Number(volume) } : {}),
@@ -120,6 +141,26 @@ export async function setComplianceProfileAction(formData) {
 
   try {
     await operatorApi(`/admin/products/${id}/compliance-profile`, { method: "PUT", body });
+  } catch (error) {
+    redirect(`/admin/products/${id}?error=${encodeURIComponent(error.message)}`);
+    return;
+  }
+  revalidatePath(`/admin/products/${id}`);
+  redirect(`/admin/products/${id}?saved=1`);
+}
+
+/**
+ * Merchandiser: replace a product's image gallery. Only ever succeeds on a
+ * DRAFT product — the API's updateDraft() rejects anything past draft, by
+ * design (a sellable product's data is frozen; edits go through retire →
+ * new draft, spec §16.7), so this deliberately does not try to work around
+ * that on non-draft products.
+ */
+export async function updateProductMediaAction(formData) {
+  const id = String(formData.get("id"));
+  const media = parseMediaJson(String(formData.get("mediaJson") ?? ""));
+  try {
+    await operatorApi(`/admin/products/${id}`, { method: "PATCH", body: { media } });
   } catch (error) {
     redirect(`/admin/products/${id}?error=${encodeURIComponent(error.message)}`);
     return;

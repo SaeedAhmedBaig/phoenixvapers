@@ -50,11 +50,15 @@ function groupByResource(permissions) {
 
 export default async function RoleDetailPage({ params }) {
   const operator = await requireOperator();
-  if (!CAN_VIEW.has(operator.role)) redirect("/admin");
-
   const { role } = await params;
   // Unknown role → back to the list (fail closed, no guessing).
   if (!OPERATOR_ROLES.includes(role)) redirect("/admin/roles");
+
+  // platform_admin/compliance_officer may browse any role; everyone else may
+  // only view their OWN role's page — self-service transparency (e.g. a
+  // merchandiser understanding why they can't approve their own product,
+  // linked from LifecycleStepper), never someone else's permissions.
+  if (!CAN_VIEW.has(operator.role) && role !== operator.role) redirect("/admin");
 
   const permissions = PERMISSION_MATRIX[role];
   const groups = groupByResource(permissions);

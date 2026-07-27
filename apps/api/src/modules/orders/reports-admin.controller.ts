@@ -29,4 +29,11 @@ export class ReportsAdminController {
   sales(@Query(new ZodValidationPipe(rangeSchema)) query: RangeQuery) {
     return this.orders.financeSummary(query.from, query.to);
   }
+
+  /** Order volume by day-of-week × hour-of-day — same role gate as `sales`. */
+  @Get('sales-heatmap')
+  @RequireRoles(OperatorRole.FINANCE, OperatorRole.PLATFORM_ADMIN)
+  salesHeatmap(@Query(new ZodValidationPipe(rangeSchema)) query: RangeQuery) {
+    return this.orders.salesHeatmap(query.from, query.to);
+  }
 }

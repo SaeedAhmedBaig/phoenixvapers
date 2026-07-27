@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { formatPence } from "@phoenix/utils/money";
+import { formatAge } from "@phoenix/utils/time";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { operatorApi } from "@/lib/admin";
+import { operatorApi, requireOperator } from "@/lib/admin";
 
 export const metadata = { title: "Catalogue" };
 
@@ -14,7 +15,32 @@ const STATUS_VARIANT = {
   retired: "destructive",
 };
 
+/**
+ * Who's actually waiting on what, from the viewing operator's perspective —
+ * the same state the shared LifecycleStepper reads on the detail page,
+ * surfaced here so the list is exception-first (§25.2) rather than just a
+ * flat set of status badges nobody can act on without opening every row.
+ */
+function waitingChip(p, operatorRole) {
+  if (p.status === "draft") {
+    return operatorRole === "merchandiser" ? { label: "With you", tone: "action" } : null;
+  }
+  if (p.status === "review") {
+    const locked = !!p.complianceProfile?.locked;
+    if (!locked) {
+      return operatorRole === "compliance_officer"
+        ? { label: "Waiting on you", tone: "action" }
+        : { label: "Waiting on Compliance", tone: "muted" };
+    }
+    return operatorRole === "merchandiser"
+      ? { label: "Ready to publish", tone: "action" }
+      : { label: "Waiting on Merchandiser", tone: "muted" };
+  }
+  return null; // sellable/retired — nothing pending
+}
+
 export default async function AdminProductsPage({ searchParams }) {
+  const operator = await requireOperator();
   const sp = await searchParams;
   const status = typeof sp?.status === "string" ? sp.status : "";
   const query = status ? `?status=${encodeURIComponent(status)}` : "";
@@ -36,7 +62,7 @@ export default async function AdminProductsPage({ searchParams }) {
           <h1 className="font-display mt-1 text-2xl font-medium sm:text-3xl">Products</h1>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button asChild variant="outline" size="sm"><a href="/admin/products/export">Export CSV</a></Button>
+          <Button asChild variant="outline" size="sm"><Link href="/admin/products/export">Export CSV</Link></Button>
           <Button asChild variant="outline" size="sm"><a href="/admin/products/report" target="_blank" rel="noopener">PDF report</a></Button>
           <Button asChild variant="outline" size="sm"><Link href="/admin/products/import">Bulk import</Link></Button>
           <Button asChild size="sm"><Link href="/admin/products/new">New product</Link></Button>
@@ -63,6 +89,8 @@ export default async function AdminProductsPage({ searchParams }) {
         <ul className="divide-border border-border divide-y border-y">
           {items.map((p) => {
             const price = p.variants?.find((v) => v.netPriceMinor != null)?.netPriceMinor;
+            const chip = waitingChip(p, operator.role);
+            const age = p.updatedAt ? formatAge(p.updatedAt) : null;
             return (
               <li key={p._id ?? p.id}>
                 <Link href={`/admin/products/${p._id ?? p.id}`} className="hover:bg-muted/40 flex items-center justify-between gap-4 py-3 transition-colors">
@@ -72,6 +100,31 @@ export default async function AdminProductsPage({ searchParams }) {
                   </div>
                   <div className="flex items-center gap-3">
                     {price != null ? <span className="text-muted-foreground hidden font-mono text-xs sm:inline">{formatPence(price)} net</span> : null}
+                    {chip ? (
+                      <span
+                        className={
+                          "hidden text-xs font-medium sm:inline " +
+                          (chip.tone === "action" ? "text-warning" : "text-muted-foreground")
+                        }
+                      >
+                        {chip.label}
+                      </span>
+                    ) : null}
+                    {age && p.status === "review" ? (
+                      <span
+                        className={
+                          "hidden font-mono text-[11px] md:inline " +
+                          (age.tone === "destructive"
+                            ? "text-destructive"
+                            : age.tone === "warning"
+                              ? "text-warning"
+                              : "text-muted-foreground")
+                        }
+                        title="Time since last update"
+                      >
+                        {age.label}
+                      </span>
+                    ) : null}
                     <Badge variant={STATUS_VARIANT[p.status] ?? "secondary"}>{p.status}</Badge>
                   </div>
                 </Link>

@@ -42,3 +42,6 @@ playwright-report/
 
 # Claude Code — local agent/editor config, not part of the product
 .claude/
+
+.vercel
+.env*

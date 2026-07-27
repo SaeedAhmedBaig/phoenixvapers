@@ -10,7 +10,10 @@ import {
   retireProductAction,
   setComplianceProfileAction,
   submitForReviewAction,
+  updateProductMediaAction,
 } from "../actions";
+import { LifecycleStepper } from "@/components/admin/lifecycle-stepper";
+import { ProductImageUploader } from "@/components/admin/product-image-uploader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -63,6 +66,47 @@ export default async function AdminProductDetail({ params, searchParams }) {
             <Row label="Compliance" value={profile?.locked ? "Approved & locked" : profile ? "Set (not approved)" : "Not set"} />
           </dl>
           <p className="text-muted-foreground mt-4 text-sm">{product.description}</p>
+        </CardContent>
+      </Card>
+
+      {/* Shared lifecycle view — visible to EVERY operator who can open this
+          page, unlike the role-gated cards below. Fixes the console's core
+          confusion: previously a merchandiser and a compliance officer each
+          only saw their own half of the process, with no "what's next /
+          whose turn" signal either could see. */}
+      <Card className="rounded-none shadow-sm">
+        <CardHeader><CardTitle className="text-base">Lifecycle status</CardTitle></CardHeader>
+        <CardContent>
+          <LifecycleStepper
+            status={product.status}
+            complianceLocked={!!profile?.locked}
+            operatorRole={operator.role}
+            roleDetailHref={`/admin/roles/${operator.role}`}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Media — editable while draft (merchandiser); read-only otherwise,
+          since updateDraft() only ever succeeds on a draft product (§16.7). */}
+      <Card className="rounded-none shadow-sm">
+        <CardHeader><CardTitle className="text-base">Images</CardTitle></CardHeader>
+        <CardContent>
+          {isMerch && product.status === "draft" ? (
+            <form action={updateProductMediaAction} className="space-y-4">
+              <input type="hidden" name="id" value={id} />
+              <ProductImageUploader initialImages={product.media ?? []} />
+              <Button type="submit" size="sm">Save images</Button>
+            </form>
+          ) : product.media?.length ? (
+            <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {product.media.map((m) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <li key={m.url}><img src={m.url} alt={m.alt} className="bg-muted aspect-square w-full object-cover" /></li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-muted-foreground text-sm">No images yet.</p>
+          )}
         </CardContent>
       </Card>
 

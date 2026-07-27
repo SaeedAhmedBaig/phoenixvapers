@@ -8,7 +8,8 @@
   "exports": {
     ".": "./src/index.js",
     "./money": "./src/money.js",
-    "./rbac": "./src/rbac.js"
+    "./rbac": "./src/rbac.js",
+    "./time": "./src/time.js"
   },
   "files": [
     "src"
