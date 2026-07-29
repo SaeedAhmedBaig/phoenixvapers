@@ -104,6 +104,143 @@ const FLAVOURS: FlavourSeed[] = [
   },
 ];
 
+/** A standalone (non-family) product: hardware, coils, accessories, shortfills, CBD. */
+interface SingleProductSeed {
+  name: string;
+  brand: string;
+  category: 'shortfills' | 'hardware-kits' | 'coils-consumables' | 'accessories' | 'cbd';
+  productType: 'shortfill' | 'hardware' | 'coil' | 'accessory' | 'cbd-liquid';
+  description: string;
+  mediaUrl: string;
+  mediaAlt: string;
+  sku: string;
+  netPriceMinor: number;
+  /** Only liquids (shortfill/cbd-liquid) carry a volume + duty classification. */
+  volumeMl?: number;
+  vgPg?: string;
+  coilOhms?: number;
+}
+
+const SINGLE_PRODUCTS: SingleProductSeed[] = [
+  {
+    name: 'Z Virus – The Host 100ml Shortfill',
+    brand: 'Z Virus',
+    category: 'shortfills',
+    productType: 'shortfill',
+    description:
+      'A blend of creamy coconut and sweet, golden pineapple. 100ml zero-nicotine shortfill — ' +
+      'add a nic shot to reach your preferred strength.',
+    mediaUrl: '/media/products/z-virus-the-host.png',
+    mediaAlt: 'Z Virus – The Host 100ml shortfill bottle',
+    sku: 'ZV-HOST-100',
+    netPriceMinor: 800, // 800 + 2200 duty (100ml) + 600 VAT = 3600p (£36.00)
+    volumeMl: 100,
+    vgPg: '30/70',
+  },
+  {
+    name: 'Uwell Caliburn G4 Pod Kit',
+    brand: 'Uwell',
+    category: 'hardware-kits',
+    productType: 'hardware',
+    description:
+      'Compact, easy-to-use pod kit for beginners and experienced vapers alike. Built-in 1300mAh ' +
+      'battery, 5-35W output, supports MTL and RDTL vaping. Includes two G4 refillable pods with ' +
+      'built-in mesh coils. USB-C charging.',
+    mediaUrl: '/media/products/uwell-caliburn-g4-pod-kit.png',
+    mediaAlt: 'Uwell Caliburn G4 pod kit',
+    sku: 'UW-CALIBURN-G4',
+    netPriceMinor: 2500, // 2500 + 500 VAT = 3000p (£30.00), no duty (non-liquid)
+  },
+  {
+    name: 'Smok Nord Replacement Coil',
+    brand: 'Smok',
+    category: 'coils-consumables',
+    productType: 'coil',
+    description:
+      'Replacement coil for the Smok Nord Pod, Nord 19 AIO, and Trinity Alpha Kit. Supplied ' +
+      'individually. 0.6 ohm mesh.',
+    mediaUrl: '/media/products/smok-nord-coil.jpg',
+    mediaAlt: 'Smok Nord replacement coil',
+    sku: 'SMOK-NORD-COIL-06',
+    netPriceMinor: 275, // 275 + 55 VAT = 330p (£3.30), no duty (non-liquid)
+    coilOhms: 0.6,
+  },
+  {
+    name: 'Nitecore i2 Intellicharger',
+    brand: 'Nitecore',
+    category: 'accessories',
+    productType: 'accessory',
+    description:
+      'Dual-slot battery charger with active current distribution, support for 3.7V and 4.35V ' +
+      'batteries, and automatic detection of non-rechargeable cells. USB powered.',
+    mediaUrl: '/media/products/nitecore-i2-intellicharger.jpg',
+    mediaAlt: 'Nitecore i2 Intellicharger battery charger',
+    sku: 'NC-I2-CHARGER',
+    netPriceMinor: 1333, // 1333 + 267 VAT = 1600p (£16.00), no duty (non-liquid)
+  },
+  {
+    name: 'Hurb Breeze CBD Prefilled Pod – Mango',
+    brand: 'Hurb',
+    category: 'cbd',
+    productType: 'cbd-liquid',
+    description:
+      '1000mg CBD/CBG prefilled 10ml pod for the Hurb Breeze CBD vape kit — up to 3,000 puffs, ' +
+      '80/20 PG/VG ratio. Mango flavour.',
+    mediaUrl: '/media/products/hurb-breeze-cbd-prefilled-pod.jpg',
+    mediaAlt: 'Hurb Breeze CBD prefilled pod, Mango flavour',
+    sku: 'HURB-BREEZE-MANGO',
+    netPriceMinor: 613, // 613 + 220 duty (10ml) + 167 VAT = 1000p (£10.00)
+    volumeMl: 10,
+    vgPg: '20/80',
+  },
+];
+
+async function seedSingleProduct(
+  catalogue: CatalogueService,
+  logger: Logger,
+  item: SingleProductSeed,
+) {
+  const isLiquid = item.productType === 'shortfill' || item.productType === 'cbd-liquid';
+
+  const dto: CreateProductDto = {
+    name: item.name,
+    brand: item.brand,
+    category: item.category,
+    description: item.description,
+    media: [{ url: item.mediaUrl, alt: item.mediaAlt }],
+    specification: {
+      volumeMl: item.volumeMl,
+      vgPg: item.vgPg,
+      coilOhms: item.coilOhms,
+    },
+    provenance: { madeIn: 'United Kingdom', batchTested: true },
+    variants: [
+      {
+        sku: item.sku,
+        attributes: {},
+        netPriceMinor: item.netPriceMinor,
+        inStockStub: true,
+      },
+    ],
+  };
+
+  const created = await catalogue.createDraft(dto, ACTOR);
+  await catalogue.submitForReview(created.id, ACTOR);
+
+  const compliance: ComplianceProfileDto = {
+    productType: item.productType,
+    nicotineStrengthMgPerMl: isLiquid ? 0 : undefined,
+    containerVolumeMl: isLiquid ? item.volumeMl : undefined,
+    mandatedWarnings: [],
+    dutyClassification: isLiquid ? 'vaping-liquid' : 'non-liquid',
+  };
+  await catalogue.updateComplianceProfile(created.id, compliance, ACTOR);
+  await catalogue.approveCompliance(created.id, ACTOR);
+  await catalogue.publish(created.id, ACTOR);
+
+  logger.log(`Seeded ${item.name} — ${item.sku}`);
+}
+
 async function seedFlavour(catalogue: CatalogueService, logger: Logger, flavour: FlavourSeed) {
   for (const s of flavour.strengths) {
     const dto: CreateProductDto = {
@@ -159,10 +296,13 @@ async function main(): Promise<void> {
   try {
     const catalogue = app.get(CatalogueService);
 
-    // Idempotent re-runs: clear any earlier attempt at these exact flavours
+    // Idempotent re-runs: clear any earlier attempt at these exact products
     // (matched by SKU, not a collection-wide wipe) before recreating them.
     const connection = app.get<Connection>(getConnectionToken());
-    const skus = FLAVOURS.flatMap((f) => f.strengths.map((s) => s.sku));
+    const skus = [
+      ...FLAVOURS.flatMap((f) => f.strengths.map((s) => s.sku)),
+      ...SINGLE_PRODUCTS.map((p) => p.sku),
+    ];
     const { deletedCount } = await connection.collection('products').deleteMany({
       'variants.sku': { $in: skus },
     });
@@ -171,7 +311,10 @@ async function main(): Promise<void> {
     for (const flavour of FLAVOURS) {
       await seedFlavour(catalogue, logger, flavour);
     }
-    logger.log('Done — 9 products seeded and sellable.');
+    for (const item of SINGLE_PRODUCTS) {
+      await seedSingleProduct(catalogue, logger, item);
+    }
+    logger.log(`Done — ${skus.length} products seeded and sellable.`);
   } finally {
     await app.close();
   }
