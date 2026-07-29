@@ -3,6 +3,7 @@ import { ArrowRight, Beaker, FlaskConical, Package, RefreshCw, Scale, ShoppingBa
 
 import { ProductCard } from "@/components/catalog/product-card";
 import { CategoryTile } from "@/components/catalog/category-tile";
+import { FaqAccordion } from "@/components/home/faq-accordion";
 import { SectionEyebrow } from "@/components/home/section-eyebrow";
 import { TrustStrip } from "@/components/home/trust-strip";
 import { RevealHeading } from "@/components/motion/reveal-heading";
@@ -96,10 +97,10 @@ export default async function HomePage() {
             UK-made, batch-tested vaping products with duty-inclusive pricing and age-verified dispatch. Built for adults who expect evidence — not hype.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Button asChild size="lg" className="rounded-none px-8">
+            <Button asChild size="lg" className="px-8">
               <Link href="/c/e-liquids">Shop e-liquids <ArrowRight className="size-4" /></Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-none border-foreground/15 bg-card px-8">
+            <Button asChild variant="outline" size="lg" className="border-foreground/15 bg-card px-8">
               <Link href="/guidance">New to vaping?</Link>
             </Button>
           </div>
@@ -115,7 +116,7 @@ export default async function HomePage() {
           {PERSONAS.map((p) => (
             <SpotlightCard key={p.title} href={p.href} className="flex flex-col p-5">
               <div className="mb-4 flex items-start justify-between">
-                <span className="bg-accent text-pine rounded-none px-2.5 py-0.5 text-[10px] font-semibold uppercase">{p.tag}</span>
+                <span className="bg-accent text-pine rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase">{p.tag}</span>
                 <p.icon className="text-pine size-5 opacity-70" />
               </div>
               <h3 className="font-medium">{p.title}</h3>
@@ -150,7 +151,7 @@ export default async function HomePage() {
             <h2 className="font-display mt-1 text-2xl font-medium sm:text-3xl">Popular right now</h2>
             <p className="text-muted-foreground mt-1 text-sm">Duty-inclusive · honest stock · full specs on every product page</p>
           </div>
-          <Button asChild variant="outline" className="rounded-none">
+          <Button asChild variant="outline" className="">
             <Link href="/c/e-liquids">View all products <ArrowRight className="size-4" /></Link>
           </Button>
         </div>
@@ -179,7 +180,7 @@ export default async function HomePage() {
           {GUIDES.map((g) => (
             <SpotlightCard key={g.title} href={g.href} className="flex flex-col p-5">
               <div className="mb-4 flex items-start justify-between">
-                <span className="bg-accent text-pine rounded-none px-2.5 py-0.5 text-[11px] font-semibold">{g.tag}</span>
+                <span className="bg-accent text-pine rounded-full px-2.5 py-0.5 text-[11px] font-semibold">{g.tag}</span>
                 <g.icon className="text-pine size-5" />
               </div>
               <h3 className="font-medium">{g.title}</h3>
@@ -204,7 +205,7 @@ export default async function HomePage() {
                 <li className="flex gap-2"><RefreshCw className="text-primary mt-0.5 size-4 shrink-0" /> Pause, skip, or swap anytime — you stay in control</li>
                 <li className="flex gap-2"><Truck className="text-primary mt-0.5 size-4 shrink-0" /> Pre-renewal reminder before each dispatch</li>
               </ul>
-              <Button asChild className="mt-8 rounded-none px-6">
+              <Button asChild className="mt-8 px-6">
                 <Link href="/c/e-liquids">Browse subscription-eligible products</Link>
               </Button>
             </div>
@@ -257,15 +258,8 @@ export default async function HomePage() {
       <section className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
         <SectionEyebrow>Common questions</SectionEyebrow>
         <h2 className="font-display mt-2 text-2xl font-medium">Before you order</h2>
-        <div className="mt-8 space-y-4">
-          {FAQ.map((f) => (
-            <details key={f.q} className="phx-card group p-5">
-              <summary className="cursor-pointer list-none font-medium marker:content-none [&::-webkit-details-marker]:hidden">
-                {f.q}
-              </summary>
-              <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{f.a}</p>
-            </details>
-          ))}
+        <div className="mt-8">
+          <FaqAccordion items={FAQ} />
         </div>
       </section>
 
@@ -276,10 +270,10 @@ export default async function HomePage() {
           Browse the full catalogue — duty-inclusive, age-verified, delivered tracked.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button asChild size="lg" className="rounded-none px-8">
+          <Button asChild size="lg" className="px-8">
             <Link href="/c/e-liquids">Shop now</Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="border-chrome-fg/25 text-chrome-fg hover:bg-white/10 rounded-none bg-transparent px-8">
+          <Button asChild size="lg" variant="outline" className="border-chrome-fg/25 text-chrome-fg hover:bg-white/10 bg-transparent px-8">
             <Link href="/register">Create account</Link>
           </Button>
         </div>

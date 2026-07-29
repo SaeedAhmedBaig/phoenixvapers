@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Ban, Beaker, CheckCircle2, Eye, FileCheck2, ShieldCheck } from "lucide-react";
 
+import { FaqAccordion } from "@/components/home/faq-accordion";
 import { SectionEyebrow } from "@/components/home/section-eyebrow";
 import { RevealHeading } from "@/components/motion/reveal-heading";
 import { Button } from "@/components/ui/button";
@@ -77,15 +78,8 @@ export default function OurStandardPage() {
         <div className="mt-14">
           <SectionEyebrow>Common questions</SectionEyebrow>
           <h2 className="font-display mt-2 text-xl font-medium">Proving the standard</h2>
-          <div className="mt-6 space-y-4">
-            {FAQ.map((item) => (
-              <details key={item.q} className="phx-card group p-5">
-                <summary className="cursor-pointer list-none font-medium marker:content-none [&::-webkit-details-marker]:hidden">
-                  {item.q}
-                </summary>
-                <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{item.a}</p>
-              </details>
-            ))}
+          <div className="mt-6">
+            <FaqAccordion items={FAQ} />
           </div>
         </div>
 
@@ -94,7 +88,7 @@ export default function OurStandardPage() {
           <p className="phx-dark-band-muted mx-auto mt-2 max-w-md text-sm">
             Calm, precise, adult. Evidence before adjectives.
           </p>
-          <Button asChild className="mt-6 rounded-none">
+          <Button asChild className="mt-6">
             <Link href="/c/e-liquids">Shop the catalogue</Link>
           </Button>
         </div>

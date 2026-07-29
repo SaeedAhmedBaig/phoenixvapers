@@ -25,10 +25,10 @@ export function FilterSidebar({ basePath, searchParams, facets }) {
                     <li key={value}>
                       <Link
                         href={filterToggleHref(basePath, searchParams, s.param, value, on)}
-                        className={`flex items-center justify-between rounded-none px-2 py-1.5 text-sm ${on ? "bg-accent text-pine font-medium" : "hover:bg-muted"}`}
+                        className={`flex items-center justify-between rounded-md px-2 py-1.5 text-sm ${on ? "bg-accent text-pine font-medium" : "hover:bg-muted"}`}
                       >
                         <span className="flex items-center gap-2">
-                          <span className={`flex size-4 items-center justify-center rounded-none border ${on ? "border-pine bg-pine text-white" : "border-border"}`}>
+                          <span className={`flex size-4 items-center justify-center rounded-sm border ${on ? "border-pine bg-pine text-white" : "border-border"}`}>
                             {on ? <Check className="size-2.5" /> : null}
                           </span>
                           {s.format(value)}

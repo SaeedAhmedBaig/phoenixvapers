@@ -68,40 +68,40 @@ export function AuthPanel({ mode = "signin", error, next = "" }) {
             {next ? <input type="hidden" name="next" value={next} /> : null}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" autoComplete="email" className="rounded-none" required />
+              <Input id="email" name="email" type="email" autoComplete="email" required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <PasswordInput id="password" name="password" autoComplete="current-password" required />
             </div>
-            <Button type="submit" className="w-full rounded-none">Sign in</Button>
+            <Button type="submit" className="w-full">Sign in</Button>
           </form>
         ) : (
           <form action={registerAction} className="mt-6 space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First name</Label>
-                <Input id="firstName" name="firstName" autoComplete="given-name" className="rounded-none" required />
+                <Input id="firstName" name="firstName" autoComplete="given-name" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last name</Label>
-                <Input id="lastName" name="lastName" autoComplete="family-name" className="rounded-none" required />
+                <Input id="lastName" name="lastName" autoComplete="family-name" required />
               </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="dateOfBirth">Date of birth</Label>
-              <Input id="dateOfBirth" name="dateOfBirth" type="date" className="rounded-none" required />
+              <Input id="dateOfBirth" name="dateOfBirth" type="date" required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" autoComplete="email" className="rounded-none" required />
+              <Input id="email" name="email" type="email" autoComplete="email" required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <PasswordInput id="password" name="password" autoComplete="new-password" minLength={10} required />
               <p className="text-muted-foreground text-xs">At least 10 characters with letters and numbers.</p>
             </div>
-            <Button type="submit" className="w-full rounded-none">Create account</Button>
+            <Button type="submit" className="w-full">Create account</Button>
           </form>
         )}
 

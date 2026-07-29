@@ -67,8 +67,8 @@ export default function FlavourFinderPage() {
       </p>
 
       <div className="mt-6 flex flex-wrap gap-3">
-        <Button asChild className="rounded-none"><Link href="/c/e-liquids">Browse all e-liquids</Link></Button>
-        <Button asChild variant="outline" className="rounded-none"><Link href="/guidance">Back to guidance</Link></Button>
+        <Button asChild className=""><Link href="/c/e-liquids">Browse all e-liquids</Link></Button>
+        <Button asChild variant="outline" className=""><Link href="/guidance">Back to guidance</Link></Button>
       </div>
     </div>
   );

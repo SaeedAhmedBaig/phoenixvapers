@@ -39,7 +39,7 @@ export default async function BasketPage() {
   if (isEmpty) {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center sm:px-6">
-        <div className="bg-accent/60 mx-auto flex size-14 items-center justify-center rounded-none">
+        <div className="bg-accent/60 mx-auto flex size-14 items-center justify-center rounded-full">
           <ShoppingBag className="text-primary/50 size-6" />
         </div>
         <SectionEyebrow className="mt-6">Cart</SectionEyebrow>
@@ -48,9 +48,9 @@ export default async function BasketPage() {
           Browse UK-made, batch-tested products and add them here. Prices show duty and VAT included, with nothing hidden until checkout.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button asChild className="rounded-none"><Link href="/c/e-liquids">Continue shopping</Link></Button>
+          <Button asChild className=""><Link href="/c/e-liquids">Continue shopping</Link></Button>
           {!signedIn ? (
-            <Button asChild variant="outline" className="rounded-none"><Link href="/register">Create account</Link></Button>
+            <Button asChild variant="outline" className=""><Link href="/register">Create account</Link></Button>
           ) : null}
         </div>
       </div>
@@ -124,7 +124,7 @@ export default async function BasketPage() {
                   {/* Quantity + remove */}
                   <div className="mt-3 flex items-center justify-between gap-3">
                     {line.available ? (
-                      <div className="border-border inline-flex items-center rounded-none border">
+                      <div className="border-border inline-flex items-center rounded-md border">
                         <form action={updateLineAction}>
                           <input type="hidden" name="sku" value={line.sku} />
                           <input type="hidden" name="quantity" value={line.quantity - 1} />
@@ -191,17 +191,17 @@ export default async function BasketPage() {
                 the click, so we render a genuine disabled button instead of a
                 dead href="#". */}
             {canCheckout ? (
-              <Button asChild className="w-full rounded-none">
+              <Button asChild className="w-full">
                 <Link href={signedIn ? "/checkout" : "/login?next=/checkout"}>
                   {signedIn ? "Proceed to checkout" : "Sign in to check out"}
                 </Link>
               </Button>
             ) : (
-              <Button disabled className="w-full rounded-none">
+              <Button disabled className="w-full">
                 {signedIn ? "Proceed to checkout" : "Sign in to check out"}
               </Button>
             )}
-            <Button asChild variant="ghost" className="mt-2 w-full rounded-none">
+            <Button asChild variant="ghost" className="mt-2 w-full">
               <Link href="/c/e-liquids">Continue shopping</Link>
             </Button>
           </div>

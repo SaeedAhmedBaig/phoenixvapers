@@ -16,7 +16,7 @@ export function PriceBreakdown({ breakdown }) {
   return (
     <details className="text-sm">
       <summary className="text-pine cursor-pointer font-medium">Price breakdown</summary>
-      <dl className="border-border mt-2 space-y-1 rounded-none border p-3">
+      <dl className="border-border mt-2 space-y-1 rounded-md border p-3">
         {rows.map(([l, m]) => (
           <div key={l} className="flex justify-between gap-4"><dt className="text-muted-foreground">{l}</dt><dd className="font-mono text-xs">{formatPence(m)}</dd></div>
         ))}

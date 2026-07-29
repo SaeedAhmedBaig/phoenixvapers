@@ -113,7 +113,7 @@ export function ProductDetailSummary({ product }) {
         {specPills.length ? (
           <div className="mt-4 flex flex-wrap gap-1.5">
             {specPills.map((s) => (
-              <span key={s} className="border-border bg-muted/50 font-mono rounded-none border px-3 py-1 text-xs">
+              <span key={s} className="border-border bg-muted/50 font-mono rounded-full border px-3 py-1 text-xs">
                 {s}
               </span>
             ))}
@@ -165,7 +165,7 @@ export function ProductDetailContent({ product }) {
       {hasVariants ? (
         <div className="space-y-2">
           <p className="text-sm font-medium">Variants</p>
-          <ul className="divide-y overflow-hidden rounded-none border border-border/80 text-sm">
+          <ul className="divide-y overflow-hidden rounded-lg border border-border/80 text-sm">
             {product.variants.map((v) => (
               <li key={v.sku} className="flex items-center justify-between bg-card px-4 py-3">
                 <span className="font-mono text-xs text-muted-foreground">{v.sku}</span>
@@ -191,7 +191,7 @@ export function ProductDetailContent({ product }) {
               aria-selected={tab === id}
               onClick={() => setTab(id)}
               className={cn(
-                "inline-flex shrink-0 items-center gap-1.5 rounded-none px-4 py-2 text-sm font-medium transition-colors",
+                "inline-flex shrink-0 items-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                 tab === id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted",
               )}
             >
@@ -216,7 +216,7 @@ export function ProductDetailContent({ product }) {
           {tab === "evidence" && (
             <div className="space-y-4">
               <div className="phx-card flex gap-4 p-5">
-                <div className="bg-accent flex size-12 shrink-0 items-center justify-center rounded-none">
+                <div className="bg-accent flex size-12 shrink-0 items-center justify-center rounded-full">
                   <FlaskConical className="text-pine size-6" />
                 </div>
                 <div>
@@ -230,7 +230,7 @@ export function ProductDetailContent({ product }) {
           )}
 
           {tab === "reviews" && (
-            <div className="rounded-none border border-dashed border-border py-12 text-center">
+            <div className="rounded-lg border border-dashed border-border py-12 text-center">
               <p className="text-sm font-medium">No reviews yet</p>
               <p className="text-muted-foreground mx-auto mt-1.5 max-w-sm text-sm">
                 Only verified purchasers can review, so every rating you see here is from someone who actually bought this product. Be the first once you&apos;ve tried it.

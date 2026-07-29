@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FileText, Package, ShieldCheck, Truck, UserCheck, Wallet } from "lucide-react";
 
+import { FaqAccordion } from "@/components/home/faq-accordion";
 import { SectionEyebrow } from "@/components/home/section-eyebrow";
 import { Button } from "@/components/ui/button";
 
@@ -102,15 +103,8 @@ export default function WholesalePage() {
       <div className="mt-14">
         <SectionEyebrow>Common questions</SectionEyebrow>
         <h2 className="font-display mt-2 text-xl font-medium">Before you register</h2>
-        <div className="mt-6 space-y-4">
-          {FAQ.map((item) => (
-            <details key={item.q} className="phx-card group p-5">
-              <summary className="cursor-pointer list-none font-medium marker:content-none [&::-webkit-details-marker]:hidden">
-                {item.q}
-              </summary>
-              <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{item.a}</p>
-            </details>
-          ))}
+        <div className="mt-6">
+          <FaqAccordion items={FAQ} />
         </div>
       </div>
 
@@ -121,10 +115,10 @@ export default function WholesalePage() {
           Register your interest and our wholesale team will be in touch as trade accounts become available.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Button asChild className="rounded-none">
+          <Button asChild className="">
             <a href="mailto:support@phoenixvapers.co.uk?subject=Trade%20account%20interest">Register interest</a>
           </Button>
-          <Button asChild size="default" variant="outline" className="border-chrome-fg/25 text-chrome-fg hover:bg-white/10 rounded-none bg-transparent">
+          <Button asChild size="default" variant="outline" className="border-chrome-fg/25 text-chrome-fg hover:bg-white/10 bg-transparent">
             <Link href="/login">Trade login</Link>
           </Button>
         </div>

@@ -68,7 +68,7 @@ export default async function CategoryPage({ params, searchParams }) {
 
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex gap-5">
-              <div className="bg-accent flex size-16 shrink-0 items-center justify-center rounded-none">
+              <div className="bg-accent flex size-16 shrink-0 items-center justify-center rounded-full">
                 <CategoryIcon slug={category} className="text-pine size-8" />
               </div>
               <div>
@@ -89,18 +89,18 @@ export default async function CategoryPage({ params, searchParams }) {
 
         <div className="flex gap-8">
           <aside className="hidden w-52 shrink-0 lg:block xl:w-60">
-            <div className="sticky top-28 rounded-none border border-border/80 bg-card p-4 shadow-sm">
+            <div className="sticky top-28 rounded-lg border border-border/80 bg-card p-4 shadow-sm">
               <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-widest uppercase">Filters</p>
               <FilterSidebar basePath={basePath} searchParams={sp} facets={facets} />
             </div>
           </aside>
 
           <div className="min-w-0 flex-1">
-            <div className="bg-surface-sunken mb-6 flex flex-wrap items-center justify-between gap-3 rounded-none px-4 py-3">
+            <div className="bg-surface-sunken mb-6 flex flex-wrap items-center justify-between gap-3 rounded-lg px-4 py-3">
               <div className="flex flex-wrap items-center gap-2">
                 <MobileFilterSheet basePath={basePath} searchParams={sp} facets={facets} />
                 {chips.map((c) => (
-                  <Button key={`${c.param}:${c.value}`} asChild variant="secondary" size="sm" className="h-7 rounded-none text-xs">
+                  <Button key={`${c.param}:${c.value}`} asChild variant="secondary" size="sm" className="h-7 text-xs">
                     <Link href={removeFilterHref(basePath, sp, c.param, c.value)}>{c.label} ×</Link>
                   </Button>
                 ))}
@@ -118,7 +118,7 @@ export default async function CategoryPage({ params, searchParams }) {
                 {items.map((p) => <ProductCard key={p.slug} product={p} />)}
               </div>
             ) : (
-              <div className="rounded-none border border-dashed border-border py-20 text-center">
+              <div className="rounded-lg border border-dashed border-border py-20 text-center">
                 <p className="font-medium">
                   {chips.length ? "No products match these filters" : `No ${categoryLabel(category).toLowerCase()} yet`}
                 </p>
@@ -129,11 +129,11 @@ export default async function CategoryPage({ params, searchParams }) {
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   {chips.length ? (
-                    <Button asChild variant="outline" className="rounded-none"><Link href={basePath}>Clear filters</Link></Button>
+                    <Button asChild variant="outline" className=""><Link href={basePath}>Clear filters</Link></Button>
                   ) : (
-                    <Button asChild variant="outline" className="rounded-none"><Link href="/c/e-liquids">Shop e-liquids</Link></Button>
+                    <Button asChild variant="outline" className=""><Link href="/c/e-liquids">Shop e-liquids</Link></Button>
                   )}
-                  <Button asChild className="rounded-none"><Link href="/guidance">New to vaping guide</Link></Button>
+                  <Button asChild className=""><Link href="/guidance">New to vaping guide</Link></Button>
                 </div>
               </div>
             )}

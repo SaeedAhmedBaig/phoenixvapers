@@ -6,7 +6,7 @@ import { CategoryIcon } from "@/lib/category-icons";
 export function CategoryTile({ category }) {
   return (
     <SpotlightCard href={`/c/${category.slug}`} className="flex flex-col p-6">
-      <div className="bg-accent flex size-12 items-center justify-center rounded-none transition-colors group-hover:bg-primary/10">
+      <div className="bg-accent flex size-12 items-center justify-center rounded-full transition-colors group-hover:bg-primary/10">
         <CategoryIcon slug={category.slug} className="text-pine size-6" />
       </div>
       <h3 className="mt-4 font-medium">{category.label}</h3>

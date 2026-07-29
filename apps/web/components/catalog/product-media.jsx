@@ -25,7 +25,7 @@ export function ProductMedia({
 
   return (
     <div className={`flex items-center justify-center ${className}`} aria-hidden>
-      <div className="bg-accent/60 flex size-20 items-center justify-center rounded-none sm:size-24">
+      <div className="bg-accent/60 flex size-20 items-center justify-center rounded-full sm:size-24">
         <CategoryIcon slug={product.category} className={iconClassName} />
       </div>
     </div>

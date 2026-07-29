@@ -31,6 +31,10 @@ export interface ProductCard {
   vgPg?: string;
   inStock: boolean;
   fromPrice?: PriceBreakdown;
+  /** SKU of the cheapest sellable variant — lets the PLP/Home "quick add"
+   *  button add straight to the basket without a PDP visit. Undefined
+   *  when nothing is purchasable (mirrors `fromPrice`'s own guard). */
+  sku?: string;
 }
 
 export interface ProductDetail extends ProductCard {
@@ -74,9 +78,13 @@ function variantBreakdown(
 }
 
 export function toProductCard(doc: any, pricing: PricingParams): ProductCard {
-  const cheapest = [...(doc.variants ?? [])]
+  const priced = [...(doc.variants ?? [])]
     .filter((v: any) => v.netPriceMinor !== undefined)
-    .sort((a: any, b: any) => a.netPriceMinor - b.netPriceMinor)[0];
+    .sort((a: any, b: any) => a.netPriceMinor - b.netPriceMinor);
+  const cheapest = priced[0];
+  // Prefer an in-stock variant for the quick-add SKU — never hand the
+  // storefront a SKU it can't actually check out with.
+  const cheapestInStock = priced.find((v: any) => v.inStockStub);
 
   return {
     slug: doc.slug,
@@ -94,6 +102,7 @@ export function toProductCard(doc: any, pricing: PricingParams): ProductCard {
     // Honest stock display (spec §5.2) — stubbed until Phase 4 inventory.
     inStock: (doc.variants ?? []).some((v: any) => v.inStockStub),
     fromPrice: variantBreakdown(doc, cheapest, pricing),
+    sku: cheapestInStock?.sku,
   };
 }
 

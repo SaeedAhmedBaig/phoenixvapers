@@ -81,8 +81,8 @@ export default function StrengthGuidePage() {
       </p>
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <Button asChild className="rounded-none"><Link href="/guidance/devices">Next: choose a device</Link></Button>
-        <Button asChild variant="outline" className="rounded-none"><Link href="/guidance">Back to guidance</Link></Button>
+        <Button asChild className=""><Link href="/guidance/devices">Next: choose a device</Link></Button>
+        <Button asChild variant="outline" className=""><Link href="/guidance">Back to guidance</Link></Button>
       </div>
     </div>
   );

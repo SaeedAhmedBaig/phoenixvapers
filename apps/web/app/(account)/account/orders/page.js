@@ -40,12 +40,12 @@ export default async function OrdersPage() {
 
       {orders.length === 0 ? (
         <div className="border-border bg-card border p-10 text-center">
-          <div className="bg-accent/60 mx-auto flex size-12 items-center justify-center rounded-none">
+          <div className="bg-accent/60 mx-auto flex size-12 items-center justify-center rounded-full">
             <Package className="text-primary/50 size-5" />
           </div>
           <p className="mt-4 text-sm font-medium">No orders yet</p>
           <p className="text-muted-foreground mt-1 text-sm">When you place an order it will appear here.</p>
-          <Button asChild className="mt-5 rounded-none"><Link href="/c/e-liquids">Start shopping</Link></Button>
+          <Button asChild className="mt-5"><Link href="/c/e-liquids">Start shopping</Link></Button>
         </div>
       ) : (
         <ul className="divide-border border-border divide-y border-y">

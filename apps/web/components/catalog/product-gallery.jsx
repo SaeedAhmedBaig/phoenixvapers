@@ -21,7 +21,7 @@ export function ProductGallery({ product }) {
 
   return (
     <div className="space-y-3 lg:sticky lg:top-28">
-      <div className="phx-product-well overflow-hidden rounded-none border border-border/80 shadow-sm">
+      <div className="phx-product-well overflow-hidden rounded-xl border border-border/80 shadow-sm">
         <div className="relative aspect-square">
           {!isPlaceholderUrl(current?.url) ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -48,7 +48,7 @@ export function ProductGallery({ product }) {
               type="button"
               onClick={() => setActive(i)}
               className={cn(
-                "bg-product-well overflow-hidden rounded-none border-2 p-2 transition-colors",
+                "bg-product-well overflow-hidden rounded-md border-2 p-2 transition-colors",
                 active === i ? "border-primary" : "border-transparent hover:border-border",
               )}
             >

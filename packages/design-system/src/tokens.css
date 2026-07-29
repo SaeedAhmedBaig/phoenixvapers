@@ -124,8 +124,16 @@
   --color-chrome-fg: var(--chrome-fg);
   --color-forest-ink: var(--forest-ink);
   --color-product-well: var(--product-well);
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
-  --radius-xl: 0;
+  /*
+   * Corner radius scale (spec: zellify-inspired "editorial, rounded-2xl
+   * cards" reference aesthetic). A prior pilot session zeroed these to
+   * chase a stricter flat look; superseded per business-owner decision —
+   * the flat treatment read as "squarish" across the storefront and admin,
+   * so the scale is real again. sm/md = controls (buttons, inputs, badges,
+   * pills); lg/xl = surfaces (cards, panels, the product gallery well).
+   */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
 }

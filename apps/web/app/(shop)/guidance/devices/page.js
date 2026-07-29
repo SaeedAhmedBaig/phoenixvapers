@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Battery, CircleDot, Layers, Zap } from "lucide-react";
 
+import { FaqAccordion } from "@/components/home/faq-accordion";
 import { SectionEyebrow } from "@/components/home/section-eyebrow";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
@@ -66,7 +67,7 @@ export default function DeviceChooserPage() {
         {DEVICE_TYPES.map((d) => (
           <SpotlightCard key={d.name} href={d.href} className="flex flex-col p-5">
             <div className="mb-3 flex items-start justify-between">
-              <span className="bg-accent text-pine rounded-none px-2.5 py-0.5 text-[10px] font-semibold uppercase">{d.tag}</span>
+              <span className="bg-accent text-pine rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase">{d.tag}</span>
               <d.icon className="text-pine size-5 opacity-70" />
             </div>
             <h2 className="font-medium">{d.name}</h2>
@@ -81,21 +82,14 @@ export default function DeviceChooserPage() {
       <div className="mt-12">
         <SectionEyebrow>Common questions</SectionEyebrow>
         <h2 className="font-display mt-2 text-xl font-medium">Choosing between devices</h2>
-        <div className="mt-6 space-y-4">
-          {QUESTIONS.map((item) => (
-            <details key={item.q} className="phx-card group p-5">
-              <summary className="cursor-pointer list-none font-medium marker:content-none [&::-webkit-details-marker]:hidden">
-                {item.q}
-              </summary>
-              <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{item.a}</p>
-            </details>
-          ))}
+        <div className="mt-6">
+          <FaqAccordion items={QUESTIONS} />
         </div>
       </div>
 
       <div className="mt-10 flex flex-wrap gap-3">
-        <Button asChild className="rounded-none"><Link href="/guidance/strength">Match your strength next</Link></Button>
-        <Button asChild variant="outline" className="rounded-none"><Link href="/guidance">Back to guidance</Link></Button>
+        <Button asChild className=""><Link href="/guidance/strength">Match your strength next</Link></Button>
+        <Button asChild variant="outline" className=""><Link href="/guidance">Back to guidance</Link></Button>
       </div>
     </div>
   );

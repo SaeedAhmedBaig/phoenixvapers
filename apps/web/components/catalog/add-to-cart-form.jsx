@@ -37,7 +37,7 @@ export function AddToCartForm({ product }) {
   if (sellable.length === 0) {
     return (
       <div className="space-y-3">
-        <Button size="lg" className="w-full rounded-none" disabled>
+        <Button size="lg" className="w-full" disabled>
           Out of stock
         </Button>
         <p className="text-muted-foreground text-center text-xs">
@@ -66,7 +66,7 @@ export function AddToCartForm({ product }) {
                   aria-pressed={selected}
                   onClick={() => setSku(v.sku)}
                   className={cn(
-                    "rounded-none border px-3 py-2 text-sm font-medium transition-colors",
+                    "rounded-md border px-3 py-2 text-sm font-medium transition-colors",
                     selected
                       ? "border-primary bg-primary text-primary-foreground"
                       : "border-border bg-card hover:border-primary/50",
@@ -83,7 +83,7 @@ export function AddToCartForm({ product }) {
 
       <div className="flex items-center gap-3">
         <span className="text-sm font-medium">Quantity</span>
-        <div className="border-border inline-flex items-center rounded-none border">
+        <div className="border-border inline-flex items-center rounded-md border">
           <button
             type="button"
             aria-label="Decrease quantity"
@@ -113,7 +113,7 @@ export function AddToCartForm({ product }) {
         <input type="hidden" name="quantity" value={quantity} />
         <input type="hidden" name="purchaseType" value="one-off" />
         <div className="flex flex-col gap-2.5 sm:flex-row">
-          <Button size="lg" type="submit" disabled={pending || !sku} className="flex-1 rounded-none">
+          <Button size="lg" type="submit" disabled={pending || !sku} className="flex-1">
             {pending ? (
               <>
                 <Loader2 className="size-4 animate-spin" /> Adding…
@@ -122,7 +122,7 @@ export function AddToCartForm({ product }) {
               "Add to basket"
             )}
           </Button>
-          <Button size="lg" type="button" variant="outline" className="flex-1 rounded-none" disabled title="Subscriptions are coming soon">
+          <Button size="lg" type="button" variant="outline" className="flex-1" disabled title="Subscriptions are coming soon">
             Subscribe &amp; save
           </Button>
         </div>

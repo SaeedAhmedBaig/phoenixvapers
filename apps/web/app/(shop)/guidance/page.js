@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Beaker, Scale, ShieldCheck, Sparkles, UserPlus } from "lucide-react";
 
+import { FaqAccordion } from "@/components/home/faq-accordion";
 import { SectionEyebrow } from "@/components/home/section-eyebrow";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
@@ -73,7 +74,7 @@ export default function GuidancePage() {
         {GUIDES.map((g) => (
           <SpotlightCard key={g.title} href={g.href} className="flex flex-col p-5">
             <div className="mb-3 flex items-start justify-between">
-              <span className="bg-accent text-pine rounded-none px-2.5 py-0.5 text-[10px] font-semibold uppercase">{g.tag}</span>
+              <span className="bg-accent text-pine rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase">{g.tag}</span>
               <g.icon className="text-pine size-5 opacity-70" />
             </div>
             <h2 className="font-medium">{g.title}</h2>
@@ -94,7 +95,7 @@ export default function GuidancePage() {
           <li>The full specification on every product page, read before you order</li>
           <li>Age verification at checkout — it takes under a minute and only happens once</li>
         </ul>
-        <Button asChild className="mt-6 rounded-none">
+        <Button asChild className="mt-6">
           <Link href="/c/nic-salts">Browse nic salts</Link>
         </Button>
       </div>
@@ -116,15 +117,8 @@ export default function GuidancePage() {
       <div className="mt-12">
         <SectionEyebrow>Common questions</SectionEyebrow>
         <h2 className="font-display mt-2 text-xl font-medium">Before you start</h2>
-        <div className="mt-6 space-y-4">
-          {FAQ.map((item) => (
-            <details key={item.q} className="phx-card group p-5">
-              <summary className="cursor-pointer list-none font-medium marker:content-none [&::-webkit-details-marker]:hidden">
-                {item.q}
-              </summary>
-              <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{item.a}</p>
-            </details>
-          ))}
+        <div className="mt-6">
+          <FaqAccordion items={FAQ} />
         </div>
       </div>
     </div>

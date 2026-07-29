@@ -54,7 +54,7 @@ export function Header({ signedIn = false, cartCount = 0 }) {
           <form
             action="/search"
             method="get"
-            className="border-input bg-background ml-auto hidden max-w-[220px] items-center rounded-none border md:flex lg:max-w-[260px] xl:max-w-xs"
+            className="border-input bg-background ml-auto hidden max-w-[220px] items-center rounded-md border md:flex lg:max-w-[260px] xl:max-w-xs"
           >
             <Search className="text-muted-foreground ml-3 size-4 shrink-0" />
             <input
@@ -99,7 +99,7 @@ export function Header({ signedIn = false, cartCount = 0 }) {
                 <Button asChild variant="ghost" size="sm" className="hidden text-sm sm:inline-flex">
                   <Link href="/login">Sign in</Link>
                 </Button>
-                <Button asChild size="sm" className="hidden rounded-none px-5 sm:inline-flex">
+                <Button asChild size="sm" className="hidden px-5 sm:inline-flex">
                   <Link href="/register">Sign up</Link>
                 </Button>
               </>
@@ -115,19 +115,24 @@ export function Header({ signedIn = false, cartCount = 0 }) {
                     <Link
                       key={l.href}
                       href={l.href}
-                      className={`rounded-none px-3 py-2.5 text-sm ${isActive(pathname, l.href) ? "bg-accent text-pine font-medium" : "hover:bg-muted"}`}
+                      className={`rounded-md px-3 py-2.5 text-sm ${isActive(pathname, l.href) ? "bg-accent text-pine font-medium" : "hover:bg-muted"}`}
                     >
                       {l.label}
                     </Link>
                   ))}
                 </nav>
-                <div className="mt-6 flex flex-col gap-2">
+                {/* Pinned to the bottom (mt-auto) — matching the desktop
+                    header's CTA hierarchy (Sign up solid/primary, Sign in
+                    outline) instead of the inverted order this had before,
+                    and anchored low so the panel doesn't read as half-empty
+                    when the nav list is short. */}
+                <div className="mt-auto flex flex-col gap-2 p-4">
                   {signedIn ? (
-                    <Button asChild className="rounded-none"><Link href="/account">My account</Link></Button>
+                    <Button asChild><Link href="/account">My account</Link></Button>
                   ) : (
                     <>
-                      <Button asChild className="rounded-none"><Link href="/login">Sign in</Link></Button>
-                      <Button asChild variant="outline" className="rounded-none"><Link href="/register">Sign up</Link></Button>
+                      <Button asChild><Link href="/register">Sign up</Link></Button>
+                      <Button asChild variant="outline"><Link href="/login">Sign in</Link></Button>
                     </>
                   )}
                 </div>

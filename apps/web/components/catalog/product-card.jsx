@@ -1,5 +1,6 @@
 import { ProductMedia } from "@/components/catalog/product-media";
 import { Price } from "@/components/catalog/price";
+import { QuickAddButton } from "@/components/catalog/quick-add-button";
 import { StockBadge } from "@/components/catalog/stock-badge";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 
@@ -19,6 +20,7 @@ export function ProductCard({ product }) {
           className="size-full object-contain p-6 transition-transform duration-200 group-hover:scale-[1.02]"
           iconClassName="text-primary/30 size-10"
         />
+        <QuickAddButton sku={product.sku} className="right-2.5 bottom-2.5 z-10" />
       </div>
 
       <div className="flex flex-1 flex-col gap-1.5 p-3">

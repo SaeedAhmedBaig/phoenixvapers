@@ -55,7 +55,7 @@ export default async function SearchPage({ searchParams }) {
         <div className="phx-card mt-12 py-16 text-center">
           <p className="font-medium">No products found</p>
           <p className="text-muted-foreground mt-2 text-sm">Try a different term or browse by category.</p>
-          <Button asChild className="mt-6 rounded-none"><Link href="/c/e-liquids">Browse e-liquids</Link></Button>
+          <Button asChild className="mt-6"><Link href="/c/e-liquids">Browse e-liquids</Link></Button>
         </div>
       ) : null}
 
