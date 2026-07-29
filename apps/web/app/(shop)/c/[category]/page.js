@@ -119,12 +119,20 @@ export default async function CategoryPage({ params, searchParams }) {
               </div>
             ) : (
               <div className="rounded-none border border-dashed border-border py-20 text-center">
-                <p className="font-medium">No products match these filters</p>
-                <p className="text-muted-foreground mt-2 text-sm">Try removing a filter or read our guidance.</p>
+                <p className="font-medium">
+                  {chips.length ? "No products match these filters" : `No ${categoryLabel(category).toLowerCase()} yet`}
+                </p>
+                <p className="text-muted-foreground mt-2 text-sm">
+                  {chips.length
+                    ? "Try removing a filter or read our guidance."
+                    : "We're adding to this range — check back soon, or explore what's already in stock."}
+                </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   {chips.length ? (
                     <Button asChild variant="outline" className="rounded-none"><Link href={basePath}>Clear filters</Link></Button>
-                  ) : null}
+                  ) : (
+                    <Button asChild variant="outline" className="rounded-none"><Link href="/c/e-liquids">Shop e-liquids</Link></Button>
+                  )}
                   <Button asChild className="rounded-none"><Link href="/guidance">New to vaping guide</Link></Button>
                 </div>
               </div>
