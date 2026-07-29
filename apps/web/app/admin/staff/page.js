@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { OPERATOR_ROLES, OPERATOR_ROLE_LABELS as ROLE_LABEL } from "@phoenix/utils/rbac";
 
 import { createStaffAction, setStaffStatusAction } from "./actions";
@@ -39,13 +41,16 @@ export default async function StaffPage({ searchParams }) {
           <ul className="divide-border border-border divide-y border-y text-sm">
             {items.map((op) => (
               <li key={op.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
-                <div>
+                <Link href={`/admin/staff/${op.id}`} className="hover:underline">
                   <p className="font-medium">{op.firstName} {op.lastName}</p>
                   <p className="text-muted-foreground text-xs">{op.email}</p>
-                </div>
+                </Link>
                 <div className="flex items-center gap-3">
                   <Badge variant="secondary">{ROLE_LABEL[op.role] ?? op.role}</Badge>
                   <Badge variant={op.status === "active" ? "default" : "destructive"}>{op.status}</Badge>
+                  <Button asChild size="sm" variant="ghost">
+                    <Link href={`/admin/staff/${op.id}`}>Manage</Link>
+                  </Button>
                   <form action={setStaffStatusAction}>
                     <input type="hidden" name="id" value={op.id} />
                     <input type="hidden" name="action" value={op.status === "active" ? "suspend" : "activate"} />

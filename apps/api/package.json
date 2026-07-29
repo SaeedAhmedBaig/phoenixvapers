@@ -9,6 +9,7 @@
     "dev": "nest start --watch",
     "build": "nest build",
     "create-admin": "ts-node -r tsconfig-paths/register src/seed/create-admin.main.ts",
+    "seed:products": "ts-node -r tsconfig-paths/register src/seed/seed-products.main.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node --max-old-space-size=512 dist/main.js",
     "start:dev": "nest start --watch",

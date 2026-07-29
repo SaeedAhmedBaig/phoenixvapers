@@ -22,17 +22,20 @@ const STATUS_VARIANT = {
  * flat set of status badges nobody can act on without opening every row.
  */
 function waitingChip(p, operatorRole) {
+  // platform_admin holds both halves of the lifecycle (owner-continuity),
+  // so anything pending is always actionable from their account.
+  const isAdmin = operatorRole === "platform_admin";
   if (p.status === "draft") {
-    return operatorRole === "merchandiser" ? { label: "With you", tone: "action" } : null;
+    return operatorRole === "merchandiser" || isAdmin ? { label: "With you", tone: "action" } : null;
   }
   if (p.status === "review") {
     const locked = !!p.complianceProfile?.locked;
     if (!locked) {
-      return operatorRole === "compliance_officer"
+      return operatorRole === "compliance_officer" || isAdmin
         ? { label: "Waiting on you", tone: "action" }
         : { label: "Waiting on Compliance", tone: "muted" };
     }
-    return operatorRole === "merchandiser"
+    return operatorRole === "merchandiser" || isAdmin
       ? { label: "Ready to publish", tone: "action" }
       : { label: "Waiting on Merchandiser", tone: "muted" };
   }

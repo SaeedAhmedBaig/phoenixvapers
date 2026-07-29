@@ -43,7 +43,7 @@ export default async function AdminDashboard() {
   const operator = await requireOperator();
 
   const role = operator.role;
-  const canCatalogue = ["merchandiser", "compliance_officer"].includes(role);
+  const canCatalogue = ["merchandiser", "compliance_officer", "platform_admin"].includes(role);
   const canVerification = ["compliance_officer", "platform_admin", "customer_support"].includes(role);
   const canStaff = role === "platform_admin";
   const canOrders = ["platform_admin", "customer_support", "finance"].includes(role);

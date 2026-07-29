@@ -395,18 +395,29 @@ export class CatalogueService {
       throw new NotFoundException('Product not found');
     }
 
-    const related = await this.model
-      .find({
-        status: ProductStatus.SELLABLE,
-        category: product.category,
-        _id: trusted({ $ne: product._id }),
-      })
-      .sort({ createdAt: -1 })
-      .limit(4)
-      .lean();
+    const [related, strengthSiblings] = await Promise.all([
+      this.model
+        .find({
+          status: ProductStatus.SELLABLE,
+          category: product.category,
+          _id: trusted({ $ne: product._id }),
+        })
+        .sort({ createdAt: -1 })
+        .limit(4)
+        .lean(),
+      product.flavourFamily
+        ? this.model
+            .find({
+              status: ProductStatus.SELLABLE,
+              flavourFamily: product.flavourFamily,
+              _id: trusted({ $ne: product._id }),
+            })
+            .lean()
+        : Promise.resolve([]),
+    ]);
 
     return {
-      product: toProductDetail(product, this.pricing.params),
+      product: toProductDetail(product, this.pricing.params, strengthSiblings),
       related: related.map((item) => toProductCard(item, this.pricing.params)),
     };
   }

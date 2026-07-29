@@ -74,6 +74,8 @@ export const createProductSchema = z.object({
   range: z.string().trim().min(2).max(80).optional(),
   category: z.enum(CATEGORIES),
   description: z.string().trim().min(20).max(5_000),
+  /** Links strength siblings of the same flavour for the PDP switcher. */
+  flavourFamily: z.string().trim().min(2).max(120).optional(),
   media: z.array(mediaItemSchema).max(12).default([]),
   specification: specificationSchema.default({}),
   provenance: provenanceSchema.default({}),

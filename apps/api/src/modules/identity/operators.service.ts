@@ -19,6 +19,13 @@ export interface CreateOperatorInput {
   role: OperatorRole;
 }
 
+export interface UpdateOperatorInput {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  role?: OperatorRole;
+}
+
 /**
  * Operator accounts (spec §3.2). The ONLY exported surface for the
  * operators collection — no other module touches it directly (§16.7).
@@ -106,5 +113,79 @@ export class OperatorsService {
     });
 
     return created;
+  }
+
+  /**
+   * Edit an existing staff account's identity/role — platform-admin only
+   * (enforced by the controller guard, not here). A role change is a
+   * security-relevant event, so it's captured in the same before/after
+   * audit record as name/email edits, not a silent field update.
+   */
+  async update(
+    id: string,
+    input: UpdateOperatorInput,
+    actor: string,
+  ): Promise<OperatorDocument> {
+    const operator = await this.requireById(id);
+    const before = {
+      firstName: operator.firstName,
+      lastName: operator.lastName,
+      email: operator.email,
+      role: operator.role,
+    };
+
+    if (input.firstName !== undefined) operator.firstName = input.firstName;
+    if (input.lastName !== undefined) operator.lastName = input.lastName;
+    if (input.email !== undefined) operator.email = input.email;
+    if (input.role !== undefined) operator.role = input.role;
+
+    try {
+      await operator.save();
+    } catch (error: unknown) {
+      if ((error as { code?: number }).code === 11000) {
+        throw new ConflictException('That email address already has an account');
+      }
+      throw error;
+    }
+
+    await this.audit.record({
+      actor,
+      action: 'identity.operator.updated',
+      subjectRef: `operator:${operator.id}`,
+      before,
+      after: {
+        firstName: operator.firstName,
+        lastName: operator.lastName,
+        email: operator.email,
+        role: operator.role,
+      },
+    });
+
+    return operator;
+  }
+
+  /**
+   * Reset a staff account's password — platform-admin only. The new
+   * password is never logged; the audit trail records only that a reset
+   * happened and when, matching the "never echo submitted values" rule
+   * already applied to validation errors (§16.10).
+   */
+  async resetPassword(
+    id: string,
+    newPassword: string,
+    actor: string,
+  ): Promise<void> {
+    const operator = await this.requireById(id);
+    operator.passwordHash = await argon2.hash(newPassword, {
+      type: argon2.argon2id,
+    });
+    await operator.save();
+
+    await this.audit.record({
+      actor,
+      action: 'identity.operator.password_reset',
+      subjectRef: `operator:${operator.id}`,
+      after: { resetAt: new Date().toISOString() },
+    });
   }
 }

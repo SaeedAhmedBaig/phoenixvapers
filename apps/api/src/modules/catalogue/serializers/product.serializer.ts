@@ -45,6 +45,14 @@ export interface ProductDetail extends ProductCard {
     inStock: boolean;
     price?: PriceBreakdown;
   }[];
+  /** Same flavour at other nicotine strengths — each its own product
+   *  document (see Product.flavourFamily). Empty when the product isn't
+   *  part of a family or has no sellable siblings. */
+  strengthSiblings: {
+    slug: string;
+    strengthMgPerMl?: number;
+    fromPrice?: PriceBreakdown;
+  }[];
 }
 
 /** Duty- and VAT-inclusive display price for one variant, engine-computed. */
@@ -92,6 +100,7 @@ export function toProductCard(doc: any, pricing: PricingParams): ProductCard {
 export function toProductDetail(
   doc: any,
   pricing: PricingParams,
+  strengthSiblingDocs: any[] = [],
 ): ProductDetail {
   return {
     ...toProductCard(doc, pricing),
@@ -110,5 +119,17 @@ export function toProductDetail(
       inStock: Boolean(v.inStockStub),
       price: variantBreakdown(doc, v, pricing),
     })),
+    strengthSiblings: strengthSiblingDocs
+      .map((sib: any) => {
+        const cheapest = [...(sib.variants ?? [])]
+          .filter((v: any) => v.netPriceMinor !== undefined)
+          .sort((a: any, b: any) => a.netPriceMinor - b.netPriceMinor)[0];
+        return {
+          slug: sib.slug,
+          strengthMgPerMl: sib.complianceProfile?.nicotineStrengthMgPerMl,
+          fromPrice: variantBreakdown(sib, cheapest, pricing),
+        };
+      })
+      .sort((a, b) => (a.strengthMgPerMl ?? 0) - (b.strengthMgPerMl ?? 0)),
   };
 }

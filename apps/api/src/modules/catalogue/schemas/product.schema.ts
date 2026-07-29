@@ -153,6 +153,19 @@ export class Product {
   @Prop({ required: true })
   description!: string;
 
+  /**
+   * Groups strength siblings of the SAME flavour under one storefront
+   * experience (e.g. "Cedar Reserve – American Red" at 0/3/6/12/18mg).
+   * Each strength is its own Product document — not a `variant` — because
+   * the compliance profile (nicotine strength, MHRA notification number)
+   * is singular per product and each strength is its own MHRA notification
+   * in reality. `flavourFamily` is the merchandiser-set link between those
+   * sibling documents so the PDP can offer a strength switcher without
+   * merging documents that must stay independently compliance-locked.
+   */
+  @Prop()
+  flavourFamily?: string;
+
   @Prop({ type: [MediaItem], default: [] })
   media!: MediaItem[];
 
@@ -189,6 +202,7 @@ export const ProductSchema = SchemaFactory.createForClass(Product);
 // across documents, category+status for PLP queries, text index for search.
 ProductSchema.index({ 'variants.sku': 1 }, { unique: true, sparse: true });
 ProductSchema.index({ category: 1, status: 1 });
+ProductSchema.index({ flavourFamily: 1, status: 1 }, { sparse: true });
 ProductSchema.index(
   { name: 'text', brand: 'text', description: 'text' },
   { weights: { name: 10, brand: 5, description: 1 } },

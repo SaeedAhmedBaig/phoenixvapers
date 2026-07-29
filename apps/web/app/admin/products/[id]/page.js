@@ -35,8 +35,11 @@ export default async function AdminProductDetail({ params, searchParams }) {
     notFound();
   }
 
-  const isMerch = operator.role === "merchandiser";
-  const isOfficer = operator.role === "compliance_officer";
+  // platform_admin sees BOTH halves of the lifecycle (owner-continuity
+  // decision, see packages/utils/src/rbac.js PERMISSION_MATRIX) — merchandiser
+  // and compliance_officer remain exactly as separated from each other.
+  const isMerch = operator.role === "merchandiser" || operator.role === "platform_admin";
+  const isOfficer = operator.role === "compliance_officer" || operator.role === "platform_admin";
   const profile = product.complianceProfile ?? null;
   const price = product.variants?.find((v) => v.netPriceMinor != null)?.netPriceMinor;
 

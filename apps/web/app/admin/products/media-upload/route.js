@@ -9,16 +9,18 @@ import { AuthRequiredError, customerApi } from "@/lib/auth";
  * never receives the file itself, only authorises the upload, so there is
  * no serverless body-size limit to fight and nothing to proxy.
  *
- * Security: the token is only ever issued to a signed-in MERCHANDISER —
- * mirrors the API's own `@RequireRoles(MERCHANDISER)` on product create/
- * update (spec §3.2 segregation of duties: this is commerce data, not the
- * compliance profile, but still gated to the one role that owns products).
- * Content type and size are enforced server-side in the token grant itself,
- * not just as a client `accept` hint, so a modified client request still
- * can't smuggle a non-image or oversized file.
+ * Security: the token is only ever issued to a signed-in MERCHANDISER (or
+ * PLATFORM_ADMIN, owner-continuity — see packages/utils/src/rbac.js
+ * PERMISSION_MATRIX) — mirrors the API's own `@RequireRoles` on product
+ * create/update (spec §3.2 segregation of duties: this is commerce data,
+ * not the compliance profile, but still gated to the roles that own
+ * products). Content type and size are enforced server-side in the token
+ * grant itself, not just as a client `accept` hint, so a modified client
+ * request still can't smuggle a non-image or oversized file.
  */
 const ALLOWED_CONTENT_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_SIZE_BYTES = 8 * 1024 * 1024; // 8MB
+const ALLOWED_ROLES = ["merchandiser", "platform_admin"];
 
 export async function POST(request) {
   const body = await request.json();
@@ -37,7 +39,7 @@ export async function POST(request) {
           }
           throw error;
         }
-        if (operator.role !== "merchandiser") {
+        if (!ALLOWED_ROLES.includes(operator.role)) {
           throw new Error("Only merchandisers can upload product media");
         }
 

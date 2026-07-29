@@ -24,7 +24,7 @@ const NAV_GROUPS = [
     section: "Commerce",
     items: [
       { href: "/admin/orders", label: "Orders", roles: ["platform_admin", "customer_support", "finance"] },
-      { href: "/admin/products", label: "Catalogue", roles: ["merchandiser", "compliance_officer"] },
+      { href: "/admin/products", label: "Catalogue", roles: ["merchandiser", "compliance_officer", "platform_admin"] },
       { href: "/admin/fulfilment", label: "Fulfilment", roles: ["fulfilment", "platform_admin"] },
     ],
   },

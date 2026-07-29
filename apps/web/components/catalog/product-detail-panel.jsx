@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { CheckCircle2, FlaskConical, List, MessageSquare, ShieldCheck } from "lucide-react";
 
 import { AddToCartForm } from "@/components/catalog/add-to-cart-form";
@@ -41,6 +42,43 @@ function buildSpecPills(product) {
   ].filter(Boolean);
 }
 
+/**
+ * Same flavour at other nicotine strengths (`product.strengthSiblings`,
+ * see CatalogueService.getSellableBySlug) — each strength is its own
+ * product/PDP (the compliance profile is legitimately singular per
+ * product), so switching strength here is a real navigation, not client
+ * state. Images stay the same because siblings share the same bottle art.
+ */
+function StrengthSwitcher({ product }) {
+  if (!product.strengthSiblings?.length) return null;
+
+  const options = [
+    { slug: product.slug, strengthMgPerMl: product.strengthMgPerMl, current: true },
+    ...product.strengthSiblings.map((s) => ({ ...s, current: false })),
+  ].sort((a, b) => (a.strengthMgPerMl ?? 0) - (b.strengthMgPerMl ?? 0));
+
+  return (
+    <div className="flex flex-wrap items-center gap-1.5">
+      <span className="text-muted-foreground text-xs font-medium">Strength</span>
+      {options.map((o) => (
+        <Link
+          key={o.slug}
+          href={`/p/${o.slug}`}
+          aria-current={o.current ? "page" : undefined}
+          className={cn(
+            "border font-mono text-xs px-2.5 py-1 transition-colors",
+            o.current
+              ? "border-primary bg-primary/10 text-pine font-semibold"
+              : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground",
+          )}
+        >
+          {o.strengthMgPerMl}mg
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 /** Title, buy box, and trust — pairs with the sticky gallery column. */
 export function ProductDetailSummary({ product }) {
   const specPills = buildSpecPills(product);
@@ -66,6 +104,8 @@ export function ProductDetailSummary({ product }) {
           </div>
         ) : null}
       </div>
+
+      <StrengthSwitcher product={product} />
 
       <div className="overflow-hidden rounded-none border border-border/80 bg-card shadow-sm">
         <div className="bg-forest-ink/5 border-b border-border/60 px-5 py-4">

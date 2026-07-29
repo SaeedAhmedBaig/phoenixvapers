@@ -52,7 +52,7 @@ export const OPERATOR_ROLE_DESCRIPTIONS = {
   finance: "Money and reporting — settlements, refunds approval, revenue/tax reports.",
   fulfilment: "Warehouse — picking, packing, dispatch, inventory and serials.",
   marketing: "Promotions, content and newsletters — sends gated by compliance approval.",
-  platform_admin: "Runs the platform — operators, roles, config, flags; cannot silently alter audit.",
+  platform_admin: "Runs the platform and holds every permission as an owner-continuity fallback — operators, roles, config, flags, and every specialist action, so the business keeps running if a role is unavailable. Cannot silently alter audit.",
 };
 
 /**
@@ -64,8 +64,19 @@ export const OPERATOR_ROLE_DESCRIPTIONS = {
  *  - [COMPLIANCE] Segregation of duties (see SEGREGATION_RULES): a role may
  *    hold `*:approve` WITHOUT being able to approve an artefact it authored.
  *    e.g. compliance_officer approves compliance profiles but cannot create
- *    products; platform_admin deliberately holds NEITHER compliance nor
- *    settlement approval — admin is not a compliance override.
+ *    products.
+ *
+ * DECISION (business owner, recorded here so the reasoning survives code
+ * changes): platform_admin is deliberately granted EVERY permission,
+ * including the approve-side of every segregation pair. This is a named
+ * continuity/break-glass role for the actual business owner — the person
+ * ultimately accountable for the business regardless — so operations never
+ * stall if a specialist role (compliance officer, finance) is unavailable.
+ * This intentionally departs from a stricter reading of segregation of
+ * duties; it does not remove the control for merchandiser/compliance_officer/
+ * finance/etc., who remain exactly as separated as before. Every action a
+ * platform_admin takes is still fully audited (§4.6), so a self-approval by
+ * the owner is always traceable after the fact even though it isn't blocked.
  */
 export const PERMISSION_MATRIX = {
   merchandiser: [
@@ -151,17 +162,46 @@ export const PERMISSION_MATRIX = {
     "config:update",
     "audit:read",
     "audit:export",
-    // Operational oversight: an admin runs the platform, so holds broad READ
-    // and the order hold/release controls it already operates today. This is
-    // NOT a compliance override — note the deliberate exclusions below.
+    // Full operational authority — the owner/continuity role (see the
+    // DECISION note above). Every action every other role can take, so the
+    // business can keep running if a specialist isn't available.
     "order:read",
     "order:hold",
     "order:release",
+    "order:export",
     "customer:read",
+    "customer:update",
+    "customer:impersonate",
+    "product:create",
     "product:read",
+    "product:update",
+    "compliance_profile:read",
+    "compliance_profile:approve", // ▲ owner continuity exemption — see DECISION above
+    "label_order:read",
+    "label_order:approve", // ▲ owner continuity exemption
+    "serial:read",
+    "serial:update",
     "inventory:read",
-    // NB: no compliance_profile:approve, no settlement:approve, no
-    // refund:approve — segregation of duties is never waived for admins (§3.2).
+    "inventory:update",
+    "price:read",
+    "price:update",
+    "promotion:create",
+    "promotion:read",
+    "promotion:update",
+    "content:create",
+    "content:read",
+    "content:update",
+    "campaign:create",
+    "campaign:read",
+    "campaign:update",
+    "newsletter:create",
+    "newsletter:read",
+    "settlement:read",
+    "settlement:approve", // ▲ owner continuity exemption
+    "settlement:export",
+    "refund:read",
+    "refund:create",
+    "refund:approve", // ▲ owner continuity exemption
   ],
 };
 
@@ -173,6 +213,7 @@ export const PERMISSION_MATRIX = {
 export const ROLE_LIMITS = {
   customer_support: { refundCeilingMinor: 5000 }, // £50.00
   finance: { refundCeilingMinor: null },
+  platform_admin: { refundCeilingMinor: null }, // owner continuity — unlimited
 };
 
 /**
@@ -242,8 +283,10 @@ export function can(actor, permission, ctx = {}) {
   // [COMPLIANCE] Segregation of duties — the author of an artefact may not be
   // the approver of it. `actor.id` and `actor.actorId` are both accepted so
   // the front-end (id) and the API's audit shape (actorId) share this code.
+  // platform_admin is exempt (owner-continuity DECISION, see PERMISSION_MATRIX
+  // above) — every other role remains exactly as separated as before.
   const rule = SEGREGATION_RULES.find((r) => r.approve === permission);
-  if (rule && ctx.createdByActorId) {
+  if (rule && ctx.createdByActorId && actor.role !== "platform_admin") {
     const actorIdentity = actor.id ?? actor.actorId;
     if (actorIdentity && actorIdentity === ctx.createdByActorId) return false;
   }

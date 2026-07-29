@@ -44,6 +44,13 @@ const objectIdSchema = z.string().regex(/^[a-f0-9]{24}$/i, 'invalid id');
  *    but the compliance profile is not even part of their DTOs.
  *  - Compliance Officers own the profile, approval, and rejection.
  * The guard fails closed (401 when unconfigured; 403 wrong role).
+ *
+ * PLATFORM_ADMIN is additionally granted every route here (owner-continuity
+ * decision, see packages/utils/src/rbac.js PERMISSION_MATRIX) — a deliberate,
+ * documented exemption for the business owner so operations don't stall if a
+ * specialist role is unavailable. Merchandiser and Compliance Officer remain
+ * exactly as separated from each other as before; only the admin role spans
+ * both.
  */
 @Controller('admin/products')
 @UseGuards(OperatorAuthGuard)
@@ -53,7 +60,7 @@ export class CatalogueAdminController {
   /* ───────────── shared reads (any catalogue operator) ───────────── */
 
   @Get()
-  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.COMPLIANCE_OFFICER)
+  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.COMPLIANCE_OFFICER, OperatorRole.PLATFORM_ADMIN)
   list(
     @Query(new ZodValidationPipe(adminListQuerySchema)) query: AdminListQuery,
   ) {
@@ -61,7 +68,7 @@ export class CatalogueAdminController {
   }
 
   @Get(':id')
-  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.COMPLIANCE_OFFICER)
+  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.COMPLIANCE_OFFICER, OperatorRole.PLATFORM_ADMIN)
   get(@Param('id', new ZodValidationPipe(objectIdSchema)) id: string) {
     return this.catalogue.adminGet(id);
   }
@@ -69,7 +76,7 @@ export class CatalogueAdminController {
   /* ─────────────────── merchandiser lifecycle ─────────────────────── */
 
   @Post()
-  @RequireRoles(OperatorRole.MERCHANDISER)
+  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.PLATFORM_ADMIN)
   create(
     @Body(new ZodValidationPipe(createProductSchema)) dto: CreateProductDto,
     @CurrentOperator() operator: Operator,
@@ -78,7 +85,7 @@ export class CatalogueAdminController {
   }
 
   @Patch(':id')
-  @RequireRoles(OperatorRole.MERCHANDISER)
+  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.PLATFORM_ADMIN)
   update(
     @Param('id', new ZodValidationPipe(objectIdSchema)) id: string,
     @Body(new ZodValidationPipe(updateProductSchema)) dto: UpdateProductDto,
@@ -88,7 +95,7 @@ export class CatalogueAdminController {
   }
 
   @Post(':id/submit-for-review')
-  @RequireRoles(OperatorRole.MERCHANDISER)
+  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.PLATFORM_ADMIN)
   submitForReview(
     @Param('id', new ZodValidationPipe(objectIdSchema)) id: string,
     @CurrentOperator() operator: Operator,
@@ -97,7 +104,7 @@ export class CatalogueAdminController {
   }
 
   @Post(':id/publish')
-  @RequireRoles(OperatorRole.MERCHANDISER)
+  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.PLATFORM_ADMIN)
   publish(
     @Param('id', new ZodValidationPipe(objectIdSchema)) id: string,
     @CurrentOperator() operator: Operator,
@@ -106,7 +113,7 @@ export class CatalogueAdminController {
   }
 
   @Post(':id/retire')
-  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.COMPLIANCE_OFFICER)
+  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.COMPLIANCE_OFFICER, OperatorRole.PLATFORM_ADMIN)
   retire(
     @Param('id', new ZodValidationPipe(objectIdSchema)) id: string,
     @CurrentOperator() operator: Operator,
@@ -116,7 +123,7 @@ export class CatalogueAdminController {
 
   /** Drafts only — anything past draft retires instead (audit trail). */
   @Delete(':id')
-  @RequireRoles(OperatorRole.MERCHANDISER)
+  @RequireRoles(OperatorRole.MERCHANDISER, OperatorRole.PLATFORM_ADMIN)
   deleteDraft(
     @Param('id', new ZodValidationPipe(objectIdSchema)) id: string,
     @CurrentOperator() operator: Operator,
@@ -127,7 +134,7 @@ export class CatalogueAdminController {
   /* ──────────── compliance officer operations [COMPLIANCE] ────────── */
 
   @Put(':id/compliance-profile')
-  @RequireRoles(OperatorRole.COMPLIANCE_OFFICER)
+  @RequireRoles(OperatorRole.COMPLIANCE_OFFICER, OperatorRole.PLATFORM_ADMIN)
   setComplianceProfile(
     @Param('id', new ZodValidationPipe(objectIdSchema)) id: string,
     @Body(new ZodValidationPipe(complianceProfileSchema))
@@ -138,7 +145,7 @@ export class CatalogueAdminController {
   }
 
   @Post(':id/approve')
-  @RequireRoles(OperatorRole.COMPLIANCE_OFFICER)
+  @RequireRoles(OperatorRole.COMPLIANCE_OFFICER, OperatorRole.PLATFORM_ADMIN)
   approve(
     @Param('id', new ZodValidationPipe(objectIdSchema)) id: string,
     @CurrentOperator() operator: Operator,
@@ -147,7 +154,7 @@ export class CatalogueAdminController {
   }
 
   @Post(':id/reject')
-  @RequireRoles(OperatorRole.COMPLIANCE_OFFICER)
+  @RequireRoles(OperatorRole.COMPLIANCE_OFFICER, OperatorRole.PLATFORM_ADMIN)
   reject(
     @Param('id', new ZodValidationPipe(objectIdSchema)) id: string,
     @Body(new ZodValidationPipe(rejectReviewSchema)) dto: RejectReviewDto,
