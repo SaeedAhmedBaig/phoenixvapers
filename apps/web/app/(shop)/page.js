@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, Beaker, FlaskConical, Package, RefreshCw, Scale, ShoppingBag, Sparkles, Truck, UserPlus } from "lucide-react";
+import { ArrowRight, Beaker, Factory, FlaskConical, Package, RefreshCw, Scale, ShieldCheck, ShoppingBag, Sparkles, Truck, UserPlus } from "lucide-react";
 
 import { ProductCard } from "@/components/catalog/product-card";
 import { CategoryTile } from "@/components/catalog/category-tile";
 import { FaqAccordion } from "@/components/home/faq-accordion";
+import { GoogleReviewsBand } from "@/components/home/google-reviews-band";
+import { LogoLoop } from "@/components/home/logo-loop";
 import { SectionEyebrow } from "@/components/home/section-eyebrow";
 import { TrustStrip } from "@/components/home/trust-strip";
 import { RevealHeading } from "@/components/motion/reveal-heading";
@@ -63,9 +65,9 @@ const PROCESS = [
 ];
 
 const EVIDENCE = [
-  { title: "UK manufacture", desc: "Made and filled in our Peterborough facility.", href: "/our-standard" },
-  { title: "Batch testing", desc: "Every batch independently risk-assessed.", href: "/our-standard" },
-  { title: "MHRA notified", desc: "Every product notified under UK TPD framework.", href: "/our-standard" },
+  { icon: Factory, title: "UK manufacture", desc: "Made and filled in our Peterborough facility.", href: "/our-standard" },
+  { icon: FlaskConical, title: "Batch testing", desc: "Every batch independently risk-assessed.", href: "/our-standard" },
+  { icon: ShieldCheck, title: "MHRA notified", desc: "Every product notified under UK TPD framework.", href: "/our-standard" },
 ];
 
 const FAQ = [
@@ -107,6 +109,9 @@ export default async function HomePage() {
           <TrustStrip className="mt-10" />
         </div>
       </section>
+
+      <LogoLoop />
+      <GoogleReviewsBand />
 
       {/* Persona routing */}
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
@@ -219,35 +224,50 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Evidence */}
+      {/* Evidence — deliberately NOT boxed (unlike the card grids above and
+          below it): "trust signals are primary content, not fine print"
+          reads oddly from inside the exact same bordered box every other
+          section uses, so this one is a plain editorial row with divider
+          rules instead. */}
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="text-center">
           <SectionEyebrow>Our Standard</SectionEyebrow>
           <h2 className="font-display mt-2 text-2xl font-medium sm:text-3xl">Evidence-forward by design</h2>
           <p className="text-muted-foreground mx-auto mt-3 max-w-lg text-sm">Trust signals are primary content — not fine print.</p>
         </div>
-        <div className="mt-10 grid gap-5 sm:grid-cols-3">
+        <div className="divide-border mt-10 grid divide-y sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {EVIDENCE.map((e) => (
-            <Link key={e.title} href={e.href} className="phx-card p-6 text-center">
-              <h3 className="font-medium">{e.title}</h3>
+            <Link key={e.title} href={e.href} className="group flex flex-col items-center px-6 py-6 text-center first:pt-0 sm:py-0">
+              <e.icon className="text-pine size-7" />
+              <h3 className="mt-3 font-medium">{e.title}</h3>
               <p className="text-muted-foreground mt-2 text-sm">{e.desc}</p>
-              <span className="text-pine mt-4 inline-block text-xs font-medium">Learn more →</span>
+              <span className="text-pine mt-4 inline-block text-xs font-medium group-hover:underline">Learn more →</span>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* Process */}
+      {/* Process — a connected step tracker instead of another card grid,
+          so "how it works" reads as a sequence rather than four more boxes. */}
       <section className="phx-section-sunken border-border border-y py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionEyebrow>How it works</SectionEyebrow>
           <h2 className="font-display mt-2 text-2xl font-medium">Verify, dispatch, deliver — transparently</h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PROCESS.map((p) => (
-              <div key={p.step} className="phx-card p-5">
-                <span className="font-mono text-pine text-xs font-medium">{p.step}</span>
-                <h3 className="mt-2 font-medium">{p.title}</h3>
-                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">{p.desc}</p>
+          <div className="mt-10 grid gap-8 sm:grid-cols-4 sm:gap-4">
+            {PROCESS.map((p, i) => (
+              <div key={p.step} className="relative flex gap-4 sm:block sm:gap-0">
+                <div className="flex shrink-0 flex-col items-center sm:w-full sm:flex-row">
+                  <span className="bg-primary text-primary-foreground font-mono flex size-9 shrink-0 items-center justify-center rounded-full text-xs font-semibold">
+                    {p.step}
+                  </span>
+                  {i < PROCESS.length - 1 ? (
+                    <span className="bg-border mt-1 w-px flex-1 sm:mt-0 sm:ml-2 sm:h-px sm:w-full sm:flex-none" aria-hidden />
+                  ) : null}
+                </div>
+                <div className="pb-2 sm:mt-4 sm:pb-0">
+                  <h3 className="font-medium">{p.title}</h3>
+                  <p className="text-muted-foreground mt-1.5 text-sm leading-relaxed">{p.desc}</p>
+                </div>
               </div>
             ))}
           </div>

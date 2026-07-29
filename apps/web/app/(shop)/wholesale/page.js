@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { FileText, Package, ShieldCheck, Truck, UserCheck, Wallet } from "lucide-react";
+import { Building2, FileText, Package, ShieldCheck, Store, Truck, UserCheck, Utensils, Wallet } from "lucide-react";
 
 import { FaqAccordion } from "@/components/home/faq-accordion";
 import { SectionEyebrow } from "@/components/home/section-eyebrow";
+import { WholesaleInterestForm } from "@/components/home/wholesale-interest-form";
 import { Button } from "@/components/ui/button";
 
 export const metadata = { title: "Wholesale" };
@@ -14,6 +15,12 @@ const VALUE_PROPS = [
   { icon: FileText, title: "Compliance documentation", desc: "Every invoice itemises net, duty, and VAT, with product notification numbers and batch records attached — your own compliance obligations, covered." },
   { icon: Truck, title: "Palletised delivery", desc: "Trade-appropriate carriers and delivery for volume orders, alongside standard tracked shipping for smaller top-ups." },
   { icon: ShieldCheck, title: "Dedicated account management", desc: "A named Wholesale Account Manager for pricing, credit, and order questions — not a support queue." },
+];
+
+const SEGMENTS = [
+  { icon: Store, title: "Independent vape shops", desc: "Full-range restocking with trade pricing on the same MHRA-notified, batch-tested lines your customers already trust." },
+  { icon: Building2, title: "Convenience & newsagents", desc: "A curated core range sized for counter space, with the compliance paperwork your licence conditions require on file." },
+  { icon: Utensils, title: "Hospitality & venues", desc: "Bars and venues offering vaping products for adult guests — trade terms, discreet delivery, and full documentation." },
 ];
 
 const STEPS = [
@@ -56,6 +63,21 @@ export default function WholesalePage() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Who we supply */}
+      <div className="mt-14">
+        <SectionEyebrow>Who we supply</SectionEyebrow>
+        <h2 className="font-display mt-2 text-xl font-medium">Built for every kind of trade buyer</h2>
+        <div className="divide-border mt-6 grid divide-y sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {SEGMENTS.map((s) => (
+            <div key={s.title} className="flex flex-col items-center px-6 py-6 text-center first:pt-0 sm:py-0">
+              <s.icon className="text-primary size-7" />
+              <h3 className="mt-3 font-medium">{s.title}</h3>
+              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">{s.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* How it works */}
@@ -109,17 +131,20 @@ export default function WholesalePage() {
       </div>
 
       {/* CTA */}
-      <div className="phx-dark-band mt-14 p-8 text-center">
-        <p className="font-display text-xl font-medium">Trade accounts are opening soon</p>
-        <p className="phx-dark-band-muted mx-auto mt-2 max-w-md text-sm">
-          Register your interest and our wholesale team will be in touch as trade accounts become available.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Button asChild className="">
-            <a href="mailto:support@phoenixvapers.co.uk?subject=Trade%20account%20interest">Register interest</a>
-          </Button>
-          <Button asChild size="default" variant="outline" className="border-chrome-fg/25 text-chrome-fg hover:bg-white/10 bg-transparent">
-            <Link href="/login">Trade login</Link>
+      <div className="mt-14">
+        <div className="text-center">
+          <SectionEyebrow>Get started</SectionEyebrow>
+          <h2 className="font-display mt-2 text-xl font-medium">Register your interest</h2>
+          <p className="text-muted-foreground mx-auto mt-2 max-w-md text-sm">
+            Trade accounts are opening soon. Tell us about your business and our wholesale team will be in touch.
+          </p>
+        </div>
+        <div className="mt-6">
+          <WholesaleInterestForm />
+        </div>
+        <div className="mt-4 text-center">
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/login">Already have a trade account? Sign in</Link>
           </Button>
         </div>
       </div>

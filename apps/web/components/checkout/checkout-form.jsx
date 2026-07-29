@@ -154,7 +154,7 @@ export function CheckoutForm({ context }) {
         <Button
           type="submit"
           disabled={pending || !hasAddress || !deliveryMethodId}
-          className="mt-5 w-full rounded-none"
+          className="mt-5 w-full"
           size="lg"
         >
           {pending ? (
