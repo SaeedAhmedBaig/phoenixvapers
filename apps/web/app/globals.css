@@ -41,6 +41,16 @@ body {
     var(--color-background);
 }
 
+/* PDP gallery well — a static pine-tinted radial behind the product photo so
+   a single small bottle doesn't read as an empty grey box (§ "squarish
+   feel"). No motion, no glass — same restrained radial technique as
+   .phx-hero, just scoped to the well instead of the page background. */
+.phx-product-well {
+  background:
+    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--color-primary) 7%, transparent), transparent 65%),
+    var(--color-product-well);
+}
+
 /* Dark conversion band — Ink Green, not loud green wallpaper */
 .phx-dark-band {
   background: var(--color-chrome);

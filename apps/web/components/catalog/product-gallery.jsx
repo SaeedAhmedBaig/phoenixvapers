@@ -21,7 +21,7 @@ export function ProductGallery({ product }) {
 
   return (
     <div className="space-y-3 lg:sticky lg:top-28">
-      <div className="bg-product-well overflow-hidden rounded-none border border-border/80 shadow-sm">
+      <div className="phx-product-well overflow-hidden rounded-none border border-border/80 shadow-sm">
         <div className="relative aspect-square">
           {!isPlaceholderUrl(current?.url) ? (
             // eslint-disable-next-line @next/next/no-img-element

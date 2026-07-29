@@ -33,9 +33,15 @@ function buildSpecs(product) {
   ].filter(Boolean);
 }
 
-function buildSpecPills(product) {
+/**
+ * `hasSwitcher` drops the strength value from these pills when the
+ * interactive StrengthSwitcher is also rendering — otherwise the same
+ * "6mg" reads twice, back to back, in two different pill styles (a
+ * PDP inconsistency, not a deliberate confirm-at-a-glance pattern).
+ */
+function buildSpecPills(product, hasSwitcher) {
   return [
-    product.strengthMgPerMl != null && `${product.strengthMgPerMl}mg/ml`,
+    !hasSwitcher && product.strengthMgPerMl != null && `${product.strengthMgPerMl}mg/ml`,
     product.volumeMl && `${product.volumeMl}ml`,
     product.vgPg,
     product.productType,
@@ -48,6 +54,13 @@ function buildSpecPills(product) {
  * product/PDP (the compliance profile is legitimately singular per
  * product), so switching strength here is a real navigation, not client
  * state. Images stay the same because siblings share the same bottle art.
+ *
+ * Styled as one connected segmented control (filled active segment) rather
+ * than another row of bordered pills — it reuses the exact active/inactive
+ * treatment the tab bar below already uses (`bg-primary text-primary-
+ * foreground`), so the page has ONE "this is a clickable control" language
+ * instead of a second, easily-missed one that looked like the inert spec
+ * badges next to it.
  */
 function StrengthSwitcher({ product }) {
   if (!product.strengthSiblings?.length) return null;
@@ -58,30 +71,33 @@ function StrengthSwitcher({ product }) {
   ].sort((a, b) => (a.strengthMgPerMl ?? 0) - (b.strengthMgPerMl ?? 0));
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5">
-      <span className="text-muted-foreground text-xs font-medium">Strength</span>
-      {options.map((o) => (
-        <Link
-          key={o.slug}
-          href={`/p/${o.slug}`}
-          aria-current={o.current ? "page" : undefined}
-          className={cn(
-            "border font-mono text-xs px-2.5 py-1 transition-colors",
-            o.current
-              ? "border-primary bg-primary/10 text-pine font-semibold"
-              : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground",
-          )}
-        >
-          {o.strengthMgPerMl}mg
-        </Link>
-      ))}
+    <div>
+      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wide uppercase">Nicotine strength</p>
+      <div className="border-border inline-flex divide-x divide-border overflow-hidden border">
+        {options.map((o) => (
+          <Link
+            key={o.slug}
+            href={`/p/${o.slug}`}
+            aria-current={o.current ? "page" : undefined}
+            className={cn(
+              "font-mono px-4 py-2 text-sm transition-colors",
+              o.current
+                ? "bg-primary text-primary-foreground font-semibold"
+                : "bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
+            )}
+          >
+            {o.strengthMgPerMl}mg
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
 
 /** Title, buy box, and trust — pairs with the sticky gallery column. */
 export function ProductDetailSummary({ product }) {
-  const specPills = buildSpecPills(product);
+  const hasSwitcher = !!product.strengthSiblings?.length;
+  const specPills = buildSpecPills(product, hasSwitcher);
 
   return (
     <div className="space-y-6 lg:pt-2">
@@ -107,7 +123,7 @@ export function ProductDetailSummary({ product }) {
 
       <StrengthSwitcher product={product} />
 
-      <div className="overflow-hidden rounded-none border border-border/80 bg-card shadow-sm">
+      <div className="phx-card overflow-hidden shadow-sm">
         <div className="bg-forest-ink/5 border-b border-border/60 px-5 py-4">
           <Price breakdown={product.fromPrice} className="text-3xl font-semibold" />
           <p className="text-muted-foreground mt-1 text-xs">Duty and VAT included</p>
@@ -187,7 +203,7 @@ export function ProductDetailContent({ product }) {
 
         <div className="mt-5" role="tabpanel">
           {tab === "spec" && specs.length ? (
-            <dl className="overflow-hidden rounded-none border border-border/80 bg-card text-sm divide-y">
+            <dl className="phx-card overflow-hidden text-sm divide-y">
               {specs.map(({ label, value }) => (
                 <div key={label} className="flex justify-between gap-4 px-5 py-3.5">
                   <dt className="text-muted-foreground">{label}</dt>
@@ -199,7 +215,7 @@ export function ProductDetailContent({ product }) {
 
           {tab === "evidence" && (
             <div className="space-y-4">
-              <div className="flex gap-4 rounded-none border border-border/80 bg-card p-5">
+              <div className="phx-card flex gap-4 p-5">
                 <div className="bg-accent flex size-12 shrink-0 items-center justify-center rounded-none">
                   <FlaskConical className="text-pine size-6" />
                 </div>
