@@ -19,7 +19,7 @@ export function MobileFilterSheet({ basePath, searchParams, facets }) {
       </SheetTrigger>
       <SheetContent side="left" className="w-80 overflow-y-auto">
         <SheetHeader><SheetTitle>Filters</SheetTitle></SheetHeader>
-        <div className="mt-4"><FilterSidebar basePath={basePath} searchParams={searchParams} facets={facets} /></div>
+        <div className="px-4 pb-4"><FilterSidebar basePath={basePath} searchParams={searchParams} facets={facets} /></div>
       </SheetContent>
     </Sheet>
   );
